@@ -4,11 +4,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Profile from '../Pages/Main/Profile';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 import { View, Text } from 'react-native';
 import TopStack from './TopStack';
+import SingleAssignment from '../Pages/Main/SingleAssignment';
+import BackIcon from '../Components/BackIcon';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 function BottomTabs() {
@@ -33,7 +35,7 @@ function BottomTabs() {
                                     justifyContent: 'center',
                                     top: 10,
                                 }}>
-                                <Ionicons
+                                <Icon
                                     name={'home'}
                                     size={20}
                                     color={focused ? '#4a72f5' : 'black'}
@@ -65,8 +67,8 @@ function BottomTabs() {
                                     top: 10,
                                 }}>
                                     
-                                <Ionicons
-                                    name={ 'ios-people-outline'}
+                                <Icon
+                                    name={ 'human'}
                                     size={22}
                                     color={focused ? '#4a72f5' : 'black'}
                                 // style={focused ? styles.reHeight : null}
@@ -95,10 +97,31 @@ function BottomStack() {
 
         <Stack.Navigator
             screenOptions={{
-                headerShown: false
+                headerShown: true
             }}
         >
-            <Stack.Screen name="bottomTab" component={BottomTabs} />
+            <Stack.Screen name="bottomTab" component={BottomTabs}
+            
+                options={{
+                    headerShown: true,
+                    title: 'Spetre',
+                    // headerTitleAlign:'center'
+                    headerTitleStyle: { color: 'blue', fontSize: 25 },
+                    headerBackVisible: false
+                }}
+            />
+            <Stack.Screen name="SingleAssignment" component={SingleAssignment} 
+                options={{
+                    title: 'Asignment Details',
+                    // headerTitleAlign:'center'
+                    headerTitleStyle: { color: 'blue', fontSize: 15 },
+                    headerLeft: () => <BackIcon />,
+                    headerTitleAlign: 'center',
+                }}
+            
+            />
+
+            
         </Stack.Navigator>
 
     );

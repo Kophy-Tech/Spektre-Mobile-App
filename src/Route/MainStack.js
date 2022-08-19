@@ -19,13 +19,7 @@ function MainStack() {
       >
         <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="Bottom" component={BottomStack}
-      options={{
-        headerShown: true,
-        headerTitle: 'Spetre',
-        // headerTitleAlign:'center'
-        headerTitleStyle:{color:'blue', fontSize:25},
-        headerBackVisible: false
-      }}
+     
      
       />
 

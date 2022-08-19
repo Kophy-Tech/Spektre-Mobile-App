@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Box, Text,  Stack } from "native-base";
-export default function EmptyCard() {
+export default function EmptyCard({msg}) {
     return (
         <Box  style={{
             flex:1,
@@ -23,7 +23,7 @@ export default function EmptyCard() {
                     justifyContent='center'>
 
                     <Text fontWeight="400">
-                        No Assignment Was Found
+                       {msg}
                     </Text>
 
                 </Stack>

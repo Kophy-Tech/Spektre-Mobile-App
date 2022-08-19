@@ -43,10 +43,10 @@ export const api = createApi({
 
         },
       }),
-      getCompletedAsign: builder.query({
+      getPendingAsign: builder.query({
         query(token) {
           return {
-            url: '/projects/assignments/?status=COMPLETED',
+            url: '/projects/assignments/?status=PENDING',
             method: "GET",
             headers: {
               Authorization: `Token  ${token}`
@@ -69,10 +69,10 @@ export const api = createApi({
 
         },
       }),
-      getPendingAsign: builder.query({
+    getCompletedAsign: builder.query({
         query(token) {
           return {
-            url: '/projects/assignments/?status=PENDING',
+            url: '/projects/assignments/?status=ACTIVE',
             method: "GET",
             headers: {
               Authorization: `Token  ${token}`
@@ -85,7 +85,7 @@ export const api = createApi({
       getUser: builder.query({
         query(token) {
           return {
-            url: '/projects/assignments/?status=PENDING',
+            url: '/user/',
             method: "GET",
             headers: {
               Authorization: `Token  ${token}`
@@ -95,11 +95,24 @@ export const api = createApi({
 
         },
       }),
-      getDetailAsign: builder.query({
-        query(token) {
+      getAsign: builder.query({
+        query({token, id}) {
           return {
-            url: '/projects/assignments/?status=PENDING',
+            url: `/projects/assignments/${id}/`,
             method: "GET",
+            headers: {
+              Authorization: `Token  ${token}`
+            }
+
+          };
+
+        },
+      }),
+      changeAsignStatus: builder.query({
+        query({ token, id }) {
+          return {
+            url: `/projects/assignments/${id}/`,
+            method: "PATCH",
             headers: {
               Authorization: `Token  ${token}`
             }
@@ -111,10 +124,12 @@ export const api = createApi({
   }),
 })
 
-export const { useLoginMutation, useGeAllAsignQuery, UseGetPendingAsignQuery, 
-  UseGetActiveAsignQuery ,
-  UseGetCompletedAsignQuery,
-  UseGetUserQuery,
-  UserGetDetailAsign
+export const { useLoginMutation, useGeAllAsignQuery, 
+ useGetPendingAsignQuery,
+  useGetActiveAsignQuery,
+  useGetCompletedAsignQuery,
+ useGetUserQuery,
+  useGetAsignQuery,
+  useChangeAsignStatusQuery,
 
 } = api;

@@ -3,14 +3,14 @@ import React from 'react'
 import Card from './Card'
 import EmptyCard from "./EmptyCard";
 
-const CustomFlatList = ({data}) => {
-    console.log(data, 'from customflatlist')
+const CustomFlatList = ({data, msg , navigation}) => {
+    const renderItem = ({ item }) => <Card item={item} navigation={navigation} />
     const fakeData=[]
     return <FlatList
         data={data}
-        renderItem={()=> <Card data={data}/>}
+        renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={EmptyCard}
+        ListEmptyComponent={()=> <EmptyCard msg={msg}/>}
     />
   
 }
