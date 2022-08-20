@@ -16,7 +16,7 @@ export const api = createApi({
     //   return headers
     // },
   }),
- 
+  tagTypes: ['Assignments'],
     endpoints: (builder) => ({
         login:  builder.mutation({
       query(data) {
@@ -42,6 +42,7 @@ export const api = createApi({
           };
 
         },
+        providesTags: ['Assignments'],
       }),
       getPendingAsign: builder.query({
         query(token) {
@@ -55,6 +56,8 @@ export const api = createApi({
           };
 
         },
+        providesTags: ['Assignments']
+
       }),
       getActiveAsign: builder.query({
         query(token) {
@@ -68,11 +71,13 @@ export const api = createApi({
           };
 
         },
+        providesTags: ['Assignments']
+
       }),
     getCompletedAsign: builder.query({
         query(token) {
           return {
-            url: '/projects/assignments/?status=ACTIVE',
+            url: '/projects/assignments/?status=COMPLETED',
             method: "GET",
             headers: {
               Authorization: `Token  ${token}`
@@ -81,6 +86,8 @@ export const api = createApi({
           };
 
         },
+      providesTags:['Assignments']
+
       }),
       getUser: builder.query({
         query(token) {
@@ -107,19 +114,24 @@ export const api = createApi({
           };
 
         },
+        providesTags: ['Assignments']
       }),
-      changeAsignStatus: builder.query({
-        query({ token, id }) {
+      changeAsignStatus: builder.mutation({
+       
+        query({ token, id , updateData}) {
+          console.log(id, token, 'aaaaa')
           return {
             url: `/projects/assignments/${id}/`,
             method: "PATCH",
             headers: {
-              Authorization: `Token  ${token}`
-            }
+              Authorization: `Token ${token}`
+            },
+              body:updateData
 
           };
 
         },
+        invalidatesTags:['Assignments']
       }),
   }),
 })
@@ -130,6 +142,6 @@ export const { useLoginMutation, useGeAllAsignQuery,
   useGetCompletedAsignQuery,
  useGetUserQuery,
   useGetAsignQuery,
-  useChangeAsignStatusQuery,
+  useChangeAsignStatusMutation,
 
 } = api;

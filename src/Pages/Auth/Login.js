@@ -98,7 +98,7 @@ const Login = () => {
         Sign in to continue!
       </Heading>
 
-      <VStack space={3} mt="5">
+      <VStack  mt="5">
         <FormControl>
           <FormControl.Label>Username</FormControl.Label>
           <Input 
