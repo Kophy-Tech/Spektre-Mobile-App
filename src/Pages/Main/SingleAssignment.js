@@ -53,7 +53,7 @@ console.log(id)
      ]
    );
  }
- const renderItem =({item})=> <CardFile item={item}/>
+ const renderItem =({item })=> <CardFile item={item}/>
    
   if (isLoading) {
         return <LoadingCard />

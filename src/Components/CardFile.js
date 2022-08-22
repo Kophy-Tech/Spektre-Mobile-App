@@ -1,6 +1,8 @@
-import { StyleSheet, Linking, Alert, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, Linking, Alert, Platform } from 'react-native'
 import React from 'react'
-import { Box,  AspectRatio, Image,  Center, Text } from "native-base";
+import { Box,  AspectRatio, Image,  Center, Text , Button, HStack,} from "native-base";
+import RNFS from "react-native-fs";
+import FileViewer from "react-native-file-viewer";
 const CardFile = ({item}) => {
     const OpenUrl = React.useCallback(
         async (url) => {
@@ -16,6 +18,37 @@ const CardFile = ({item}) => {
         },
       [],
     )
+
+    const Downloadfile =async()=>{
+        const url =
+            "https://github.com/vinzscam/react-native-file-viewer/raw/master/docs/react-native-file-viewer-certificate.pdf";
+
+        // *IMPORTANT*: The correct file extension is always required.
+        // You might encounter issues if the file's extension isn't included
+        // or if it doesn't match the mime type of the file.
+        // https://stackoverflow.com/a/47767860
+        function getUrlExtension(url) {
+            return url.split(/[#?]/)[0].split(".").pop().trim();
+        }
+
+        const extension = getUrlExtension(url);
+
+        // Feel free to change main path according to your requirements.
+        const localFile = `${RNFS.DocumentDirectoryPath}/temporaryfile.${extension}`;
+
+        const options = {
+            fromUrl: url,
+            toFile: localFile,
+        };
+        RNFS.downloadFile(options)
+            .promise.then(() => FileViewer.open(localFile))
+            .then(() => {
+                // success
+            })
+            .catch((error) => {
+                // error
+            });
+    }
   return (
    <Center>
           <Box w="95%" rounded="lg" my="1" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
@@ -29,33 +62,58 @@ const CardFile = ({item}) => {
           }}
         
           >
-            <TouchableWithoutFeedback
-                  onPress={() => OpenUrl(item.file)}
-            >
-                  <Box w="100%" h="40" >
-                      <AspectRatio w="100%" h="100%" justifyContent="center" >
-                          <Image source={require('../images/file.jpg')} alt="image" h="100%" w="120%" />
-                      </AspectRatio>
-                      <Center bg="blue.500" _dark={{
-                          bg: "blue.400"
-                      }} _text={{
-                          color: "warmGray.50",
-                          fontWeight: "400",
-                          fontSize: 10
-                      }} position="absolute" px="3" py="1.5">
-                          <Text
-                              color="#fff"
-                              fontSize="xs"
-                              _dark={{
-                                  color: "warmGray.200"
-                              }} fontWeight="400"
-                          > Document {item?.id}</Text>
-                      </Center>
-                  </Box>
-          </TouchableWithoutFeedback>
-              
              
+              <Box w="100%" h="40" >
+                
+                  <AspectRatio w="100%" h="100%" justifyContent="center" >
+                      <Image source={require('../images/file.jpg')} alt="image" h="100%" w="120%" />
+                  </AspectRatio>
 
+                
+                  <Center bg="blue.500" _dark={{
+                      bg: "blue.400"
+                  }} _text={{
+                      color: "warmGray.50",
+                      fontWeight: "400",
+                      fontSize: 10
+                  }} position="absolute" px="3" py="1.5">
+                      <Text
+                          color="#fff"
+                          fontSize="xs"
+                          _dark={{
+                              color: "warmGray.200"
+                          }} fontWeight="400"
+                      > Document {item?.id}</Text>
+                  </Center>
+              </Box>
+              <HStack
+                  justifyContent="space-between"
+
+              >
+
+                  <Button bg="#fff"
+                  borderWidth='1'
+                  borderColor="blue.600"
+                      onPress={() => OpenUrl(item.file)}
+                  >
+                      <Text
+                          color="blue.600"
+                          fontSize='sm'
+                      >Open On Web</Text>
+
+                  </Button>
+                  <Button bg="#fff"
+                      borderWidth='1'
+                      borderColor="blue.600"
+                      onPress={Downloadfile}
+                  >
+                      <Text
+                          color="blue.600"
+                          fontSize='sm'
+                      >Download</Text>
+
+                  </Button>
+              </HStack>
           </Box>
    </Center>
   )
