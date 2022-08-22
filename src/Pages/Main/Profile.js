@@ -6,16 +6,16 @@ import ErrorCard from '../../Components/ErrorCard';
 import { useNavigation } from "@react-navigation/native";
 
 import LoadingCard from '../../Components/Loading';
-import { useSelector } from 'react-redux';
+
 import { useGetUserQuery } from '../../Redux/AuthApi';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Profile() {
   const navigation = useNavigation()
 
-  const token = useSelector((auth) => auth.auth.token)
+  
 
-  const { data, error, isLoading } = useGetUserQuery(token)
+  const { data, error, isLoading } = useGetUserQuery()
   const LogOut = () =>{
     Alert.alert(
       "Are you sure you want to logout?",

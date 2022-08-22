@@ -9,12 +9,12 @@ import CustomFlatList from '../../Components/CustomFlatList';
 import { useGetPendingAsignQuery } from '../../Redux/AuthApi';
 
 export default function Pending({navigation}) {
-  const token = useSelector((auth) => auth.auth.token)
 
-  const { data, error, isLoading } = useGetPendingAsignQuery(token)
+
+  const { data, error, isLoading } = useGetPendingAsignQuery()
   // console.log(error, 'errror')
   // console.log(data)
-  //  console.log(token, 'aaaa');
+ 
   if (isLoading) {
     return <LoadingCard />
   }

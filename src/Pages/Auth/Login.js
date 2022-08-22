@@ -78,8 +78,23 @@ const Login = () => {
         navigation.replace("Bottom")
         
       } catch (error) {
-        console.log(error.data)
-        Alert.alert(error.data.non_field_errors[0])
+        // console.log(error.status)
+        if (!error?.status){
+Alert.alert('No Server Response')
+        }
+        else if (error.status === 400){
+          Alert.alert(error.data.non_field_errors[0])
+
+        }
+        else if (err.status === 401) {
+          Alert.alert('Unauthorized')
+
+        
+        } else {
+          Alert.alert('Login Failed')
+
+         
+        }
       }
     }
     
@@ -104,6 +119,7 @@ const Login = () => {
           <Input 
           value={data.username}
             onChangeText={value => handleInputChange('username', value)}
+            fontSize="md"
           />
           {errorUsername && <FormControl.HelperText _text={{
             fontSize: 'xs',
@@ -127,6 +143,8 @@ const Login = () => {
               value={data.password}
               onChangeText={value => handleInputChange('password', value)}
               underlineColorAndroid="transparent"
+              fontSize="md"
+
             type={passwordType}  w="100%" style={{
               borderWidth:0,
               borderRightWidth:0,

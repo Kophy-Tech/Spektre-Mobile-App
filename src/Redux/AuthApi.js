@@ -6,15 +6,14 @@ export const api = createApi({
     reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://spektre-prj.herokuapp.com/api',
-    // prepareHeaders: async(headers, { getState }) => {
-    //   // By default, if we have a token in the store, let's use that for authenticated requests
-    //   const token = await (getState()).auth.auth.token
-    //   console.log(token, 'token')
-    //   if (token) {
-    //     headers.set('authorization', `Token 4db8fc1f65a65d8b845f58d63b099126cf094aeda376986066af95d4ddcd43bf`)
-    //   }
-    //   return headers
-    // },
+    credentials: 'include',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token
+      if (token) {
+        headers.set("authorization", `Token ${token}`)
+      }
+      return headers
+    }
   }),
   tagTypes: ['Assignments'],
     endpoints: (builder) => ({
@@ -31,101 +30,93 @@ export const api = createApi({
          
     }),
       geAllAsign: builder.query({
-        query(token) {
+        query() {
           return {
             url: '/projects/assignments/',
             method: "GET",
-         headers:{
-           Authorization:`Token  ${token}`
-         }
+      
 
           };
 
         },
         providesTags: ['Assignments'],
+        keepUnusedDataFor: 5,
       }),
       getPendingAsign: builder.query({
-        query(token) {
+        query() {
           return {
             url: '/projects/assignments/?status=PENDING',
             method: "GET",
-            headers: {
-              Authorization: `Token  ${token}`
-            }
+         
 
           };
 
         },
-        providesTags: ['Assignments']
+        providesTags: ['Assignments'],
+        keepUnusedDataFor: 5,
 
       }),
       getActiveAsign: builder.query({
-        query(token) {
+        query() {
           return {
             url: '/projects/assignments/?status=ACTIVE',
             method: "GET",
-            headers: {
-              Authorization: `Token  ${token}`
-            }
+           
 
           };
 
         },
-        providesTags: ['Assignments']
+        providesTags: ['Assignments'],
+          keepUnusedDataFor: 5,
 
       }),
     getCompletedAsign: builder.query({
-        query(token) {
+        query() {
           return {
             url: '/projects/assignments/?status=COMPLETED',
             method: "GET",
-            headers: {
-              Authorization: `Token  ${token}`
-            }
+           
 
           };
 
         },
-      providesTags:['Assignments']
+      providesTags:['Assignments'],
+      keepUnusedDataFor: 5,
 
       }),
       getUser: builder.query({
-        query(token) {
+        query() {
           return {
             url: '/user/',
             method: "GET",
-            headers: {
-              Authorization: `Token  ${token}`
-            }
+           
 
           };
 
         },
+        keepUnusedDataFor: 5,
+
       }),
       getAsign: builder.query({
-        query({token, id}) {
+        query({ id}) {
           return {
             url: `/projects/assignments/${id}/`,
             method: "GET",
-            headers: {
-              Authorization: `Token  ${token}`
-            }
+          
 
           };
 
         },
-        providesTags: ['Assignments']
+        providesTags: ['Assignments'],
+        keepUnusedDataFor: 5,
       }),
       changeAsignStatus: builder.mutation({
        
-        query({ token, id , updateData}) {
-          console.log(id, token, 'aaaaa')
+        query({  id , updateData}) {
+         
           return {
             url: `/projects/assignments/${id}/`,
             method: "PATCH",
-            headers: {
-              Authorization: `Token ${token}`
-            },
               body:updateData
 
           };

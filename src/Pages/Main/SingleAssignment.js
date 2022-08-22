@@ -4,20 +4,19 @@ import ErrorCard from '../../Components/ErrorCard';
 import { useRoute } from '@react-navigation/native';
 import { Box, Heading, Text, Center, HStack, Stack, Button } from "native-base";
 import LoadingCard from '../../Components/Loading';
-import { useSelector } from 'react-redux';
 import {useChangeAsignStatusMutation, useGetAsignQuery } from '../../Redux/AuthApi';
 import CardFile from '../../Components/CardFile';
 import EmptyCardFile from '../../Components/EmptyCardFile';
 import SpinnerLoad from '../../Components/Spinner';
 export default function SingleAssignment() {
-    const token = useSelector((auth) => auth.auth.token)
+ 
    const route = useRoute();
   const [changeAsignStatus, { isLoading:Loadingstatus }] =useChangeAsignStatusMutation()
 
 const id = route?.params?.id
 console.log(id)
 
-    const { data:itemData, error, isLoading } = useGetAsignQuery({token,id})
+    const { data:itemData, error, isLoading } = useGetAsignQuery({id})
  console.log(error)
  const updateStatus = ()=>{
    Alert.alert(
@@ -36,7 +35,7 @@ console.log(id)
              status: data
            }
            const updateId = {
-             token, id,
+             id,
              updateData
            }
            try {

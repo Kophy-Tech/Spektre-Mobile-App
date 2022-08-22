@@ -19,9 +19,9 @@ const CardFile = ({item}) => {
       [],
     )
 
-    const Downloadfile =async()=>{
-        const url =
-            "https://github.com/vinzscam/react-native-file-viewer/raw/master/docs/react-native-file-viewer-certificate.pdf";
+    const Downloadfile =async(file)=>{
+        const url =file
+            // "https://github.com/vinzscam/react-native-file-viewer/raw/master/docs/react-native-file-viewer-certificate.pdf";
 
         // *IMPORTANT*: The correct file extension is always required.
         // You might encounter issues if the file's extension isn't included
@@ -46,7 +46,7 @@ const CardFile = ({item}) => {
                 // success
             })
             .catch((error) => {
-                // error
+             Alert.alert('Unable to download file')
             });
     }
   return (
@@ -105,7 +105,7 @@ const CardFile = ({item}) => {
                   <Button bg="#fff"
                       borderWidth='1'
                       borderColor="blue.600"
-                      onPress={Downloadfile}
+                      onPress={() => Downloadfile(item.file)}
                   >
                       <Text
                           color="blue.600"
