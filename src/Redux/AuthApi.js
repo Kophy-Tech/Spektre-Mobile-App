@@ -15,7 +15,7 @@ export const api = createApi({
       return headers
     }
   }),
-  tagTypes: ['Assignments'],
+  tagTypes: ['Assignments', 'Assignment'],
     endpoints: (builder) => ({
         login:  builder.mutation({
       query(data) {
@@ -107,7 +107,7 @@ export const api = createApi({
           };
 
         },
-        providesTags: ['Assignments'],
+        providesTags: ['Assignments', 'Assignment'],
         keepUnusedDataFor: 5,
       }),
       changeAsignStatus: builder.mutation({
@@ -124,15 +124,93 @@ export const api = createApi({
         },
         invalidatesTags:['Assignments']
       }),
+      OpenTicket: builder.mutation({
+
+        query(respondId) {
+
+          return {
+            url: `/projects/tickets/`,
+            method: "POST",
+            body: respondId
+
+          };
+
+        },
+        invalidatesTags: ['Assignment']
+      }),
+      getTicket: builder.query({
+        query({ id }) {
+          return {
+            url: `/projects/assignments/${id}/`,
+            method: "GET",
+
+
+          };
+
+        },
+        providesTags: ['Assignment'],
+        keepUnusedDataFor: 5,
+      }),
+      responseTicket: builder.mutation({
+
+        query({ updateData }) {
+
+          return {
+            url: '/projects/responses/',
+            method: "POST",
+            body: updateData
+
+          };
+
+        },
+        invalidatesTags: ['Assignment']
+      }),
+      CloseTicket: builder.mutation({
+
+        query({ updateData, id }) {
+
+          return {
+            url: `/projects/tickets/${id}/`,
+            method: "PATCH",
+            body: updateData
+
+          };
+
+        },
+        invalidatesTags: ['Assignment']
+      }),
+      getAllTicket: builder.query({
+        query() {
+          return {
+            url: '/projects/assignments/',
+            method: "GET",
+
+
+          };
+
+        },
+        providesTags: ['Assignments'],
+        keepUnusedDataFor: 5,
+      }),
+
   }),
 })
 
-export const { useLoginMutation, useGeAllAsignQuery, 
+export const { 
+  useLoginMutation, 
+  useGeAllAsignQuery, 
  useGetPendingAsignQuery,
   useGetActiveAsignQuery,
   useGetCompletedAsignQuery,
  useGetUserQuery,
   useGetAsignQuery,
   useChangeAsignStatusMutation,
+  useOpenTicketMutation,
+  useGetTicketQuery,
+  useResponseTicketMutation,
+  useCloseTicketMutation,
+  useGetAllTicketQuery
+  
+
 
 } = api;

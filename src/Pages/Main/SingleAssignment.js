@@ -1,20 +1,33 @@
-import { StyleSheet, View, FlatList , Alert} from 'react-native'
+import { StyleSheet, View, FlatList, Alert, TouchableOpacity, Modal, } from 'react-native'
 import React from 'react'
 import ErrorCard from '../../Components/ErrorCard';
 import { useRoute } from '@react-navigation/native';
-import { Box, Heading, Text, Center, HStack, Stack, Button } from "native-base";
+import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl } from "native-base";
 import LoadingCard from '../../Components/Loading';
-import {useChangeAsignStatusMutation, useGetAsignQuery } from '../../Redux/AuthApi';
+import { useChangeAsignStatusMutation, useGetAsignQuery, useOpenTicketMutation, useCloseTicketMutation } from '../../Redux/AuthApi';
 import CardFile from '../../Components/CardFile';
 import EmptyCardFile from '../../Components/EmptyCardFile';
 import SpinnerLoad from '../../Components/Spinner';
+import EmptyCard from '../../Components/EmptyCard';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import TicketHeader from '../../Components/TicketHeader';
+import DocumentHeader from '../../Components/DocumentHeader';
+import Ticket from '../../Components/Ticket';
+import EmptyTicket from '../../Components/EmptyTicket';
 export default function SingleAssignment() {
  
    const route = useRoute();
   const [changeAsignStatus, { isLoading:Loadingstatus }] =useChangeAsignStatusMutation()
+  const [OpenTicket, { isLoading: LoadingOpenTicket }] = useOpenTicketMutation()
+  const [CloseTicket, { isLoading: LoadingCloseTicket }] = useCloseTicketMutation()
+ const [IdLoaing, setIdLoaing] = React.useState(null);
 
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [respond, setRespond] = React.useState('');
+  const [respondError, setRespondError] = React.useState('');
+  // console.log(respond)
 const id = route?.params?.id
-console.log(id)
+// console.log(id)
 
     const { data:itemData, error, isLoading } = useGetAsignQuery({id})
  console.log(error)
@@ -45,14 +58,138 @@ console.log(id)
 
            } catch (error) {
              console.log(error.data)
-             Alert.alert(error.data.non_field_errors[0])
+             if (!error?.status) {
+               Alert.alert('No Server Response')
+             }
+             else if (error.status === 400) {
+               Alert.alert(error.data.non_field_errors[0])
+
+             }
+             else if (err.status === 401) {
+               Alert.alert('Unauthorized')
+
+
+             } else {
+               Alert.alert('Login Failed')
+
+
+             }
            }
          }
        }
      ]
    );
  }
+
+  const closeTicketSend = (idProps) => {
+    Alert.alert(
+      "Are you sure you want to close this ticket?",
+      "",
+      [
+
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK", onPress: async () => {
+            console.log(idProps)
+            setIdLoaing(idProps)
+
+            const updateData = {
+              status: 'CLOSED'
+            }
+            const updateId = {
+              id:idProps,
+              updateData
+            }
+            try {
+              const user = await CloseTicket(updateId).unwrap()
+              console.log(user?.status);
+              setIdLoaing(null)
+
+            } catch (error) {
+              console.log(error.data)
+              if (!error?.status) {
+                Alert.alert('No Server Response')
+              }
+              else if (error.status === 400) {
+                Alert.alert(error.data.non_field_errors[0])
+
+              }
+              else if (err.status === 401) {
+                Alert.alert('Unauthorized')
+
+
+              } else {
+                Alert.alert('Login Failed')
+
+
+              }
+            }
+          }
+        }
+      ]
+    );
+  }
+  const validateResponse = () => {
+    if (respond === '') {
+      setRespondError('Ticket is required');
+
+      return false;
+    }
+    if (respond.length >0) {
+      setRespondError('');
+
+      return true;
+    }
+
+  
+
+// return true
+
+  
+  };
+ const SendOpenTicket = async()=>{
+   if (!validateResponse()) {
+     console.log('error')
+   }
+ else{
+     const respondId = {
+
+       issue: respond,
+       assignment: id
+     }
+     try {
+       const user = await OpenTicket(respondId).unwrap()
+       console.log(user?.status);
+       setModalVisible(false)
+       setRespond('')
+
+     } catch (error) {
+       console.log(error.data)
+       if (!error?.status) {
+         Alert.alert('No Server Response')
+       }
+       else if (error.status === 400) {
+         Alert.alert(error.data.non_field_errors[0])
+
+       }
+       else if (err.status === 401) {
+         Alert.alert('Unauthorized')
+
+
+       } else {
+         Alert.alert('Login Failed')
+
+
+       }
+     }
+ }
+ }
  const renderItem =({item })=> <CardFile item={item}/>
+  const renderItemTickets = ({ item }) => <Ticket item={item} closeTicketSend={closeTicketSend} LoadingCloseTicket={LoadingCloseTicket} IdLoaing={IdLoaing}/>
    
   if (isLoading) {
         return <LoadingCard />
@@ -61,6 +198,7 @@ console.log(id)
         return <ErrorCard errormsg={error?.data?.detail} />
     }
   return (
+    <>
     <Box  bg="#fff" flex="1">
    <Center>
 
@@ -212,16 +350,132 @@ console.log(id)
 
       
    </Center>
+      <HStack my="2" mx="2" justifyContent="space-between">
+        <Text color="coolGray.900"
+          fontSize='lg'
+          _dark={{
+            color: "warmGray.200"
+          }} fontWeight="700">
+        Tickets
+        </Text>
+
+        <Button bg="blue.600"
+          onPress={() => setModalVisible(true)}
+        >
+          <Text
+            color="#fff"
+            fontSize='sm'
+          >Open Ticket</Text>
+
+        </Button>
+   </HStack>
+
+     
       <FlatList
-        data={itemData?.documents}
-        renderItem={renderItem}
+        data={itemData?.tickets}
+        renderItem={renderItemTickets}
         keyExtractor={item => item.id}
-        ListEmptyComponent={<EmptyCardFile/>}
+          ListEmptyComponent={<EmptyTicket />}
+        ListHeaderComponent={<TicketHeader/>}
+     
+        ListFooterComponent={<FlatList
+          data={itemData?.documents}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={<EmptyCardFile />}
+          ListHeaderComponent={<DocumentHeader/>}
+        />}
       />
+     
+     
     </Box>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+         
+          <View style={styles.modalView}>
+            <Box justifyContent='flex-end'
+            alignItems="flex-end"
+            my="2"
+            >
+              <Icon
+                name="close"
+                size={35}
+                color='blue'
+   onPress={() => setModalVisible(false)}
+
+              />
+            </Box>
+            <FormControl>
+              <Input
+                value={respond}
+                onChangeText={(text) => setRespond(text)}
+                fontSize="md"
+
+              />
+              {
+                respondError && <FormControl.HelperText _text={{
+                  fontSize: 'xs',
+                  color: 'red.500'
+                }}>
+                  {respondError}
+                </FormControl.HelperText>
+              }
+            </FormControl>
+          
+            <Box mt="8">
+              <Button bg="blue.600"
+                onPress={SendOpenTicket}
+              >
+                {
+                  LoadingOpenTicket ? <SpinnerLoad /> : <Text
+                    color="#fff"
+                    fontSize='sm'
+                  >Send</Text>
+                }
+              
+
+              </Button>
+            </Box>
+          </View>
+        </View>
+      
+      </Modal>
+    </>
   )
 }
 
 
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 2
+  },
+  modalView: {
+    margin: 10,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 10,
+    // alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
+    width:'90%'
+  },
+
+})
