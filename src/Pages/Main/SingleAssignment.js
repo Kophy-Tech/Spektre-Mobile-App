@@ -81,7 +81,7 @@ const id = route?.params?.id
    );
  }
 
-  const closeTicketSend = (idProps) => {
+  const closeTicketSend = ({idProps, status}) => {
     Alert.alert(
       "Are you sure you want to close this ticket?",
       "",
@@ -94,40 +94,48 @@ const id = route?.params?.id
         },
         {
           text: "OK", onPress: async () => {
-            console.log(idProps)
-            setIdLoaing(idProps)
-
-            const updateData = {
-              status: 'CLOSED'
+            if(status==='CLOSED'){
+              Alert.alert('Ticket is closed already')
             }
-            const updateId = {
-              id:idProps,
-              updateData
+
+            else{
+              console.log(idProps)
+              setIdLoaing(idProps)
+              const updateData = {
+                status: 'CLOSED'
+              }
+              const updateId = {
+                id: idProps,
+                updateData
+              }
+              try {
+                const user = await CloseTicket(updateId).unwrap()
+                console.log(user?.status);
+                setIdLoaing(null)
+
+              } catch (error) {
+                console.log(error.data)
+                if (!error?.status) {
+                  Alert.alert('No Server Response')
+                }
+                else if (error.status === 400) {
+                  Alert.alert(error.data.non_field_errors[0])
+
+                }
+                else if (err.status === 401) {
+                  Alert.alert('Unauthorized')
+
+
+                } else {
+                  Alert.alert('Login Failed')
+
+
+                }
+              }
             }
-            try {
-              const user = await CloseTicket(updateId).unwrap()
-              console.log(user?.status);
-              setIdLoaing(null)
+       
+           
 
-            } catch (error) {
-              console.log(error.data)
-              if (!error?.status) {
-                Alert.alert('No Server Response')
-              }
-              else if (error.status === 400) {
-                Alert.alert(error.data.non_field_errors[0])
-
-              }
-              else if (err.status === 401) {
-                Alert.alert('Unauthorized')
-
-
-              } else {
-                Alert.alert('Login Failed')
-
-
-              }
-            }
           }
         }
       ]

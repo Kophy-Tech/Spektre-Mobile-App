@@ -79,7 +79,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}
-                    onPress={() => closeTicketSend(item.id)}
+                    onPress={() => closeTicketSend({idProps:item.id,status:item?.status })}
                 >
                     <Text color="#fff"
                         fontSize="xs"
