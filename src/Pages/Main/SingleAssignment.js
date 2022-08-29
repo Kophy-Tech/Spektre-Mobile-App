@@ -14,7 +14,7 @@ import TicketHeader from '../../Components/TicketHeader';
 import DocumentHeader from '../../Components/DocumentHeader';
 import Ticket from '../../Components/Ticket';
 import EmptyTicket from '../../Components/EmptyTicket';
-export default function SingleAssignment() {
+export default function SingleAssignment({navigation}) {
  
    const route = useRoute();
   const [changeAsignStatus, { isLoading:Loadingstatus }] =useChangeAsignStatusMutation()
@@ -31,7 +31,7 @@ const id = route?.params?.id
 
     const { data:itemData, error, isLoading } = useGetAsignQuery({id})
  console.log(error)
- const updateStatus = ()=>{
+ const updateStatus = (data)=>{
    Alert.alert(
      "Are you sure you want to update the status?",
      "",
@@ -43,7 +43,7 @@ const id = route?.params?.id
          style: "cancel"
        },
        {
-         text: "OK", onPress: async(data) => {
+         text: "OK", onPress: async() => {
            const updateData = {
              status: data
            }
@@ -51,6 +51,7 @@ const id = route?.params?.id
              id,
              updateData
            }
+           console.log(updateId)
            try {
              const user = await changeAsignStatus(updateId).unwrap()
              console.log(user?.status);
@@ -65,8 +66,8 @@ const id = route?.params?.id
                Alert.alert(error.data.non_field_errors[0])
 
              }
-             else if (err.status === 401) {
-               Alert.alert('Unauthorized')
+             else if (error.status === 405) {
+               Alert.alert(error.data.detail)
 
 
              } else {
@@ -122,7 +123,7 @@ const id = route?.params?.id
                   Alert.alert(error.data.non_field_errors[0])
 
                 }
-                else if (err.status === 401) {
+                else if (error.status === 401) {
                   Alert.alert('Unauthorized')
 
 
@@ -176,7 +177,7 @@ const id = route?.params?.id
        setRespond('')
 
      } catch (error) {
-       console.log(error.data)
+       console.log(error)
        if (!error?.status) {
          Alert.alert('No Server Response')
        }
@@ -184,12 +185,12 @@ const id = route?.params?.id
          Alert.alert(error.data.non_field_errors[0])
 
        }
-       else if (err.status === 401) {
+       else if (error.status === 401) {
          Alert.alert('Unauthorized')
 
 
        } else {
-         Alert.alert('Login Failed')
+         Alert.alert('Error')
 
 
        }
@@ -197,7 +198,7 @@ const id = route?.params?.id
  }
  }
  const renderItem =({item })=> <CardFile item={item}/>
-  const renderItemTickets = ({ item }) => <Ticket item={item} closeTicketSend={closeTicketSend} LoadingCloseTicket={LoadingCloseTicket} IdLoaing={IdLoaing}/>
+  const renderItemTickets = ({ item }) => <Ticket item={item} closeTicketSend={closeTicketSend} LoadingCloseTicket={LoadingCloseTicket} IdLoaing={IdLoaing} navigation={navigation} />
    
   if (isLoading) {
         return <LoadingCard />
@@ -225,7 +226,7 @@ const id = route?.params?.id
               <Heading size="md" >
                 {itemData?.name}
               </Heading>
-              <Text fontWeight="400" pt="1" color="blue.800">
+              <Text fontWeight="400" pt="1" color="blue">
                 {itemData?.description}
               </Text>
 
@@ -265,7 +266,7 @@ const id = route?.params?.id
                 Status:
               </Text>
               {
-                itemData?.status === 'PENDING' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
+                itemData?.status === 'PENDING' && <Stack w="20" bg="black" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
                   <Text fontWeight="400" color="white">
                     {itemData?.status}
                   </Text>
@@ -280,7 +281,7 @@ const id = route?.params?.id
               }
 
               {
-                itemData?.status === 'COMPLETED' && <Stack w="20" bg="red.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="red.600">
+                itemData?.status === 'COMPLETED' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="red.600">
                   <Text fontWeight="400" color="white" style={{
                     fontSize:12
                   }}>
@@ -315,7 +316,7 @@ const id = route?.params?.id
                   }} fontWeight="700">
                   Activate Status
                 </Text>
-                <Button bg="blue.600"
+                <Button style={{backgroundColor:"blue"}}
                   onPress={() => updateStatus('ACTIVE')}
                 >
 {
@@ -341,6 +342,7 @@ const id = route?.params?.id
                 </Text>
                 <Button bg="blue.600"
                   onPress={() => updateStatus('COMPLETED')}
+                    disabled={Loadingstatus}
                 >
                   {
                     Loadingstatus ? <SpinnerLoad /> : <Text
@@ -367,7 +369,7 @@ const id = route?.params?.id
         Tickets
         </Text>
 
-        <Button bg="blue.600"
+          <Button style={{ backgroundColor: "blue" }}
           onPress={() => setModalVisible(true)}
         >
           <Text
@@ -439,8 +441,10 @@ const id = route?.params?.id
             </FormControl>
           
             <Box mt="8">
-              <Button bg="blue.600"
+              <Button
+                style={{ backgroundColor: "blue" , borderRadius:10}}
                 onPress={SendOpenTicket}
+                disabled={LoadingOpenTicket}
               >
                 {
                   LoadingOpenTicket ? <SpinnerLoad /> : <Text
@@ -467,7 +471,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 2
+    marginTop: 2,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    
   },
   modalView: {
     margin: 10,

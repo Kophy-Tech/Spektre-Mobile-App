@@ -18,7 +18,7 @@ if(isLoading){
   return <LoadingCard />
 }
 if(error){
-return <ErrorCard  errormsg={error.data.detail}/>
+// return <ErrorCard  errormsg={error.data.detail}/>
 }
   return (
     <View style={{flex:1, backgroundColor:'#fff'}}>

@@ -2,12 +2,13 @@ import React from 'react';
 import { Text, HStack,  } from "native-base";
 import { TouchableOpacity } from 'react-native';
 
-export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLoaing }) {
+export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLoaing, navigation }) {
     return (
         <HStack mt="0.5" mb="2" mx="2" p="0.5" justifyContent="space-between" alignItems='center'>
             <Text color="coolGray.600"
                 fontSize="xs"
                 flex="1"
+                justifyItems="flex-start"
 
                 _dark={{
                     color: "warmGray.200"
@@ -17,7 +18,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
             <Text color="coolGray.600"
                 fontSize="xs"
                 flex="1"
-
+                textAlign="center"
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="400">
@@ -25,9 +26,10 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
 
             </Text>
             {
-                item?.status === 'OPEN' && <Text color="blue.600"
+                item?.status === 'OPEN' && <Text color="blue"
                     fontSize="xs"
-                    pl="1"
+                    textAlign="center"
+                 
                     flex="1"
 
                     _dark={{
@@ -37,9 +39,11 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                 </Text>
             }
             {
-                item?.status === 'CLOSED' && <Text color="red.600"
+                item?.status === 'CLOSED' && <Text 
+                    style={{ color: "red" }}
                     fontSize="xs"
-                    pl="1"
+                    textAlign="center"
+               
                     flex="1"
 
                     _dark={{
@@ -55,12 +59,16 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                 <TouchableOpacity style={{
                     backgroundColor: 'blue',
                     padding: 4,
-                    borderRadius: 2,
+                    borderRadius: 10,
                     width: '45%',
                     justifyContent: 'center',
                     alignItems: 'center'
 
-                }}>
+                }}
+                onPress={()=>{
+                    navigation.navigate('responseTicket', { id: item.id })
+                }}
+                >
                     <Text color="#fff"
                         fontSize="xs"
 
@@ -72,9 +80,9 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{
-                        backgroundColor: 'green',
+                        backgroundColor: 'blue',
                         padding: 4,
-                        borderRadius: 2,
+                        borderRadius: 10,
                         width: '45%',
                         justifyContent: 'center',
                         alignItems: 'center'

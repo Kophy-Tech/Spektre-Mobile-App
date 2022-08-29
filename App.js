@@ -17,9 +17,10 @@ import { Provider } from 'react-redux';
 import { store } from './src/Redux/Store';
 import { NativeBaseProvider } from "native-base";
 import StatusBarContainer from './src/Components/StatusBar';
+import { api } from './src/Redux/AuthApi'
 const App = () => {
  
-
+  store.dispatch(api.endpoints.getNotifications.initiate())
   return (
     < NativeBaseProvider>
     < NavigationContainer>

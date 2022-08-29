@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from '../Pages/Auth/Login';
-
+import ChangePassword from '../Pages/Auth/ChangePassoword';
 
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +19,8 @@ function AuthStack() {
             }}
         >
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="change" component={ChangePassword} />
+
         </Stack.Navigator>
 
     );

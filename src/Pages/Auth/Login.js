@@ -4,7 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SpinnerLoad from "../../Components/Spinner";
 import { useLoginMutation } from "../../Redux/AuthApi";
-import { Alert } from "react-native";
+import { StyleSheet, Linking, Alert, Platform } from 'react-native'
+
 const Login = () => {
   const [passwordType, setPasswordType] = React.useState("password");
   const navigation = useNavigation()
@@ -13,6 +14,22 @@ const Login = () => {
     username:'',
     password:''
   });
+
+  const OpenUrl = React.useCallback(
+    async () => {
+      const supported = await Linking.canOpenURL('https://spektre-prj.herokuapp.com/account/password_reset/');
+      //  console.log(supported)
+      if (supported) {
+        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+        // by some browser in the mobile
+        await Linking.openURL('https://spektre-prj.herokuapp.com/account/password_reset/');
+      } else {
+        Alert.alert(`Don't know how to open this URL`);
+      }
+    },
+    [],
+  )
+
   const [errorUsername, setErrorUsername] = React.useState('');
   const [errorPassword, setErrorPassword] = React.useState('');
   const togglePassword = () => {
@@ -78,7 +95,7 @@ const Login = () => {
         navigation.replace("Bottom")
         
       } catch (error) {
-        // console.log(error.status)
+        console.log(error)
         if (!error?.status){
 Alert.alert('No Server Response')
         }
@@ -86,8 +103,8 @@ Alert.alert('No Server Response')
           Alert.alert(error.data.non_field_errors[0])
 
         }
-        else if (err.status === 401) {
-          Alert.alert('Unauthorized')
+        else if (error.status === 405) {
+          Alert.alert(error.data.detail)
 
         
         } else {
@@ -173,12 +190,23 @@ Alert.alert('No Server Response')
           <Link _text={{
             fontSize: "xs",
             fontWeight: "500",
-            color: "indigo.500"
-          }} alignSelf="flex-end" mt="1">
+            color: "blue"
+          }} alignSelf="flex-end" mt="1"
+          
+          >
             Forget Password?
           </Link>
+          <Link 
+            onPress={() => navigation.navigate('change')}
+          _text={{
+            fontSize: "xs",
+            fontWeight: "500",
+            color: "blue"
+          }} alignSelf="flex-end" mt="1">
+            change Password?
+          </Link>
         </FormControl>
-        <Button mt="2" colorScheme="indigo"
+        <Button mt="2" colorScheme="blue"
           onPress={submitData}
           disabled={isLoading}
           >

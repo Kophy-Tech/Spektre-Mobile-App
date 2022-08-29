@@ -15,7 +15,7 @@ export const api = createApi({
       return headers
     }
   }),
-  tagTypes: ['Assignments', 'Assignment'],
+  tagTypes: ['Assignments', 'Assignment', 'notify'],
     endpoints: (builder) => ({
         login:  builder.mutation({
       query(data) {
@@ -141,7 +141,7 @@ export const api = createApi({
       getTicket: builder.query({
         query({ id }) {
           return {
-            url: `/projects/assignments/${id}/`,
+            url: `/projects/tickets/${id}/`,
             method: "GET",
 
 
@@ -153,7 +153,7 @@ export const api = createApi({
       }),
       responseTicket: builder.mutation({
 
-        query({ updateData }) {
+        query( updateData ) {
 
           return {
             url: '/projects/responses/',
@@ -192,7 +192,48 @@ export const api = createApi({
         providesTags: ['Assignments'],
         keepUnusedDataFor: 5,
       }),
+      getNotifications: builder.query({
+        query() {
+          return {
+            url: '/notifications/',
+            method: "GET",
 
+
+          };
+
+        },
+  
+        providesTags: ['notify'],
+        keepUnusedDataFor: 5,
+      }),
+      getNotification: builder.query({
+        query(id) {
+          return {
+            url: `/notifications/${id}`,
+            method: "GET",
+
+
+          };
+
+        },
+
+       
+        keepUnusedDataFor: 5,
+      }),
+      readNofitication: builder.mutation({
+
+        query({ data, id }) {
+
+          return {
+            url: `/notifications/${id}/`,
+            method: "PATCH",
+            boday: data
+
+          };
+
+        },
+        invalidatesTags: ['notify']
+      }),
   }),
 })
 
@@ -209,7 +250,12 @@ export const {
   useGetTicketQuery,
   useResponseTicketMutation,
   useCloseTicketMutation,
-  useGetAllTicketQuery
+  useGetAllTicketQuery,
+  useGetNotificationsQuery,
+  useGetNotificationQuery,
+  useReadNofiticationMutation
+
+
   
 
 

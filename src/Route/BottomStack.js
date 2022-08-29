@@ -6,11 +6,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profile from '../Pages/Main/Profile';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
 import { View, Text } from 'react-native';
 import TopStack from './TopStack';
 import SingleAssignment from '../Pages/Main/SingleAssignment';
 import BackIcon from '../Components/BackIcon';
+import ResponseTicket from '../Pages/Main/ResponseTicket';
+import Notify from '../Components/Notify';
+import Notifications from '../Pages/Main/Notification/Notifications';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 function BottomTabs() {
@@ -25,7 +27,7 @@ function BottomTabs() {
 
                     // tabBarStyle: { display: "none" },
                     tabBarLabel: '',
-                    tabBarLabelStyle:{fontSize:15, color:'#4a72f5'},
+                    tabBarLabelStyle:{fontSize:15, color:'blue'},
                     headerShown: false,
                     tabBarIcon: ({ focused, color }) => {
                         return (
@@ -38,11 +40,11 @@ function BottomTabs() {
                                 <Icon
                                     name={'home'}
                                     size={20}
-                                    color={focused ? '#4a72f5' : 'black'}
+                                    color={focused ? 'blue' : 'black'}
                                   
                                 />
                                 <Text style={{
-                                   color: focused? '#4a72f5': 'black'
+                                   color: focused? 'blue': 'black'
                                 }}>Home</Text>
                             </View>
                         );
@@ -56,7 +58,7 @@ function BottomTabs() {
 
                     // tabBarStyle: { display: "none" },
                     tabBarLabel: '',
-                    tabBarLabelStyle: { fontSize: 15, color: '#4a72f5' },
+                    tabBarLabelStyle: { fontSize: 15, color: 'blue' },
                     headerShown: false,
                     tabBarIcon: ({ focused, color }) => {
                         return (
@@ -68,14 +70,14 @@ function BottomTabs() {
                                 }}>
                                     
                                 <Icon
-                                    name={ 'human'}
+                                    name={ 'account-circle'}
                                     size={22}
-                                    color={focused ? '#4a72f5' : 'black'}
+                                    color={focused ? 'blue' : 'black'}
                                 // style={focused ? styles.reHeight : null}
                                 />
                                 <Text
                                     style={{
-                                        color: focused ? '#4a72f5' : 'black'
+                                        color: focused ? 'blue' : 'black'
                                     }}
                                 >Profile</Text>
                             </View>
@@ -104,10 +106,11 @@ function BottomStack() {
             
                 options={{
                     headerShown: true,
-                    title: 'Spetre',
+                    title: 'Spektre',
                     // headerTitleAlign:'center'
                     headerTitleStyle: { color: 'blue', fontSize: 25 },
-                    headerBackVisible: false
+                    headerBackVisible: false,
+                     headerRight:()=> <Notify/>
                 }}
             />
             <Stack.Screen name="SingleAssignment" component={SingleAssignment} 
@@ -120,7 +123,26 @@ function BottomStack() {
                 }}
             
             />
+            <Stack.Screen name="responseTicket" component={ResponseTicket}
+                options={{
+                    title: 'Chat',
+                    // headerTitleAlign:'center'
+                    headerTitleStyle: { color: 'blue', fontSize: 15 },
+                    headerLeft: () => <BackIcon />,
+                    headerTitleAlign: 'center',
+                }}
 
+            />
+            <Stack.Screen name="notify" component={Notifications}
+                options={{
+                    title: 'Notifications',
+                    // headerTitleAlign:'center'
+                    headerTitleStyle: { color: 'blue', fontSize: 15 },
+                    headerLeft: () => <BackIcon />,
+                    headerTitleAlign: 'center',
+                }}
+
+            />
             
         </Stack.Navigator>
 

@@ -10,7 +10,7 @@ const BackIcon = (props) => {
     return (
         <View>
             <Icon
-                name="chevron-left"
+                name="arrow-left"
                 size={35}
                 color='blue'
 

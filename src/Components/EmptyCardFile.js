@@ -16,10 +16,12 @@ const EmptyCardFile = () => {
             }}
 
             >
-                <Box w="100%" >
-                    <AspectRatio w="100%" h="100%" justifyContent="center" >
+                <Box w="100%" h="20">
+                    <Box w="100%" alignItems="center" justifyContent="center">
                         <Image source={require('../images/empyfile.jpg')} alt="image" h="100%" w="100%" />
-                    </AspectRatio>
+
+                    </Box>
+           
                     <Center bg="blue.500" _dark={{
                         bg: "blue.400"
                     }} _text={{

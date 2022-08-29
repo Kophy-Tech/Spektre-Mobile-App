@@ -1,9 +1,12 @@
+
+
+
 import { StyleSheet, Linking, Alert, Platform } from 'react-native'
 import React from 'react'
-import { Box,  AspectRatio, Image,  Center, Text , Button, HStack,} from "native-base";
+import { Box, AspectRatio, Image, Center, Text, Button, HStack, } from "native-base";
 import RNFS from "react-native-fs";
 import FileViewer from "react-native-file-viewer";
-const CardFile = ({item}) => {
+const CardFile = ({ item }) => {
     const OpenUrl = React.useCallback(
         async (url) => {
             const supported = await Linking.canOpenURL(url);
@@ -16,12 +19,12 @@ const CardFile = ({item}) => {
                 Alert.alert(`Don't know how to open this URL: ${url}`);
             }
         },
-      [],
+        [],
     )
 
-    const Downloadfile =async(file)=>{
-        const url =file
-            // "https://github.com/vinzscam/react-native-file-viewer/raw/master/docs/react-native-file-viewer-certificate.pdf";
+    const Downloadfile = async (file) => {
+        const url = file
+        // "https://github.com/vinzscam/react-native-file-viewer/raw/master/docs/react-native-file-viewer-certificate.pdf";
 
         // *IMPORTANT*: The correct file extension is always required.
         // You might encounter issues if the file's extension isn't included
@@ -46,77 +49,71 @@ const CardFile = ({item}) => {
                 // success
             })
             .catch((error) => {
-             Alert.alert('Unable to download file')
+                Alert.alert('Unable to download file')
             });
     }
-  return (
-   <Center>
-          <Box w="95%" rounded="lg" my="1" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
-              borderColor: "coolGray.600",
-              backgroundColor: "gray.700"
-          }} _web={{
-              shadow: 2,
-              borderWidth: 0
-          }} _light={{
-              backgroundColor: "gray.50"
-          }}
-        
-          >
-             
-              <Box w="100%" h="40" >
-                
-                  <AspectRatio w="100%" h="100%" justifyContent="center" >
-                      <Image source={require('../images/file.jpg')} alt="image" h="100%" w="120%" />
-                  </AspectRatio>
+    return (
+        <Center>
+            <Box w="95%" rounded="lg" my="1" mb="3" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
+                borderColor: "coolGray.600",
+                backgroundColor: "gray.700"
+            }} _web={{
+                shadow: 2,
+                borderWidth: 0
+            }} _light={{
+                backgroundColor: "gray.50"
+            }}
 
-                
-                  <Center bg="blue.500" _dark={{
-                      bg: "blue.400"
-                  }} _text={{
-                      color: "warmGray.50",
-                      fontWeight: "400",
-                      fontSize: 10
-                  }} position="absolute" px="3" py="1.5">
-                      <Text
-                          color="#fff"
-                          fontSize="xs"
-                          _dark={{
-                              color: "warmGray.200"
-                          }} fontWeight="400"
-                      > Document {item?.id}</Text>
-                  </Center>
-              </Box>
-              <HStack
-                  justifyContent="space-between"
+            >
 
-              >
+                <Box w="100%" h="20" >
+                    <Box w="100%" alignItems="center" justifyContent="center">
+                        <Image source={require('../images/file.jpg')} alt="image" h="100" w="100" />
 
-                  <Button bg="#fff"
-                  borderWidth='1'
-                  borderColor="blue.600"
-                      onPress={() => OpenUrl(item.file)}
-                  >
-                      <Text
-                          color="blue.600"
-                          fontSize='sm'
-                      >Open On Web</Text>
+                    </Box>
 
-                  </Button>
-                  <Button bg="#fff"
-                      borderWidth='1'
-                      borderColor="blue.600"
-                      onPress={() => Downloadfile(item.file)}
-                  >
-                      <Text
-                          color="blue.600"
-                          fontSize='sm'
-                      >Download</Text>
 
-                  </Button>
-              </HStack>
-          </Box>
-   </Center>
-  )
+                    <Center style={{ backgroundColor: "blue" }} position="absolute" px="3" py="1.5">
+                        <Text
+                            color="#fff"
+                            fontSize="xs"
+                            _dark={{
+                                color: "warmGray.200"
+                            }} fontWeight="400"
+                        > Document {item?.id}</Text>
+                    </Center>
+                </Box>
+                <HStack
+                    justifyContent="space-between"
+
+                >
+
+                    <Button bg="#fff"
+                        borderWidth='1'
+                        style={{ borderColor: "blue", borderRadius:15 }}
+                        onPress={() => OpenUrl(item.file)}
+                    >
+                        <Text
+                            style={{ color: "blue" }}
+                            fontSize='sm'
+                        >Open On Web</Text>
+
+                    </Button>
+                    <Button bg="#fff"
+                        borderWidth='1'
+                        style={{ borderColor: "blue", borderRadius: 15 }}
+                        onPress={() => Downloadfile(item.file)}
+                    >
+                        <Text
+                            style={{ color: "blue" }}
+                            fontSize='sm'
+                        >Download</Text>
+
+                    </Button>
+                </HStack>
+            </Box>
+        </Center>
+    )
 }
 
 export default CardFile

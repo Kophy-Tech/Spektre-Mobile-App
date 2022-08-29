@@ -28,7 +28,7 @@ export default function Card({item, navigation}) {
                                 <Heading size="md" >
                                     {item?.name}
                                 </Heading>
-                                <Text fontWeight="400" pt="1" color="blue.800">
+                                <Text fontWeight="400" pt="1" color="blue">
                                     {item?.description.slice(0, 30)}
                                 </Text>
 
@@ -68,7 +68,7 @@ export default function Card({item, navigation}) {
                                     Status:
                                 </Text>
                                 {
-                                    item?.status === 'PENDING' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
+                                    item?.status === 'PENDING' && <Stack w="20" bg="black" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
                                         <Text fontWeight="400" color="white">
                                             {item?.status}
                                         </Text>
@@ -83,7 +83,7 @@ export default function Card({item, navigation}) {
                                 }
 
                                 {
-                                    item?.status === 'COMPLETED' && <Stack w="20" bg="red.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="red.600">
+                                    item?.status === 'COMPLETED' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="red.600">
                                         <Text fontWeight="400" color="white" style={{
                                             fontSize: 12
                                         }}>
