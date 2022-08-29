@@ -17,9 +17,30 @@ export default function Home({navigation}) {
 if(isLoading){
   return <LoadingCard />
 }
-if(error){
-// return <ErrorCard  errormsg={error.data.detail}/>
-}
+  if (error) {
+    if (!error?.status) {
+
+      return <ErrorCard errormsg='No Server Response' />
+    }
+    else if (error.status === 400) {
+      return <ErrorCard errormsg={error?.data?.detail} />
+
+    }
+    else if (error.status === 401) {
+      return <ErrorCard errormsg='Unauthorized' />
+
+
+
+
+    } else {
+      return <ErrorCard errormsg='Error' />
+
+
+
+
+    }
+
+  }
   return (
     <View style={{flex:1, backgroundColor:'#fff'}}>
        

@@ -217,22 +217,40 @@ export const api = createApi({
 
         },
 
-       
+        providesTags: ['notify'],
+
         keepUnusedDataFor: 5,
       }),
       readNofitication: builder.mutation({
 
-        query({ data, id }) {
+        query(id) {
 
           return {
             url: `/notifications/${id}/`,
+            method: "PATCH",
+            boday:{ 
+
+              seen: true
+            }
+
+          };
+
+        },
+        invalidatesTags: ['notify']
+      }),
+      changePassword: builder.mutation({
+
+        query(data) {
+
+          return {
+            url: `/change_password/`,
             method: "PATCH",
             boday: data
 
           };
 
         },
-        invalidatesTags: ['notify']
+      
       }),
   }),
 })
@@ -253,7 +271,8 @@ export const {
   useGetAllTicketQuery,
   useGetNotificationsQuery,
   useGetNotificationQuery,
-  useReadNofiticationMutation
+  useReadNofiticationMutation,
+  useChangePasswordMutation
 
 
   

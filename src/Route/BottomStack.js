@@ -13,6 +13,7 @@ import BackIcon from '../Components/BackIcon';
 import ResponseTicket from '../Pages/Main/ResponseTicket';
 import Notify from '../Components/Notify';
 import Notifications from '../Pages/Main/Notification/Notifications';
+import Notification from '../Pages/Main/Notification/Notification';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 function BottomTabs() {
@@ -143,7 +144,16 @@ function BottomStack() {
                 }}
 
             />
-            
+            <Stack.Screen name="notification" component={Notification}
+                options={{
+                    title: 'Notification',
+                    // headerTitleAlign:'center'
+                    headerTitleStyle: { color: 'blue', fontSize: 15 },
+                    headerLeft: () => <BackIcon />,
+                    headerTitleAlign: 'center',
+                }}
+
+            />
         </Stack.Navigator>
 
     );

@@ -3,14 +3,14 @@ import { Box, Text, Heading, VStack, FormControl, Input, Link, Button, HStack, C
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SpinnerLoad from "../../Components/Spinner";
-import { useLoginMutation } from "../../Redux/AuthApi";
+import { useChangePasswordMutation } from "../../Redux/AuthApi";
 import { Alert } from "react-native";
 const ChangePassword = () => {
     const [passwordType, setPasswordType] = React.useState("password");
     const [passwordTypeTwo, setPasswordTypeTwo] = React.useState("password");
 
     const navigation = useNavigation()
-    const [login, { isLoading }] = useLoginMutation()
+    const [changePassword, { isLoading }] = useChangePasswordMutation()
     const [data, setData] = React.useState({
         old_password: '',
         new_password: ''
@@ -40,13 +40,13 @@ const ChangePassword = () => {
     };
     const validatePassword = () => {
 
-        if (data.old_password == '') {
+        if (data.old_password === '') {
             setErrorOldPassword('password is required');
             return false;
         }
 
         else if (data.old_password) {
-            setErrorPassword('');
+            setErrorOldPassword('');
             return true;
         }
 
@@ -80,11 +80,11 @@ const ChangePassword = () => {
 
         }
         else {
-            // console.log('send data', data)
+            console.log('send data', data)
             try {
-                const user = await login(data).unwrap()
+                const user = await changePassword(data).unwrap()
                 // console.log(user);
-                navigation.navigate("Bottom")
+                navigation.navigate("Login")
 
             } catch (error) {
                 console.log(error)
@@ -100,7 +100,7 @@ const ChangePassword = () => {
 
 
                 } else {
-                    Alert.alert('Login Failed')
+                    Alert.alert('changePassword Failed')
 
 
                 }
@@ -205,7 +205,9 @@ const ChangePassword = () => {
                         </FormControl.HelperText>
                     }
 
-                    <Link _text={{
+                    <Link
+                    my="3"
+                    _text={{
                         fontSize: "xs",
                         fontWeight: "500",
                         color: "blue"
@@ -220,7 +222,7 @@ const ChangePassword = () => {
                     disabled={isLoading}
                 >
                     {
-                        isLoading ? <SpinnerLoad /> : 'Sign In'
+                        isLoading ? <SpinnerLoad /> : 'Change Password'
                     }
                 </Button>
 

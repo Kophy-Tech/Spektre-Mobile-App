@@ -187,24 +187,27 @@ Alert.alert('No Server Response')
             </FormControl.HelperText>
           }
         
-          <Link _text={{
-            fontSize: "xs",
-            fontWeight: "500",
-            color: "blue"
-          }} alignSelf="flex-end" mt="1"
-          
-          >
-            Forget Password?
-          </Link>
-          <Link 
-            onPress={() => navigation.navigate('change')}
-          _text={{
-            fontSize: "xs",
-            fontWeight: "500",
-            color: "blue"
-          }} alignSelf="flex-end" mt="1">
-            change Password?
-          </Link>
+     <HStack justifyContent="flex-end" alignItems="center" mb="3">
+            <Link _text={{
+              fontSize: "xs",
+              fontWeight: "500",
+              color: "blue"
+            }} alignSelf="flex-end" mt="1"
+            onPress={OpenUrl}
+            >
+              Forget Password?
+            </Link>
+            <Link
+            ml='4'
+              onPress={() => navigation.navigate('change')}
+              _text={{
+                fontSize: "xs",
+                fontWeight: "500",
+                color: "blue"
+              }} alignSelf="flex-end" mt="1">
+              change Password?
+            </Link>
+     </HStack>
         </FormControl>
         <Button mt="2" colorScheme="blue"
           onPress={submitData}

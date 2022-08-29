@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const Notify = (props) => {
     const navigation = useNavigation();
 const data = useSelector((data)=> data.auth?.notify)
- const  number = data.map((dat)=>dat.item?.seen== false)
+ const  number = data?.map((dat)=>dat.item?.seen== false)
     return (
         <View>
             <Icon
