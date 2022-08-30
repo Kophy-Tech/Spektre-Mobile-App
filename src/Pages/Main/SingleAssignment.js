@@ -302,7 +302,7 @@ const id = route?.params?.id
               }
 
               {
-                itemData?.status === 'COMPLETED' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="red.600">
+                itemData?.status === 'COMPLETED' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
                   <Text fontWeight="400" color="white" style={{
                     fontSize:12
                   }}>

@@ -2,13 +2,13 @@ import { StyleSheet, View, Alert } from 'react-native'
 import React, {useEffect} from 'react'
 import { Box, Heading, Text, Center, HStack, Stack, Button } from "native-base";
 
-import { useGetNotificationQuery, useReadNofiticationMutation } from '../../../Redux/AuthApi'
+import { useReadNofiticationMutation } from '../../../Redux/AuthApi'
 import ErrorCard from '../../../Components/ErrorCard';
 import LoadingCard from '../../../Components/Loading';
 const Notification = ({route}) => {
     const id = route?.params?.id
-    const { data: item, error, isLoading } = useGetNotificationQuery(id)
-    const [readNofitication, { isLoading: readLoading }] = useReadNofiticationMutation()
+ const [item, setItem] = React.useState(null);
+    const [readNofitication, { isLoading: readLoading, error, isSuccess }] = useReadNofiticationMutation()
 
   
 
@@ -18,6 +18,7 @@ const Notification = ({route}) => {
 
             const user = await readNofitication(id).unwrap()
             console.log(user, 'from read');
+            setItem(user)
         
 
         } catch (error) {
@@ -44,7 +45,7 @@ const Notification = ({route}) => {
 ReadDoc()
     }, []);
  console.log(item)
-    if (isLoading) {
+    if (readLoading) {
         return <LoadingCard />
     }
 
@@ -72,33 +73,38 @@ ReadDoc()
         }
 
     }
-  return (
-      <Box alignItems="center" mt="20">
-          <Box w="95%" rounded="lg"
-              p='2'
-              overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
-                  borderColor: "coolGray.600",
-                  backgroundColor: "gray.700"
-              }} _web={{
-                  shadow: 2,
-                  borderWidth: 0
-              }} _light={{
-                  backgroundColor: "gray.50"
-              }}>
-              <Heading size="md" py="1">
-                  {item?.title}
-              </Heading>
-              <Text color="coolGray.800"
-              py="4"
-                  fontSize="md"
-                  _dark={{
-                      color: "warmGray.200"
-                  }} fontWeight="400">
-                  {item?.text}
-              </Text>
-          </Box>
-      </Box>
-  )
+
+    if (isSuccess){
+        return (
+            <Box alignItems="center" mt="20">
+                <Box w="95%" rounded="lg"
+                    p='2'
+                    overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
+                        borderColor: "coolGray.600",
+                        backgroundColor: "gray.700"
+                    }} _web={{
+                        shadow: 2,
+                        borderWidth: 0
+                    }} _light={{
+                        backgroundColor: "gray.50"
+                    }}>
+                    <Heading size="md" py="1">
+                        {item?.title}
+                    </Heading>
+                    <Text color="coolGray.800"
+                        py="4"
+                        fontSize="md"
+                        _dark={{
+                            color: "warmGray.200"
+                        }} fontWeight="400">
+                        {item?.text}
+                    </Text>
+
+                </Box>
+            </Box>
+        )
+    }
+
 }
 
 export default Notification

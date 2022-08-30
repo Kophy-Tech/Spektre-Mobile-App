@@ -228,7 +228,7 @@ export const api = createApi({
           return {
             url: `/notifications/${id}/`,
             method: "PATCH",
-            boday:{ 
+            body:{ 
 
               seen: true
             }

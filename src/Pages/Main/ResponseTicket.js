@@ -1,19 +1,106 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, FlatList } from 'react-native'
 import React from 'react'
-import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner } from "native-base";
+import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner, Avatar } from "native-base";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import moment from 'moment'
 import { useGetTicketQuery, useResponseTicketMutation } from '../../Redux/AuthApi'
 import LoadingCard from '../../Components/Loading'
 import ErrorCard from '../../Components/ErrorCard'
 const ResponseTicket = ({route}) => {
     const id = route?.params?.id
-    const { data:item, error, isLoading } = useGetTicketQuery({ id })
+    const { data:itemData, error, isLoading } = useGetTicketQuery({ id })
     const [responseTicket, { isLoading: responseLoading }] = useResponseTicketMutation()
 
     const [ text, setText] = React.useState('');
+    // console.log(itemData?.responses?.length, 'from item')
 
+    const renderItem =({item})=>{
+        return(
+            <Box w="100%">
+                {
+                    item?.writer?.type !== 'WORKER' && 
+                    <Stack px="2" alignItems="flex-end" my="1">
+                            <HStack alignItems="center">
+                                <Text color="black"
+                                    fontSize="md"
+                                    pr="3"
+                                    _dark={{
+                                        color: "warmGray.200"
+                                    }} fontWeight="700">
+                                    {
+                                        item?.writer?.first_name
+                                    }
+                                </Text>
+                                <Avatar bg="blue.500" source={{
+                                    uri: item?.writer?.profile_picture
+                                }}>
+                                    AJ
+                                </Avatar>
+                             
+                            </HStack>
+                            <Stack py="2">
 
+                                <Text color="coolGray.700" _dark={{
+                                    color: "warmGray.200"
+                                }} fontWeight="700">
+                                    {
+                                        item?.text
+                                    }
+                                </Text>
+                                <Text color="coolGray.600" _dark={{
+                                    color: "warmGray.200"
+                                }} fontWeight="400">
+                                    {
+                                        moment().format(item?.date_created, 'MMMM Do YYYY, h:mm:ss a')
+                                }
+                                </Text>
+
+                            </Stack>
+                    </Stack>
+                }
+               
+         {
+                    item?.writer?.type === 'WORKER' && 
+                    <Stack px="2" my="1" >
+                        <HStack alignItems="center">
+                            <Avatar bg="blue.500" source={{
+                                    uri: item?.writer?.profile_picture
+                            }}>
+                             WK
+                            </Avatar>
+                            <Text color="black"
+                                fontSize="md"
+                            pl="3"
+                            _dark={{
+                                color: "warmGray.200"
+                            }} fontWeight="700">
+                             {
+                                    item?.writer?.first_name 
+                             }
+                            </Text>
+                      </HStack>
+                        <Stack py="2">
+
+                                <Text color="coolGray.700" _dark={{
+                                color: "warmGray.200"
+                            }} fontWeight="700">
+                              {
+                                    item?.text 
+                              }
+                            </Text>
+                            <Text color="coolGray.600" _dark={{
+                                color: "warmGray.200"
+                            }} fontWeight="400">
+                                {item?.date_created}
+                            </Text>
+
+                        </Stack>
+                    </Stack>
+         }
+
+            </Box>
+        )
+    }
     const submitData = async () => {
  const data = {
     ticket:id,
@@ -22,7 +109,7 @@ const ResponseTicket = ({route}) => {
  }
         try {
             const user = await responseTicket(data).unwrap()
-            console.log(user);
+            // console.log(user);
         
  setText('')
         } catch (error) {
@@ -47,7 +134,7 @@ const ResponseTicket = ({route}) => {
 
     }
     console.log(error)
- console.log(item)
+//  console.log(item)
     if (isLoading) {
         return <LoadingCard />
     }
@@ -76,7 +163,7 @@ const ResponseTicket = ({route}) => {
        
     }
   return (
-   <Box flex="1">
+      <Box flex="1" bg="#fff" >
           <Box w="100%" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
               borderColor: "coolGray.600",
               backgroundColor: "gray.700"
@@ -90,7 +177,7 @@ const ResponseTicket = ({route}) => {
               <Stack p="3" space={3}>
                   <Stack>
                       <Heading size="md" >
-                          {item?.issue}
+                          {itemData?.issue}
                       </Heading>
                     
 
@@ -107,7 +194,7 @@ const ResponseTicket = ({route}) => {
                           _dark={{
                               color: "warmGray.200"
                           }} fontWeight="400">
-                      {item?.opener?.company?.name}
+                          {itemData?.opener?.company?.name}
                       </Text>
                   </HStack>
                   <HStack alignItems="center" justifyContent="space-between">
@@ -117,20 +204,20 @@ const ResponseTicket = ({route}) => {
                           Status:
                       </Text>
                       {
-                          item?.status === 'OPEN' && <Stack w="20" bg="white" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
+                          itemData?.status === 'OPEN' && <Stack w="20" bg="white" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
                               <Text fontWeight="400" color="black">
-                                  {item?.status}
+                                  {itemData?.status}
                               </Text>
                           </Stack>
                       }
                     
 
                       {
-                          item?.status === 'CLOSE' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="red.600">
+                          itemData?.status === 'CLOSE' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="red.600">
                               <Text fontWeight="400" color="white" style={{
                                   fontSize: 12
                               }}>
-                                  {item?.status}
+                                  {itemData?.status}
                               </Text>
                           </Stack>
                       }
@@ -140,18 +227,29 @@ const ResponseTicket = ({route}) => {
                       <Text color="coolGray.600" _dark={{
                           color: "warmGray.200"
                       }} fontWeight="400">
-                        Date Created:{item?.date_created}
+                          Date Created:{itemData?.date_created}
                       </Text>
                    
                   </HStack>
               </Stack>
           </Box>
 
+       <Box mb="20">
+              <FlatList
+                  data={itemData?.responses}
+                  renderItem={renderItem}
+                  keyExtractor={(item) => item.id}
+                  ListHeaderComponentStyle={{
+                      paddingBottom: 10
+                  }}
+              //   ListEmptyComponent={() => <EmptyCard />}
+              />
 
+       </Box>
 
 {
-              item?.status === 'OPEN' && <HStack position="absolute" bottom="0" alignItems="center" justifyContent="space-between">
-                  <FormControl w="86%">
+              itemData?.status === 'OPEN' && <HStack position="absolute" bottom="0" alignItems="center" justifyContent="space-between">
+                  <FormControl w="87%">
                       <Input
                           value={text}
                           onChangeText={(text) => setText(text)}
@@ -161,24 +259,18 @@ const ResponseTicket = ({route}) => {
                       />
 
                   </FormControl>
-                  {
-                      text === '' && !responseLoading&& <Button
-                          disabled={!text}
-                          onPress={() => console.log('heloo')}
-                          style={{ backgroundColor: 'transparent' }}>
-                      <Text color="black"> typ..</Text>
-                      </Button>
-
-                  }
+                 
               {
-                      text &&  !responseLoading && <Button
+                     !responseLoading && <Button
+                          w="13%"
+                          alignItems="center" justifyContent="center"
                           disabled={!text}
                           onPress={submitData}
                           style={{ backgroundColor: 'transparent' }}>
                           <Icon
                               name="send"
-                              size={35}
-                              color='black'
+                              size={24}
+                              color='blue'
 
 
                           />

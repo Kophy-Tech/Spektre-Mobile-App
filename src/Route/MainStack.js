@@ -27,7 +27,7 @@ function MainStack() {
     LoadData()
     }, []);
   return (
-   
+      isAppFirstLaunched != null && (
       <Stack.Navigator
           screenOptions={{
               headerShown:false
@@ -42,7 +42,7 @@ function MainStack() {
       <Stack.Screen name="Bottom" component={BottomStack} />
 
 
-      </Stack.Navigator>
+      </Stack.Navigator>)
     
   );
 }
