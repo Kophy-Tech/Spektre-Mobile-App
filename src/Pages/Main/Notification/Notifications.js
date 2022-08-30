@@ -30,7 +30,9 @@ const EmptyCard =()=>{
     )
 }
 const Notifications = ({navigation}) => {
-    const { data, error, isLoading } = useGetNotificationsQuery()
+    const { data, error, isLoading } = useGetNotificationsQuery({
+        pollingInterval: 1000,
+    })
 
   
  const renderItem =({item})=>{

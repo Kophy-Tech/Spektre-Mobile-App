@@ -15,6 +15,8 @@ export const api = createApi({
       return headers
     }
   }),
+  refetchOnFocus: true,
+  refetchOnReconnect: true,
   tagTypes: ['Assignments', 'Assignment', 'notify'],
     endpoints: (builder) => ({
         login:  builder.mutation({

@@ -27,16 +27,18 @@ function MainStack() {
     LoadData()
     }, []);
   return (
-      isAppFirstLaunched != null && (
+    
       <Stack.Navigator
           screenOptions={{
               headerShown:false
           }}
       >
-          {isAppFirstLaunched && (
+          <Stack.Screen name="onboard" component={OnboardingScreen} />
+
+          {/* {isAppFirstLaunched && (
               <Stack.Screen name="onboard" component={OnboardingScreen} />
 
-          )}
+          )} */}
       <Stack.Screen name="Auth" component={AuthStack} />
 
       <Stack.Screen name="Bottom" component={BottomStack} />
@@ -44,7 +46,7 @@ function MainStack() {
 
       </Stack.Navigator>)
     
-  );
+
 }
 
 export default MainStack;

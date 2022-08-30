@@ -41,11 +41,11 @@ function BottomTabs() {
                                 <Icon
                                     name={'home'}
                                     size={20}
-                                    color={focused ? 'blue' : 'black'}
+                                    color={focused ? '#4dd3ff' : 'black'}
                                   
                                 />
                                 <Text style={{
-                                   color: focused? 'blue': 'black'
+                                   color: focused? '#4dd3ff': 'black'
                                 }}>Home</Text>
                             </View>
                         );
@@ -73,12 +73,12 @@ function BottomTabs() {
                                 <Icon
                                     name={ 'account-circle'}
                                     size={22}
-                                    color={focused ? 'blue' : 'black'}
+                                    color={focused ? '#4dd3ff' : 'black'}
                                 // style={focused ? styles.reHeight : null}
                                 />
                                 <Text
                                     style={{
-                                        color: focused ? 'blue' : 'black'
+                                        color: focused ? '#4dd3ff' : 'black'
                                     }}
                                 >Profile</Text>
                             </View>
@@ -109,7 +109,7 @@ function BottomStack() {
                     headerShown: true,
                     title: 'Spektre',
                     // headerTitleAlign:'center'
-                    headerTitleStyle: { color: 'blue', fontSize: 25 },
+                    headerTitleStyle: { color: '#4dd3ff', fontSize: 25 },
                     headerBackVisible: false,
                      headerRight:()=> <Notify/>
                 }}
@@ -118,7 +118,7 @@ function BottomStack() {
                 options={{
                     title: 'Asignment Details',
                     // headerTitleAlign:'center'
-                    headerTitleStyle: { color: 'blue', fontSize: 15 },
+                    headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
                     headerLeft: () => <BackIcon />,
                     headerTitleAlign: 'center',
                 }}
@@ -128,7 +128,7 @@ function BottomStack() {
                 options={{
                     title: 'Chat',
                     // headerTitleAlign:'center'
-                    headerTitleStyle: { color: 'blue', fontSize: 15 },
+                    headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
                     headerLeft: () => <BackIcon />,
                     headerTitleAlign: 'center',
                 }}
@@ -138,7 +138,7 @@ function BottomStack() {
                 options={{
                     title: 'Notifications',
                     // headerTitleAlign:'center'
-                    headerTitleStyle: { color: 'blue', fontSize: 15 },
+                    headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
                     headerLeft: () => <BackIcon />,
                     headerTitleAlign: 'center',
                 }}
@@ -148,7 +148,7 @@ function BottomStack() {
                 options={{
                     title: 'Notification',
                     // headerTitleAlign:'center'
-                    headerTitleStyle: { color: 'blue', fontSize: 15 },
+                    headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
                     headerLeft: () => <BackIcon />,
                     headerTitleAlign: 'center',
                 }}

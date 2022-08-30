@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const Notify = (props) => {
     const navigation = useNavigation();
 const data = useSelector((data)=> data.auth?.notify)
- const  number = data?.map((dat)=>dat.item?.seen== false)
+
     return (
         <View>
             <Icon
@@ -25,7 +25,7 @@ const data = useSelector((data)=> data.auth?.notify)
     left:-25,
     top:-10,
     fontWeight:'bold'
- }}> {number?.length} unread</Text>
+ }}> {data?.length} unread</Text>
         </View>
     );
 };

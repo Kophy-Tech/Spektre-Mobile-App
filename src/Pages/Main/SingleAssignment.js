@@ -337,7 +337,7 @@ const id = route?.params?.id
                   }} fontWeight="700">
                   Activate Status
                 </Text>
-                <Button style={{backgroundColor:"blue"}}
+                <Button style={{backgroundColor:"#4dd3ff"}}
                   onPress={() => updateStatus('ACTIVE')}
                 >
 {
@@ -361,7 +361,7 @@ const id = route?.params?.id
                   }} fontWeight="700">
                   Activate Status
                 </Text>
-                <Button bg="blue.600"
+                <Button bg="#4dd3ff"
                   onPress={() => updateStatus('COMPLETED')}
                     disabled={Loadingstatus}
                 >
@@ -390,7 +390,7 @@ const id = route?.params?.id
         Tickets
         </Text>
 
-          <Button style={{ backgroundColor: "blue" }}
+          <Button style={{ backgroundColor: "#4dd3ff" }}
           onPress={() => setModalVisible(true)}
         >
           <Text

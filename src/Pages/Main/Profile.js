@@ -134,7 +134,7 @@ navigation.replace('Auth')
       <Stack mt="10">
         <Button
           leftIcon={<Icon name="logout"  color="white" />}
-          colorScheme="blue"
+          bg="#4dd3ff"
           onPress={LogOut}
         >
           Log Out

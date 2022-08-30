@@ -209,7 +209,7 @@ Alert.alert('No Server Response')
             </Link>
      </HStack>
         </FormControl>
-        <Button mt="2" colorScheme="blue"
+        <Button mt="2" bg="#4dd3ff"
           onPress={submitData}
           disabled={isLoading}
           >

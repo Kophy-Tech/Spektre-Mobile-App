@@ -73,7 +73,7 @@ const CardFile = ({ item }) => {
                     </Box>
 
 
-                    <Center style={{ backgroundColor: "blue" }} position="absolute" px="3" py="1.5">
+                    <Center style={{ backgroundColor: "#4dd3ff" }} position="absolute" px="3" py="1.5">
                         <Text
                             color="#fff"
                             fontSize="xs"
@@ -90,22 +90,22 @@ const CardFile = ({ item }) => {
 
                     <Button bg="#fff"
                         borderWidth='1'
-                        style={{ borderColor: "blue", borderRadius:15 }}
+                        style={{ borderColor: "#4dd3ff", borderRadius:15 }}
                         onPress={() => OpenUrl(item.file)}
                     >
                         <Text
-                            style={{ color: "blue" }}
+                            style={{ color: "#4dd3ff" }}
                             fontSize='sm'
                         >Open On Web</Text>
 
                     </Button>
                     <Button bg="#fff"
                         borderWidth='1'
-                        style={{ borderColor: "blue", borderRadius: 15 }}
+                        style={{ borderColor: "#4dd3ff", borderRadius: 15 }}
                         onPress={() => Downloadfile(item.file)}
                     >
                         <Text
-                            style={{ color: "blue" }}
+                            style={{ color: "#4dd3ff" }}
                             fontSize='sm'
                         >Download</Text>
 

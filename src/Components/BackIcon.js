@@ -12,7 +12,7 @@ const BackIcon = (props) => {
             <Icon
                 name="arrow-left"
                 size={35}
-                color='blue'
+                color='#4dd3ff'
 
                 onPress={() => navigation.goBack()}
             />

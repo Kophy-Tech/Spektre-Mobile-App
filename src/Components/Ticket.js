@@ -26,8 +26,8 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
 
             </Text>
             {
-                item?.status === 'OPEN' && <Text color="blue"
-                    fontSize="xs"
+                item?.status === 'OPEN' && <Text color="green.900"
+                    fontSize="md"
                     textAlign="center"
                  
                     flex="1"
@@ -41,7 +41,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
             {
                 item?.status === 'CLOSED' && <Text 
                     style={{ color: "red" }}
-                    fontSize="xs"
+                    fontSize="sm"
                     textAlign="center"
                
                     flex="1"
@@ -57,7 +57,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                 justifyContent='space-between'
             >
                 <TouchableOpacity style={{
-                    backgroundColor: 'blue',
+                    backgroundColor: '#4dd3ff',
                     padding: 4,
                     borderRadius: 10,
                     width: '45%',
@@ -80,7 +80,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{
-                        backgroundColor: 'blue',
+                        backgroundColor: '#4dd3ff',
                         padding: 4,
                         borderRadius: 10,
                         width: '45%',

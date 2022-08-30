@@ -13,10 +13,10 @@ function TopStack() {
     return (
         <Tab.Navigator
             screenOptions={{
-                tabBarLabelStyle: { fontSize: 8, color:'blue' },
+                tabBarLabelStyle: { fontSize: 8, color:'black' },
                 tabBarItemStyle: { width: 80 },
                 tabBarStyle: { backgroundColor: '#fff' },
-                tabBarIndicatorStyle: { backgroundColor: 'blue' }
+                tabBarIndicatorStyle: { backgroundColor: '#4dd3ff' }
                 
             }}
         >

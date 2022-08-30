@@ -19,20 +19,20 @@ const slides = [
     {
         id: '1',
         image: require('../../images/one.png'),
-        title: 'Best Digital Solution',
-        subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        title: 'Easily manage all your work',
+        subtitle: 'An all-in-one suite to manage people and projects.',
     },
     {
         id: '2',
         image: require('../../images/two.png'),
-        title: 'Achieve Your Goals',
-        subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        title: 'Empower Your Teams',
+        subtitle: 'The Ultimate Project Management Tool.',
     },
     {
         id: '3',
         image: require('../../images/three.png'),
-        title: 'Increase Your Value',
-        subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        title: 'Integrate Your Team',
+        subtitle: 'Organise, Collaborate and deliver projects more effeciently.',
     },
 ];
 
@@ -161,8 +161,8 @@ const OnboardingScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor:"blue" }}>
-            <StatusBar backgroundColor="blue"
+        <SafeAreaView style={{ flex: 1, backgroundColor:"#4dd3ff" }}>
+            <StatusBar backgroundColor="#4dd3ff"
                 barStyle="light-content" hidden={false} />
             <FlatList
                 ref={ref}
@@ -182,7 +182,7 @@ const OnboardingScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     subtitle: {
         color: COLORS.white,
-        fontSize: 13,
+        fontSize: 17,
         marginTop: 10,
         maxWidth: '70%',
         textAlign: 'center',
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: COLORS.white,
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: 'bold',
         marginTop: 20,
         textAlign: 'center',

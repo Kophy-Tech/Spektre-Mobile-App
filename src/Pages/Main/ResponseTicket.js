@@ -2,13 +2,15 @@ import { StyleSheet, View, FlatList } from 'react-native'
 import React from 'react'
 import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner, Avatar } from "native-base";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import moment from 'moment'
+import moment from "moment";
 import { useGetTicketQuery, useResponseTicketMutation } from '../../Redux/AuthApi'
 import LoadingCard from '../../Components/Loading'
 import ErrorCard from '../../Components/ErrorCard'
 const ResponseTicket = ({route}) => {
     const id = route?.params?.id
-    const { data:itemData, error, isLoading } = useGetTicketQuery({ id })
+    const { data:itemData, error, isLoading } = useGetTicketQuery({ id }, {
+        pollingInterval: 1000,
+    })
     const [responseTicket, { isLoading: responseLoading }] = useResponseTicketMutation()
 
     const [ text, setText] = React.useState('');
@@ -31,7 +33,7 @@ const ResponseTicket = ({route}) => {
                                         item?.writer?.first_name
                                     }
                                 </Text>
-                                <Avatar bg="blue.500" source={{
+                                <Avatar bg="#4dd3ff" source={{
                                     uri: item?.writer?.profile_picture
                                 }}>
                                     AJ
@@ -47,11 +49,14 @@ const ResponseTicket = ({route}) => {
                                         item?.text
                                     }
                                 </Text>
-                                <Text color="coolGray.600" _dark={{
+                                <Text color="coolGray.600"
+                                    fontSize="xs"
+
+                                 _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
                                     {
-                                        moment().format(item?.date_created, 'MMMM Do YYYY, h:mm:ss a')
+                                        moment(item?.date_created).format( 'MMMM Do YYYY, h:mm:ss a')
                                 }
                                 </Text>
 
@@ -63,7 +68,7 @@ const ResponseTicket = ({route}) => {
                     item?.writer?.type === 'WORKER' && 
                     <Stack px="2" my="1" >
                         <HStack alignItems="center">
-                            <Avatar bg="blue.500" source={{
+                            <Avatar bg="#4dd3ff" source={{
                                     uri: item?.writer?.profile_picture
                             }}>
                              WK
@@ -91,7 +96,10 @@ const ResponseTicket = ({route}) => {
                             <Text color="coolGray.600" _dark={{
                                 color: "warmGray.200"
                             }} fontWeight="400">
-                                {item?.date_created}
+                               {
+                                        moment(item?.date_created).format('MMMM Do YYYY, h:mm:ss a')
+
+                               }
                             </Text>
 
                         </Stack>
@@ -227,7 +235,11 @@ const ResponseTicket = ({route}) => {
                       <Text color="coolGray.600" _dark={{
                           color: "warmGray.200"
                       }} fontWeight="400">
-                          Date Created:{itemData?.date_created}
+
+                          Date Created:{
+                              moment(itemData?.date_created).format('MMMM Do YYYY, h:mm:ss a')
+
+                          }
                       </Text>
                    
                   </HStack>
@@ -270,7 +282,7 @@ const ResponseTicket = ({route}) => {
                           <Icon
                               name="send"
                               size={24}
-                              color='blue'
+                              color='#4dd3ff'
 
 
                           />
