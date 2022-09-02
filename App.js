@@ -27,7 +27,7 @@ const App = () => {
  const show =()=>{
    setTimeout(() => {
      setload(false)
-   }, 10000);
+   }, 3000);
  }
 
 show()
