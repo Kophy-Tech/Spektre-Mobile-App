@@ -17,7 +17,7 @@ import { api } from './src/Redux/AuthApi';
 const Splash =()=>{
   return (
     <View style={{flex:1, backgroundColor:'#fff', justifyContent:'center', alignItems:'center'}}>
-      <Image source={require('../spektre/src/images/logoA.png')} alt="image" h="100" w="100" />
+      <Image source={require('./src/images/logoA.png')} alt="image" h="100" w="100" />
 
     </View>
   )
