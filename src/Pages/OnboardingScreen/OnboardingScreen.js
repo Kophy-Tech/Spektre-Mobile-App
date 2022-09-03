@@ -13,7 +13,7 @@ import {
 import StatusBarContainer from '../../Components/StatusBar';
 const { width, height } = Dimensions.get('window');
 
-const COLORS = { primary: '#282534', white: '#fff' };
+const COLORS = { primary: '#282534', white: '#fff', black:'#4dd3ff' };
 
 const slides = [
     {
@@ -113,7 +113,7 @@ const OnboardingScreen = ({ navigation }) => {
                             <TouchableOpacity
                                 style={styles.btn}
                                 onPress={() => navigation.replace('Auth')}>
-                                <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 15, color:'#fff' }}>
                                     GET STARTED
                                 </Text>
                             </TouchableOpacity>
@@ -127,7 +127,7 @@ const OnboardingScreen = ({ navigation }) => {
                                     {
                                         borderColor: COLORS.white,
                                         borderWidth: 1,
-                                        backgroundColor: 'transparent',
+                                        backgroundColor: COLORS.black,
                                     },
                                 ]}
                                 onPress={skip}>
@@ -149,6 +149,7 @@ const OnboardingScreen = ({ navigation }) => {
                                     style={{
                                         fontWeight: 'bold',
                                         fontSize: 15,
+                                        color:'#fff'
                                     }}>
                                     NEXT
                                 </Text>
@@ -211,9 +212,12 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 50,
         borderRadius: 5,
-        backgroundColor: '#fff',
+        backgroundColor:"#4dd3ff",
         justifyContent: 'center',
         alignItems: 'center',
+        borderColor: COLORS.white,
+        borderWidth: 1,
+       
     },
 });
 export default OnboardingScreen;

@@ -287,14 +287,14 @@ const id = route?.params?.id
                 Status:
               </Text>
               {
-                itemData?.status === 'PENDING' && <Stack w="20" bg="black" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
+                itemData?.status === 'PENDING' && <Stack w="30%" bg="black" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
                   <Text fontWeight="400" color="white">
                     {itemData?.status}
                   </Text>
                 </Stack>
               }
               {
-                itemData?.status === 'ACTIVE' && <Stack w="20" bg="yellow.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="yellow.600">
+                itemData?.status === 'ACTIVE' && <Stack w="30%" bg="yellow.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="yellow.600">
                   <Text fontWeight="400" color="white">
                     {itemData?.status}
                   </Text>
@@ -302,10 +302,8 @@ const id = route?.params?.id
               }
 
               {
-                itemData?.status === 'COMPLETED' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
-                  <Text fontWeight="400" color="white" style={{
-                    fontSize:12
-                  }}>
+                itemData?.status === 'COMPLETED' && <Stack w="30%" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
+                  <Text fontWeight="400" color="white"  fontSize="sm">
                     {itemData?.status}
                   </Text>
                 </Stack>
@@ -439,7 +437,7 @@ const id = route?.params?.id
               <Icon
                 name="close"
                 size={35}
-                color='blue'
+                color='#4dd3ff'
    onPress={() => setModalVisible(false)}
 
               />
@@ -463,7 +461,7 @@ const id = route?.params?.id
           
             <Box mt="8">
               <Button
-                style={{ backgroundColor: "blue" , borderRadius:10}}
+                style={{ backgroundColor: "#4dd3ff" , borderRadius:10}}
                 onPress={SendOpenTicket}
                 disabled={LoadingOpenTicket}
               >

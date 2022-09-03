@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList } from 'react-native'
+import { StyleSheet, View, FlatList , TextInput, TouchableWithoutFeedback,  Keyboard,} from 'react-native'
 import React from 'react'
 import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner, Avatar } from "native-base";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -260,16 +260,19 @@ const ResponseTicket = ({route}) => {
        </Box>
 
 {
-              itemData?.status === 'OPEN' && <HStack position="absolute" bottom="0" alignItems="center" justifyContent="space-between">
+              itemData?.status === 'OPEN' && <HStack position="absolute" bottom="2" alignItems="center" justifyContent="space-between" mx="1">
                   <FormControl w="87%">
-                      <Input
+                    <TouchableWithoutFeedback  onPress={Keyboard.dismiss} accessible={false}>
+                    <TextInput
                           value={text}
                           onChangeText={(text) => setText(text)}
-                          style={{ backgroundColor: "#fff" }}
-                          fontSize="md"
+                          style={{ backgroundColor: "#fff", borderRadius:20, borderWidth:1 }}
+                        
 
                       />
 
+                    </TouchableWithoutFeedback>
+                    
                   </FormControl>
                  
               {

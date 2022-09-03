@@ -14,6 +14,7 @@ import ResponseTicket from '../Pages/Main/ResponseTicket';
 import Notify from '../Components/Notify';
 import Notifications from '../Pages/Main/Notification/Notifications';
 import Notification from '../Pages/Main/Notification/Notification';
+import ChangePassword from '../Pages/Auth/ChangePassoword';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 function BottomTabs() {
@@ -147,6 +148,16 @@ function BottomStack() {
             <Stack.Screen name="notification" component={Notification}
                 options={{
                     title: 'Notification',
+                    // headerTitleAlign:'center'
+                    headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
+                    headerLeft: () => <BackIcon />,
+                    headerTitleAlign: 'center',
+                }}
+
+            />
+                  <Stack.Screen name="change" component={ChangePassword}
+                options={{
+                    title: 'Change Passowrd',
                     // headerTitleAlign:'center'
                     headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
                     headerLeft: () => <BackIcon />,

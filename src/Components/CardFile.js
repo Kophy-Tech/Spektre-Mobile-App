@@ -80,14 +80,14 @@ const CardFile = ({ item }) => {
                             _dark={{
                                 color: "warmGray.200"
                             }} fontWeight="400"
-                        > Document {item?.id}</Text>
+                        > Document </Text>
                     </Center>
                 </Box>
                 <HStack
                     justifyContent="space-between"
 
                 >
-
+{/* 
                     <Button bg="#fff"
                         borderWidth='1'
                         style={{ borderColor: "#4dd3ff", borderRadius:15 }}
@@ -98,7 +98,7 @@ const CardFile = ({ item }) => {
                             fontSize='sm'
                         >Open On Web</Text>
 
-                    </Button>
+                    </Button> */}
                     <Button bg="#fff"
                         borderWidth='1'
                         style={{ borderColor: "#4dd3ff", borderRadius: 15 }}

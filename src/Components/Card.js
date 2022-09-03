@@ -68,25 +68,23 @@ export default function Card({item, navigation}) {
                                     Status:
                                 </Text>
                                 {
-                                    item?.status === 'PENDING' && <Stack w="20" bg="black" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
-                                        <Text fontWeight="400" color="white">
+                                    item?.status === 'PENDING' && <Stack w="30%" bg="black" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
+                                        <Text fontWeight="400" color="white" fontSize="sm">
                                             {item?.status}
                                         </Text>
                                     </Stack>
                                 }
                                 {
-                                    item?.status === 'ACTIVE' && <Stack w="20" bg="yellow.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="yellow.600">
-                                        <Text fontWeight="400" color="white">
+                                    item?.status === 'ACTIVE' && <Stack w="30%" bg="yellow.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="yellow.600">
+                                        <Text fontWeight="400" color="white" fontSize="sm">
                                             {item?.status}
                                         </Text>
                                     </Stack>
                                 }
 
                                 {
-                                    item?.status === 'COMPLETED' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
-                                        <Text fontWeight="400" color="white" style={{
-                                            fontSize: 12
-                                        }}>
+                                    item?.status === 'COMPLETED' && <Stack w="30%" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
+                                        <Text fontWeight="400" color="white" fontSize="sm">
                                             {item?.status}
                                         </Text>
                                     </Stack>

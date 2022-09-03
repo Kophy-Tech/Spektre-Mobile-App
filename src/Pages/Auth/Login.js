@@ -22,7 +22,7 @@ const Login = () => {
       if (supported) {
         // Opening the link with some app, if the URL scheme is "http" the web link should be opened
         // by some browser in the mobile
-        await Linking.openURL('https://spektre-prj.herokuapp.com/account/password_reset/');
+        await Linking.openURL('https://spektre-prj.herokuapp.com/accounts/password_reset/');
       } else {
         Alert.alert(`Don't know how to open this URL`);
       }
@@ -197,16 +197,7 @@ Alert.alert('No Server Response')
             >
               Forget Password?
             </Link>
-            <Link
-            ml='4'
-              onPress={() => navigation.navigate('change')}
-              _text={{
-                fontSize: "xs",
-                fontWeight: "500",
-                color: "blue"
-              }} alignSelf="flex-end" mt="1">
-              change Password?
-            </Link>
+          
      </HStack>
         </FormControl>
         <Button mt="2" bg="#4dd3ff"

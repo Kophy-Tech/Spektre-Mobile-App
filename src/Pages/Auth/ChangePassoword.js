@@ -205,17 +205,7 @@ const ChangePassword = () => {
                         </FormControl.HelperText>
                     }
 
-                    <Link
-                    my="3"
-                    _text={{
-                        fontSize: "xs",
-                        fontWeight: "500",
-                        color: "blue"
-                    }} alignSelf="flex-end" mt="1"
-                    onPress={()=> navigation.navigate('Login')}
-                    >
-                        sign In?
-                    </Link>
+             
                 </FormControl>
                 <Button mt="2" bg="#4dd3ff"
                     onPress={submitData}

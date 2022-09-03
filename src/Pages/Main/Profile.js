@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert ,StyleSheet, TouchableOpacity} from 'react-native';
 
 import { Flex, Spacer, Text , Box, Stack, Button} from 'native-base';
 import ErrorCard from '../../Components/ErrorCard';
@@ -131,6 +131,16 @@ navigation.replace('Auth')
         </Text>
 
       </Flex>
+
+      <Stack mt="10">
+<TouchableOpacity style={styles.changePassword}
+  onPress={() => navigation.navigate('change')}
+>
+<Text  fontWeight="800" fontSize="md" color="#4dd3ff">
+         change Password
+        </Text> 
+</TouchableOpacity>
+      </Stack>
       <Stack mt="10">
         <Button
           leftIcon={<Icon name="logout"  color="white" />}
@@ -143,3 +153,20 @@ navigation.replace('Auth')
      </Box>
   );
 }
+
+
+const styles = StyleSheet.create({
+  changePassword:{
+    width:'100%',
+    backgroundColor:'transparent',
+    height:40,
+   justifyContent:'center',
+   alignItems:'center',
+   borderColor:'#4dd3ff',
+   borderWidth:1,
+   paddingLeft:10,
+   borderRadius:10
+   
+
+  }
+})
