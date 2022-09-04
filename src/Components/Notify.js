@@ -19,13 +19,13 @@ const data = useSelector((data)=> data.auth?.notify)
                 onPress={() => navigation.navigate('notify')}
             />
  <Text style={{
-    fontSize:10,
+    fontSize:15,
     color:'red',
     position: "absolute",
-    left:-25,
-    top:-10,
+    left:20,
+    top:-7,
     fontWeight:'bold'
- }}> {data?.length} unread</Text>
+ }}> {data?.length} </Text>
         </View>
     );
 };

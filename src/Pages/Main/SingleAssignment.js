@@ -406,9 +406,12 @@ const id = route?.params?.id
         keyExtractor={item => item.id}
           ListEmptyComponent={<EmptyTicket />}
         ListHeaderComponent={<TicketHeader/>}
+        showsVerticalScrollIndicator={false}
      
         ListFooterComponent={<FlatList
           data={itemData?.documents}
+        showsVerticalScrollIndicator={false}
+
           renderItem={renderItem}
           keyExtractor={item => item.id}
           ListEmptyComponent={<EmptyCardFile />}

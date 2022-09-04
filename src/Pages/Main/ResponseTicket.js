@@ -246,11 +246,13 @@ const ResponseTicket = ({route}) => {
               </Stack>
           </Box>
 
-       <Box mb="20">
+       <Box mb="1/2">
               <FlatList
                   data={itemData?.responses}
                   renderItem={renderItem}
                   keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+
                   ListHeaderComponentStyle={{
                       paddingBottom: 10
                   }}
