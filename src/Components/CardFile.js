@@ -87,7 +87,7 @@ const CardFile = ({ item }) => {
                     justifyContent="space-between"
 
                 >
-{/* 
+
                     <Button bg="#fff"
                         borderWidth='1'
                         style={{ borderColor: "#4dd3ff", borderRadius:15 }}
@@ -98,8 +98,8 @@ const CardFile = ({ item }) => {
                             fontSize='sm'
                         >Open On Web</Text>
 
-                    </Button> */}
-                    <Button bg="#fff"
+                    </Button>
+                    {/* <Button bg="#fff"
                         borderWidth='1'
                         style={{ borderColor: "#4dd3ff", borderRadius: 15 }}
                         onPress={() => Downloadfile(item.file)}
@@ -109,7 +109,7 @@ const CardFile = ({ item }) => {
                             fontSize='sm'
                         >Download</Text>
 
-                    </Button>
+                    </Button> */}
                 </HStack>
             </Box>
         </Center>

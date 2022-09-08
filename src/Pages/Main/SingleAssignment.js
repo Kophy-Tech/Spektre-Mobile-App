@@ -1,19 +1,28 @@
-import { StyleSheet, View, FlatList, Alert, TouchableOpacity, Modal, } from 'react-native'
+import { StyleSheet, View, FlatList, Alert, TouchableOpacity, Modal,     Platform, PermissionsAndroid } from 'react-native'
 import React from 'react'
 import ErrorCard from '../../Components/ErrorCard';
 import { useRoute } from '@react-navigation/native';
-import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl } from "native-base";
+import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl , Avatar} from "native-base";
 import LoadingCard from '../../Components/Loading';
 import { useChangeAsignStatusMutation, useGetAsignQuery, useOpenTicketMutation, useCloseTicketMutation } from '../../Redux/AuthApi';
 import CardFile from '../../Components/CardFile';
 import EmptyCardFile from '../../Components/EmptyCardFile';
 import SpinnerLoad from '../../Components/Spinner';
 import EmptyCard from '../../Components/EmptyCard';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TicketHeader from '../../Components/TicketHeader';
 import DocumentHeader from '../../Components/DocumentHeader';
 import Ticket from '../../Components/Ticket';
 import EmptyTicket from '../../Components/EmptyTicket';
+import moment from "moment";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconI from 'react-native-vector-icons/Ionicons';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import DocumentPicker from "react-native-document-picker";
+
+
+
+
+
 export default function SingleAssignment({navigation}) {
  
    const route = useRoute();
@@ -25,12 +34,217 @@ export default function SingleAssignment({navigation}) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [respond, setRespond] = React.useState('');
   const [respondError, setRespondError] = React.useState('');
+  const [imagePicker, setImagePicker] = React.useState([]);
+
+
+  const documentPicker = async () => {
+    // Opening Document Picker to select one file
+    try {
+      const res = await DocumentPicker.pick({
+        // Provide which type of file you want user to pick
+        type: [DocumentPicker.types.allFiles],
+        // There can me more options as well
+        // DocumentPicker.types.allFiles
+        // DocumentPicker.types.images
+        // DocumentPicker.types.plainText
+        // DocumentPicker.types.audio
+        // DocumentPicker.types.pdf
+      });
+      // Printing the log realted to the file
+      console.log('res : ' + JSON.stringify(res));
+      // Setting the state to show single file attributes
+      // setSingleFile(res);
+    } catch (err) {
+      // setSingleFile(null);
+      // Handling any exception (If any)
+      if (DocumentPicker.isCancel(err)) {
+        // If user canceled the document selection
+        Alert.alert('Canceled');
+      } else {
+        // For Unknown Error
+      //  Alert.alert('Unknown Error: ' + JSON.stringify(err));
+        // throw err;
+      }
+    }
+  };
+  const selectImage=()=> {
+    let options = {
+        title: 'Select Image',
+        customButtons: [
+            { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+        ],
+     
+        quality:1,
+        storageOptions: {
+            skipBackup: true,
+            path: 'images'
+        }
+    };
+
+    launchImageLibrary(options, (response) => {
+       
+
+        if (response.didCancel) {
+            console.log('User cancelled image picker');
+        } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+            alert(response.customButton);
+        } else {
+          
+
+          
+
+           
+
+            // You can also display the image using data:
+        
+            // alert(JSON.stringify(response));s
+            // const data = {
+            //     fileName: sourcefilename,
+            //     uri: sourceUri
+            // }
+            response.assets.map((asset) => {
+
+                console.log('uri -> ', asset.uri);
+
+                setImagePicker([...imagePicker, {
+                  uri: asset.uri,
+                  type:asset.type,
+                  name:asset.fileName
+              }])
+         
+         
+            });
+    
+           
+            
+       
+           
+        }
+    });
+}
+
+  const CameraImage =async()=> {
+    
+    if(Platform.OS ==='android'){
+        const grantedcamera = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+                title: "App Camera Permission",
+                message: "App needs access to your camera ",
+                buttonNeutral: "Ask Me Later",
+                buttonNegative: "Cancel",
+                buttonPositive: "OK"
+            }
+        );
+        const grantedstorage = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            {
+                title: "App Camera Permission",
+                message: "App needs access to your camera ",
+                buttonNeutral: "Ask Me Later",
+                buttonNegative: "Cancel",
+                buttonPositive: "OK"
+            }
+        );
+        if (grantedcamera === PermissionsAndroid.RESULTS.GRANTED && grantedstorage === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log("Camera & storage permission given");
+    
+            let options = {
+    
+                quality: 1,
+                storageOptions: {
+                    skipBackup: true,
+                    path: 'images',
+                    includeBase64:true
+                },
+            };
+            launchCamera(options, (response) => {
+    
+    
+                if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                } else if (response.error) {
+                    console.log('ImagePicker Error: ', response.error);
+                } else if (response.customButton) {
+                    console.log('User tapped custom button: ', response.customButton);
+                    alert(response.customButton);
+                } else {
+    
+                    response.assets.map((asset) => {
+    
+                        console.log('uri -> ', asset);
+                        setImagePicker([...imagePicker, {
+                          uri: asset.uri,
+                          type:asset.type,
+                          name:asset.fileName
+                      }])
+  
+                     
+                    });
+                  
+    
+    
+                }
+            });
+    
+    
+        } else {
+            console.log("Camera permission denied");
+        }
+    
+    }
+    
+    else{
+        let options = {
+    
+            quality: 1,
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+        launchCamera(options, (response) => {
+    
+    
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+                alert(response.customButton);
+            } else {
+    
+                response.assets.map((asset) => {
+    
+                    console.log('uri -> ', asset);
+                    setImagePicker([...imagePicker, {
+                      uri: asset.uri,
+                      type:asset.type,
+                      name:asset.fileName
+                  }])
+    
+                });
+          
+    
+              
+    
+    
+            }
+        });
+    
+    }
+           
+        }
   // console.log(respond)
 const id = route?.params?.id
 // console.log(id)
 
     const { data:itemData, error, isLoading } = useGetAsignQuery({id})
- console.log(error)
+
  const updateStatus = (data)=>{
    Alert.alert(
      "Are you sure you want to update the status?",
@@ -165,16 +379,26 @@ const id = route?.params?.id
      console.log('error')
    }
  else{
-     const respondId = {
+    
+     const data = new FormData();
 
-       issue: respond,
-       assignment: id
-     }
+     imagePicker.forEach((item, i)=>{
+      data.append('attachments', {
+        uri:item.uri,
+        type:item.type,
+        name:item.name
+      });
+     })
+     data.append('assignment', id)
+     data.append('issue', respond);
+  //  console.log(data, 'data ')
+  
      try {
-       const user = await OpenTicket(respondId).unwrap()
-       console.log(user?.status);
+       const user = await OpenTicket(data).unwrap()
+       console.log(user);
        setModalVisible(false)
        setRespond('')
+       setImagePicker([])
 
      } catch (error) {
        console.log(error)
@@ -286,13 +510,13 @@ const id = route?.params?.id
               }} fontWeight="400">
                 Status:
               </Text>
-              {
+              {/* {
                 itemData?.status === 'PENDING' && <Stack w="30%" bg="black" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
                   <Text fontWeight="400" color="white">
                     {itemData?.status}
                   </Text>
                 </Stack>
-              }
+              } */}
               {
                 itemData?.status === 'ACTIVE' && <Stack w="30%" bg="yellow.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="yellow.600">
                   <Text fontWeight="400" color="white">
@@ -314,7 +538,7 @@ const id = route?.params?.id
               <Text color="coolGray.600" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Start Time: {itemData?.start_date}
+                Start Time: {moment(itemData?.start_date).format('MMMM Do YYYY')}
               </Text>
              
             </Stack>
@@ -323,7 +547,7 @@ const id = route?.params?.id
               <Text color="coolGray.600" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Deadline: {itemData?.deadline}
+                Deadline: {moment(itemData?.deadline).format('MMMM Do YYYY')}
               </Text>
             </Stack>
             {
@@ -461,7 +685,66 @@ const id = route?.params?.id
                 </FormControl.HelperText>
               }
             </FormControl>
-          
+          <HStack alignItems="center" justifyContent="flex-end">
+<Stack mr="5">
+<TouchableOpacity
+onPress={documentPicker}
+>
+<Icon
+                name="file-upload"
+                size={35}
+                color='#4dd3ff'
+
+               
+            />
+</TouchableOpacity>
+</Stack>
+<Stack mx="5">
+<TouchableOpacity
+onPress={selectImage}
+>
+<Icon
+                name="image"
+                size={35}
+                color='#4dd3ff'
+
+               
+            />
+</TouchableOpacity>
+</Stack>
+<Stack mx="5">
+  <TouchableOpacity
+  onPress={CameraImage}
+  >
+  <IconI
+                name="camera"
+                size={35}
+                color='#4dd3ff'
+
+               
+            />
+  </TouchableOpacity>
+
+</Stack>
+          </HStack>
+
+          <HStack alignItems="center" my="3" flexWrap='wrap'>
+
+            {imagePicker.length > 0 &&  imagePicker.map( (data, i)=>{
+              console.log(data)
+              return(
+                <Avatar bg="#4dd3ff" 
+                mx="1"
+                key={i}
+                alignSelf="center" size="md" source={{
+                  uri: data?.uri
+                }}>
+                  
+                  </Avatar>
+              )
+            })   }
+        
+          </HStack>
             <Box mt="8">
               <Button
                 style={{ backgroundColor: "#4dd3ff" , borderRadius:10}}

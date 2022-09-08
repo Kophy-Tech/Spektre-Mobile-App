@@ -3,6 +3,8 @@ import React from 'react';
 
 import { Box, Heading , Text, Center, HStack, Stack } from "native-base";
 import { TouchableOpacity } from 'react-native';
+import moment from "moment";
+
 export default function Card({item, navigation}) {
 
 
@@ -92,15 +94,15 @@ export default function Card({item, navigation}) {
                             </HStack>
 
                             <HStack alignItems="center" justifyContent="space-between">
-                                <Text color="coolGray.600" _dark={{
+                                <Text fontSize="xs" color="coolGray.600" _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                    Start Time: {item?.start_date}
+                                    Start Time: {moment(item?.start_date).format('MMMM Do YYYY')}
                                 </Text>
-                                <Text color="coolGray.600" _dark={{
+                                <Text fontSize='xs' color="coolGray.600" _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                    Deadline: {item?.deadline}
+                                    Deadline: {moment(item?.deadline).format('MMMM Do YYYY')}
                                 </Text>
                             </HStack>
                         </Stack>

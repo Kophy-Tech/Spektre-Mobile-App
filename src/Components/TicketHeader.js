@@ -27,7 +27,7 @@ export default function TicketHeader() {
             <Text color="#fff"
                 fontSize='md'
                 flex="1"
-
+textAlign="left"
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="700">
@@ -35,7 +35,7 @@ export default function TicketHeader() {
             </Text>
             <Text color="#fff"
                 fontSize='md'
-                flex="1.5"
+                flex="1"
                 textAlign="center"
 
                 _dark={{

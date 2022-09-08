@@ -133,8 +133,10 @@ export const api = createApi({
           return {
             url: `/projects/tickets/`,
             method: "POST",
-            body: respondId
-
+            body: respondId,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
           };
 
         },

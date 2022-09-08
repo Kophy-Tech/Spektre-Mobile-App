@@ -1,114 +1,32 @@
-import { StyleSheet, View, FlatList , TextInput, TouchableWithoutFeedback,  Keyboard,} from 'react-native'
+import { StyleSheet, View, FlatList , TextInput, TouchableWithoutFeedback, TouchableOpacity, Keyboard, Platform, PermissionsAndroid } from 'react-native'
 import React from 'react'
-import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner, Avatar } from "native-base";
+import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner, Avatar, Modal } from "native-base";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from "moment";
 import { useGetTicketQuery, useResponseTicketMutation } from '../../Redux/AuthApi'
 import LoadingCard from '../../Components/Loading'
 import ErrorCard from '../../Components/ErrorCard'
+import ModalComponent from '../../Components/Modal';
+import ResponseRender from './responseRender';
+
 const ResponseTicket = ({route}) => {
     const id = route?.params?.id
+    const projectManG= route?.params?.project?.assignment?.project?.project_manager
+// console.log(projectManG ,' project manager')
     const { data:itemData, error, isLoading } = useGetTicketQuery({ id }, {
-        pollingInterval: 1000,
+        // pollingInterval: 1000,
     })
+   
+ 
+    const [modalVisible, setModalVisible] = React.useState(false);
+
     const [responseTicket, { isLoading: responseLoading }] = useResponseTicketMutation()
 
     const [ text, setText] = React.useState('');
-    // console.log(itemData?.responses?.length, 'from item')
+  
 
-    const renderItem =({item})=>{
-        return(
-            <Box w="100%">
-                {
-                    item?.writer?.type !== 'WORKER' && 
-                    <Stack px="2" alignItems="flex-end" my="1">
-                            <HStack alignItems="center">
-                                <Text color="black"
-                                    fontSize="md"
-                                    pr="3"
-                                    _dark={{
-                                        color: "warmGray.200"
-                                    }} fontWeight="700">
-                                    {
-                                        item?.writer?.first_name
-                                    }
-                                </Text>
-                                <Avatar bg="#4dd3ff" source={{
-                                    uri: item?.writer?.profile_picture
-                                }}>
-                                    AJ
-                                </Avatar>
-                             
-                            </HStack>
-                            <Stack py="2">
+    const renderItem =({item})=> <ResponseRender item={item}/>
 
-                                <Text color="coolGray.700" _dark={{
-                                    color: "warmGray.200"
-                                }} fontWeight="700">
-                                    {
-                                        item?.text
-                                    }
-                                </Text>
-                                <Text color="coolGray.600"
-                                    fontSize="xs"
-
-                                 _dark={{
-                                    color: "warmGray.200"
-                                }} fontWeight="400">
-                                    {
-                                        moment(item?.date_created).format( 'MMMM Do YYYY, h:mm:ss a')
-                                }
-                                </Text>
-
-                            </Stack>
-                    </Stack>
-                }
-               
-         {
-                    item?.writer?.type === 'WORKER' && 
-                    <Stack px="2" my="1" >
-                        <HStack alignItems="center">
-                            <Avatar bg="#4dd3ff" source={{
-                                    uri: item?.writer?.profile_picture
-                            }}>
-                             WK
-                            </Avatar>
-                            <Text color="black"
-                                fontSize="md"
-                            pl="3"
-                            _dark={{
-                                color: "warmGray.200"
-                            }} fontWeight="700">
-                             {
-                                    item?.writer?.first_name 
-                             }
-                            </Text>
-                      </HStack>
-                        <Stack py="2">
-
-                                <Text color="coolGray.700" _dark={{
-                                color: "warmGray.200"
-                            }} fontWeight="700">
-                              {
-                                    item?.text 
-                              }
-                            </Text>
-                            <Text color="coolGray.600" _dark={{
-                                color: "warmGray.200"
-                            }} fontWeight="400">
-                               {
-                                        moment(item?.date_created).format('MMMM Do YYYY, h:mm:ss a')
-
-                               }
-                            </Text>
-
-                        </Stack>
-                    </Stack>
-         }
-
-            </Box>
-        )
-    }
     const submitData = async () => {
  const data = {
     ticket:id,
@@ -171,6 +89,7 @@ const ResponseTicket = ({route}) => {
        
     }
   return (
+ <>
       <Box flex="1" bg="#fff" >
           <Box w="100%" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
               borderColor: "coolGray.600",
@@ -181,7 +100,14 @@ const ResponseTicket = ({route}) => {
           }} _light={{
               backgroundColor: "gray.50"
           }}>
-
+<Stack alignItems="center" mt="5">
+<Avatar bg="#4dd3ff" source={{
+                                uri:projectManG?.profile_picture
+                        }}>
+                         WK
+                        </Avatar>
+                        <Text color="#4dd3ff">Project Manager</Text>
+</Stack>
               <Stack p="3" space={3}>
                   <Stack>
                       <Heading size="md" >
@@ -205,6 +131,20 @@ const ResponseTicket = ({route}) => {
                           {itemData?.opener?.company?.name}
                       </Text>
                   </HStack>
+                  <HStack alignItems="center" justifyContent="space-between">
+              <Text color="coolGray.800" _dark={{
+                color: "warmGray.200"
+              }} fontWeight="400">
+                Project Manager:
+              </Text>
+              <Text color="coolGray.800"
+                fontSize="xs"
+                _dark={{
+                  color: "warmGray.200"
+                }} fontWeight="400">
+                {projectManG?.first_name}   {projectManG?.last_name}
+              </Text>
+            </HStack>
                   <HStack alignItems="center" justifyContent="space-between">
                       <Text color="coolGray.800" _dark={{
                           color: "warmGray.200"
@@ -261,8 +201,7 @@ const ResponseTicket = ({route}) => {
 
        </Box>
 
-{
-              itemData?.status === 'OPEN' && <HStack position="absolute" bottom="2" alignItems="center" justifyContent="space-between" mx="1">
+       <HStack position="absolute" bottom="2" alignItems="center" justifyContent="space-between" mx="1">
                   <FormControl w="87%">
                     <TouchableWithoutFeedback  onPress={Keyboard.dismiss} accessible={false}>
                     <TextInput
@@ -274,7 +213,20 @@ const ResponseTicket = ({route}) => {
                       />
 
                     </TouchableWithoutFeedback>
-                    
+                    <Stack  position="absolute" right="2" top="2">
+  <TouchableOpacity
+ onPress={() => setModalVisible(!modalVisible)}
+  >
+  <Icon
+                name="arrow-collapse-up"
+                size={35}
+                color='#4dd3ff'
+
+               
+            />
+  </TouchableOpacity>
+
+</Stack>
                   </FormControl>
                  
               {
@@ -295,13 +247,17 @@ const ResponseTicket = ({route}) => {
               }
 
                   {responseLoading &&               <Spinner accessibilityLabel="Loading posts" color="blue" />     }
-              </HStack>
-} 
-        
+              </HStack> 
    </Box>
+<Stack >
+<ModalComponent modalVisible={modalVisible}  setModalVisible={setModalVisible}/>
+</Stack>
+ </>
   )
 }
 
 export default ResponseTicket
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  
+})
