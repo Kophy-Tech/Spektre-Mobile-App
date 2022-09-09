@@ -1,11 +1,12 @@
 import { StyleSheet, View, FlatList , TextInput, TouchableWithoutFeedback, TouchableOpacity, Keyboard, Platform, PermissionsAndroid } from 'react-native'
 
 import React from 'react'
-import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner, Avatar, Modal } from "native-base";
+import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl,Image, Spinner, Avatar, Modal } from "native-base";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from "moment";
 
 const ResponseRender = ({item}) => {
+    // console.log(item?.attachment , 'response render')
     return(
         <Box w="100%">
             {
@@ -50,6 +51,16 @@ const ResponseRender = ({item}) => {
                             </Text>
 
                         </Stack>
+
+                        {
+                    item?.attachment &&    <Stack width="100%" style={{height:100}} my="2">
+                    <Image
+                    resizeMode="cover"
+                    source={{
+uri:item?.attachment
+}} alt="Alternate Text"  width="100%" height="100%"/>
+                  </Stack>
+                 }
                 </Stack>
             }
            
@@ -92,6 +103,15 @@ const ResponseRender = ({item}) => {
                         </Text>
 
                     </Stack>
+                 {
+                    item?.attachment &&    <Stack width="100%" style={{height:100}} my="2">
+                    <Image
+                    resizeMode="cover"
+                    source={{
+uri:item?.attachment
+}} alt="Alternate Text"  width="100%" height="100%"/>
+                  </Stack>
+                 }
                 </Stack>
      }
 

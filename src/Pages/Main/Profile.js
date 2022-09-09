@@ -9,6 +9,7 @@ import LoadingCard from '../../Components/Loading';
 
 import { useGetUserQuery } from '../../Redux/AuthApi';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Profile() {
   const navigation = useNavigation()
@@ -28,7 +29,8 @@ export default function Profile() {
           style: "cancel"
         },
         { text: "OK", onPress: () => {
-navigation.replace('Auth')
+          AsyncStorage.removeItem('token')
+navigation.navigate('Auth')
         } }
       ]
     );

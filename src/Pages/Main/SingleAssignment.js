@@ -107,7 +107,7 @@ export default function SingleAssignment({navigation}) {
             // }
             response.assets.map((asset) => {
 
-                console.log('uri -> ', asset.uri);
+                // console.log('uri -> ', asset.uri);
 
                 setImagePicker([...imagePicker, {
                   uri: asset.uri,
@@ -175,7 +175,7 @@ export default function SingleAssignment({navigation}) {
     
                     response.assets.map((asset) => {
     
-                        console.log('uri -> ', asset);
+                        // console.log('uri -> ', asset);
                         setImagePicker([...imagePicker, {
                           uri: asset.uri,
                           type:asset.type,
@@ -220,7 +220,7 @@ export default function SingleAssignment({navigation}) {
     
                 response.assets.map((asset) => {
     
-                    console.log('uri -> ', asset);
+                    // console.log('uri -> ', asset);
                     setImagePicker([...imagePicker, {
                       uri: asset.uri,
                       type:asset.type,
@@ -686,7 +686,7 @@ const id = route?.params?.id
               }
             </FormControl>
           <HStack alignItems="center" justifyContent="flex-end">
-<Stack mr="5">
+{/* <Stack mr="5">
 <TouchableOpacity
 onPress={documentPicker}
 >
@@ -698,7 +698,7 @@ onPress={documentPicker}
                
             />
 </TouchableOpacity>
-</Stack>
+</Stack> */}
 <Stack mx="5">
 <TouchableOpacity
 onPress={selectImage}

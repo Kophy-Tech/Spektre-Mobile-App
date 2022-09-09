@@ -3,19 +3,20 @@ import { Text, HStack, Stack, Avatar, } from "native-base";
 import { TouchableOpacity } from 'react-native';
 
 export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLoaing, navigation }) {
-    console.log(item?.attachments)
+    // console.log(item?.attachments, 'from ticket')
     return (
         <HStack mt="0.5" mb="2" mx="2" p="0.5" justifyContent="space-between" alignItems='center'>
+  <Text color="coolGray.600"
+                fontSize="xs"
+                flex="1"
+                textAlign="left"
+                _dark={{
+                    color: "warmGray.200"
+                }} fontWeight="400">
+                { item?.attachments?.length > 0 ? item?.attachments?.length :'Nil'}
 
+            </Text>
 
-<Avatar bg="#4dd3ff" 
-                mx="1"
-               
-                alignSelf="center" size="md" source={{
-                  uri: item?.uri
-                }}>
-                  
-                  </Avatar>
             <Text color="coolGray.600"
                 fontSize="xs"
                 flex="1"

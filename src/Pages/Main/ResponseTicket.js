@@ -1,6 +1,6 @@
 import { StyleSheet, View, FlatList , TextInput, TouchableWithoutFeedback, TouchableOpacity, Keyboard, Platform, PermissionsAndroid } from 'react-native'
 import React from 'react'
-import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner, Avatar, Modal } from "native-base";
+import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner, Avatar , Image} from "native-base";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from "moment";
 import { useGetTicketQuery, useResponseTicketMutation } from '../../Redux/AuthApi'
@@ -8,7 +8,7 @@ import LoadingCard from '../../Components/Loading'
 import ErrorCard from '../../Components/ErrorCard'
 import ModalComponent from '../../Components/Modal';
 import ResponseRender from './responseRender';
-
+import FileModal from './FileModal';
 const ResponseTicket = ({route}) => {
     const id = route?.params?.id
     const projectManG= route?.params?.project?.assignment?.project?.project_manager
@@ -16,9 +16,10 @@ const ResponseTicket = ({route}) => {
     const { data:itemData, error, isLoading } = useGetTicketQuery({ id }, {
         // pollingInterval: 1000,
     })
-   
+//    console.log( itemData, 'from response to ticket')
  
     const [modalVisible, setModalVisible] = React.useState(false);
+    const [modalFileVisible, setModalFileVisible] = React.useState(false);
 
     const [responseTicket, { isLoading: responseLoading }] = useResponseTicketMutation()
 
@@ -28,11 +29,10 @@ const ResponseTicket = ({route}) => {
     const renderItem =({item})=> <ResponseRender item={item}/>
 
     const submitData = async () => {
- const data = {
-    ticket:id,
-    text
+        const data = new FormData();
+        data.append('ticket', id)
+        data.append('text', text)
 
- }
         try {
             const user = await responseTicket(data).unwrap()
             // console.log(user);
@@ -91,7 +91,7 @@ const ResponseTicket = ({route}) => {
   return (
  <>
       <Box flex="1" bg="#fff" >
-          <Box w="100%" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
+          <Box w="100%" flex="1" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
               borderColor: "coolGray.600",
               backgroundColor: "gray.700"
           }} _web={{
@@ -183,10 +183,19 @@ const ResponseTicket = ({route}) => {
                       </Text>
                    
                   </HStack>
-              </Stack>
+
+                 {
+                    itemData?.attachments.length > 0 &&  <Stack my="2">
+                    <Button  style={{backgroundColor:'#4dd3ff'}} onPress={()=> setModalFileVisible(true)} >
+    <Text color="#fff" fontSize="md" fontWeight="500">Open File</Text>
+  </Button>
+                    </Stack>
+                 }
+              </Stack  >
+         
           </Box>
 
-       <Box mb="1/2">
+       <Box mb="20" flex="1" >
               <FlatList
                   data={itemData?.responses}
                   renderItem={renderItem}
@@ -250,7 +259,10 @@ const ResponseTicket = ({route}) => {
               </HStack> 
    </Box>
 <Stack >
-<ModalComponent modalVisible={modalVisible}  setModalVisible={setModalVisible}/>
+<ModalComponent modalVisible={modalVisible}  setModalVisible={setModalVisible} id={id}/>
+</Stack>
+<Stack>
+    <FileModal Attachments={itemData?.attachments} modalFileVisible={modalFileVisible}  setModalFileVisible={setModalFileVisible}/>
 </Stack>
  </>
   )

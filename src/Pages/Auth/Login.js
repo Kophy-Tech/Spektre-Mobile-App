@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SpinnerLoad from "../../Components/Spinner";
 import { useLoginMutation } from "../../Redux/AuthApi";
 import { StyleSheet, Linking, Alert, Platform } from 'react-native'
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Login = () => {
   const [passwordType, setPasswordType] = React.useState("password");
   const navigation = useNavigation()
@@ -15,6 +15,8 @@ const Login = () => {
     password:''
   });
 
+
+ 
   const OpenUrl = React.useCallback(
     async () => {
       const supported = await Linking.canOpenURL('https://spektre-prj.herokuapp.com/account/password_reset/');
@@ -92,6 +94,9 @@ const Login = () => {
       try {
         const user = await login(data).unwrap()
         // console.log(user);
+if(user){
+  AsyncStorage.setItem('token' ,  user?.token)
+}
         navigation.replace("Bottom")
         
       } catch (error) {

@@ -6,11 +6,15 @@ import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from '../Pages/Auth/Login';
 import ChangePassword from '../Pages/Auth/ChangePassoword';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
-function AuthStack() {
+function AuthStack({navigation}) {
+
+    
+
+ 
     return (
 
         <Stack.Navigator

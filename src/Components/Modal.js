@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList ,Modal, TextInput, TouchableWithoutFeedback, TouchableOpacity, Keyboard, Platform, PermissionsAndroid } from 'react-native'
+import { StyleSheet, View, FlatList ,Modal, TextInput, TouchableWithoutFeedback,Alert, TouchableOpacity, Keyboard, Platform, PermissionsAndroid } from 'react-native'
 import React from 'react'
 import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl, Spinner, Avatar } from "native-base";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -6,7 +6,13 @@ import moment from "moment";
 import IconI from 'react-native-vector-icons/Ionicons';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import DocumentPicker from "react-native-document-picker";
-const ModalComponent = ({modalVisible, setModalVisible}) => {
+import { useResponseTicketMutation } from '../Redux/AuthApi';
+const ModalComponent = ({modalVisible, setModalVisible ,id}) => {
+
+    const [responseTicket, { isLoading: responseLoading }] = useResponseTicketMutation()
+
+
+
     const [imagePicker, setImagePicker] = React.useState({
 
     });
@@ -84,8 +90,39 @@ const ModalComponent = ({modalVisible, setModalVisible}) => {
     
                   
                     setImagePicker({
-                        uri: asset.uri
-                    })
+                        uri: asset.uri,
+                        type:asset.type,
+                        name:asset.fileName})
+                        const data = new FormData();
+
+                        data.append('attachment', {
+                            uri: asset.uri,
+                            type:asset.type,
+                            name:asset.fileName});
+                          data.append('ticket', id)
+                        
+                         responseTicket(data).unwrap().then((data)=>{
+console.log(data)
+                          }).catch((error)=>{
+                            if (!error?.status) {
+                                Alert.alert('No Server Response')
+                            }
+                            else if (error.status === 400) {
+                                Alert.alert(error.data.non_field_errors[0])
+                
+                            }
+                            else if (error.status === 405) {
+                                Alert.alert(error.data.detail)
+                
+                
+                            } else {
+                                Alert.alert('error')
+                
+                
+                            }
+
+                          })
+                           
              
              
                 });
@@ -150,9 +187,41 @@ const ModalComponent = ({modalVisible, setModalVisible}) => {
                             console.log('uri -> ', asset.uri);
                         
                     setImagePicker({
-                        uri: asset.uri
-                    })
-                         
+                        uri: asset.uri,
+                        type:asset.type,
+                        name:asset.fileName})
+                        const data = new FormData();
+
+                        data.append('attachment', {
+                            uri: asset.uri,
+                            type:asset.type,
+                            name:asset.fileName});
+                          data.append('ticket', id)
+                        
+                         responseTicket(data).unwrap().then((data)=>{
+console.log(data)
+                          }).catch((error)=>{
+                            if (!error?.status) {
+                                Alert.alert('No Server Response')
+                            }
+                            else if (error.status === 400) {
+                                Alert.alert(error.data.non_field_errors[0])
+                
+                            }
+                            else if (error.status === 405) {
+                                Alert.alert(error.data.detail)
+                
+                
+                            } else {
+                                Alert.alert('error')
+                
+                
+                            }
+
+                          })
+                           
+                       
+          
                         });
                       
         
@@ -193,8 +262,14 @@ const ModalComponent = ({modalVisible, setModalVisible}) => {
                         console.log('uri -> ', asset.uri);
                       
                     setImagePicker({
-                        uri: asset.uri
+                        uri: asset.uri,
+                        type:asset.type,
+                        name:asset.fileName
                     })
+
+                    if(imagePicker.uri){
+                        submitData()
+                    }
         
                     });
               
@@ -208,6 +283,45 @@ const ModalComponent = ({modalVisible, setModalVisible}) => {
         }
                
             }
+
+            
+    const submitData = async () => {
+     const data = new FormData();
+
+        data.append('attachment', {
+            uri:imagePicker.uri,
+            type:imagePicker.type,
+            name:imagePicker.name
+          });
+          data.append('ticket', id)
+          data.append('text', '');
+               try {
+                   const user = await responseTicket(data).unwrap()
+                 
+                   console.log(user);
+               
+        setText('')
+               } catch (error) {
+                   console.log(error)
+                   if (!error?.status) {
+                       Alert.alert('No Server Response')
+                   }
+                   else if (error.status === 400) {
+                       Alert.alert(error.data.non_field_errors[0])
+       
+                   }
+                   else if (error.status === 405) {
+                       Alert.alert(error.data.detail)
+       
+       
+                   } else {
+                       Alert.alert('error')
+       
+       
+                   }
+               }
+       
+           }
   return (
     <View style={styles.centeredView}>
    
@@ -234,7 +348,7 @@ const ModalComponent = ({modalVisible, setModalVisible}) => {
                         />
       </Stack>
         <HStack alignItems="center" justifyContent="space-between">
-<Stack alignItems="center">
+{/* <Stack alignItems="center">
 <Stack >
 <TouchableOpacity
 onPress={documentPicker}
@@ -250,7 +364,7 @@ onPress={documentPicker}
 </Stack>
 <Text fontSize="lg"   fontWeight="900"  color='#4dd3ff'>Document</Text>
 
-</Stack>
+</Stack> */}
 <Stack  alignItems="center">
 <Stack >
 <TouchableOpacity

@@ -7,11 +7,16 @@ import BottomStack from './BottomStack';
 import OnboardingScreen from '../Pages/OnboardingScreen/OnboardingScreen';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SplashScreen from '../Pages/Splash/SplashScreen';
+
 const Stack = createNativeStackNavigator();
 
-function MainStack() {
+function MainStack({navigation}) {
     const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
 
+
+  
+     
 
     const LoadData = async()=>{
         const appData = await AsyncStorage.getItem('isAppFirstLaunched');
@@ -23,9 +28,15 @@ function MainStack() {
         }
  
     }
+    
+  
     React.useEffect(() => {
     LoadData()
+  
     }, []);
+
+    
+     
   return (
       isAppFirstLaunched != null && (
       <Stack.Navigator
@@ -39,9 +50,14 @@ function MainStack() {
               <Stack.Screen name="onboard" component={OnboardingScreen} />
 
           )}
-      <Stack.Screen name="Auth" component={AuthStack} />
+<Stack.Screen name="Splash" component={SplashScreen} />
 
-      <Stack.Screen name="Bottom" component={BottomStack} />
+<Stack.Screen name="Auth" component={AuthStack} />
+
+<Stack.Screen name="Bottom" component={BottomStack} />
+
+    
+
 
 
       </Stack.Navigator>)

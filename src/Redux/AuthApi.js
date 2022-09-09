@@ -1,4 +1,5 @@
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // Define a service using a base URL and expected endpoints
@@ -7,9 +8,11 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://spektre-prj.herokuapp.com/api',
     credentials: 'include',
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token
+    prepareHeaders: async(headers, { getState }) => {
+      const token = await AsyncStorage.getItem('token')
       if (token) {
+      // console.log(token, 'valid token')
+
         headers.set("authorization", `Token ${token}`)
       }
       return headers
@@ -160,10 +163,12 @@ export const api = createApi({
         query( updateData ) {
 
           return {
-            url: '/projects/responses/',
+            url: `/projects/responses/`,
             method: "POST",
-            body: updateData
-
+            body: updateData,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
           };
 
         },
@@ -256,6 +261,7 @@ export const api = createApi({
         },
       
       }),
+ 
   }),
 })
 
