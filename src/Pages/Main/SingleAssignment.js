@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconI from 'react-native-vector-icons/Ionicons';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import DocumentPicker from "react-native-document-picker";
-
+import ImagePicker from 'react-native-image-crop-picker';
 
 
 
@@ -126,119 +126,139 @@ export default function SingleAssignment({navigation}) {
     });
 }
 
-  const CameraImage =async()=> {
-    
-    if(Platform.OS ==='android'){
-        const grantedcamera = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            {
-                title: "App Camera Permission",
-                message: "App needs access to your camera ",
-                buttonNeutral: "Ask Me Later",
-                buttonNegative: "Cancel",
-                buttonPositive: "OK"
-            }
-        );
-        const grantedstorage = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-            {
-                title: "App Camera Permission",
-                message: "App needs access to your camera ",
-                buttonNeutral: "Ask Me Later",
-                buttonNegative: "Cancel",
-                buttonPositive: "OK"
-            }
-        );
-        if (grantedcamera === PermissionsAndroid.RESULTS.GRANTED && grantedstorage === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log("Camera & storage permission given");
-    
-            let options = {
-    
-                quality: 1,
-                storageOptions: {
-                    skipBackup: true,
-                    path: 'images',
-                    includeBase64:true
-                },
-            };
-            launchCamera(options, (response) => {
-    
-    
-                if (response.didCancel) {
-                    console.log('User cancelled image picker');
-                } else if (response.error) {
-                    console.log('ImagePicker Error: ', response.error);
-                } else if (response.customButton) {
-                    console.log('User tapped custom button: ', response.customButton);
-                    alert(response.customButton);
-                } else {
-    
-                    response.assets.map((asset) => {
-    
-                        // console.log('uri -> ', asset);
-                        setImagePicker([...imagePicker, {
-                          uri: asset.uri,
-                          type:asset.type,
-                          name:asset.fileName
-                      }])
+ 
+const CameraImage =async()=> {
+        
+  if(Platform.OS ==='android'){
+      const grantedcamera = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+              title: "App Camera Permission",
+              message: "App needs access to your camera ",
+              buttonNeutral: "Ask Me Later",
+              buttonNegative: "Cancel",
+              buttonPositive: "OK"
+          }
+      );
+      const grantedstorage = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+              title: "App Camera Permission",
+              message: "App needs access to your camera ",
+              buttonNeutral: "Ask Me Later",
+              buttonNegative: "Cancel",
+              buttonPositive: "OK"
+          }
+      );
+      if (grantedcamera === PermissionsAndroid.RESULTS.GRANTED && grantedstorage === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log("Camera & storage permission given");
   
-                     
-                    });
+          let options = {
+              noData: true,
+              quality: 1,
+              storageOptions: {
+                  skipBackup: true,
+                  path: 'images',
+                  // includeBase64: true
+              },
+          };
+          launchCamera(options, (response) => {
+  
+  
+              if (response.didCancel) {
+                  console.log('User cancelled image picker');
+              } else if (response.error) {
+                  console.log('ImagePicker Error: ', response.error);
+              } else if (response.customButton) {
+                  console.log('User tapped custom button: ', response.customButton);
+                  alert(response.customButton);
+              } else {
+  
+                  response.assets.map((asset) => {
+  
+                      console.log('uri -> ', asset.uri);
                   
+                      setImagePicker([...imagePicker, {
+                        uri: asset.uri,
+                        type:asset.type,
+                        name:asset.fileName
+                    }])
+                     
+                 
     
-    
-                }
-            });
-    
-    
-        } else {
-            console.log("Camera permission denied");
-        }
-    
-    }
-    
-    else{
-        let options = {
-    
-            quality: 1,
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        };
-        launchCamera(options, (response) => {
-    
-    
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-                alert(response.customButton);
-            } else {
-    
-                response.assets.map((asset) => {
-    
-                    // console.log('uri -> ', asset);
-                    setImagePicker([...imagePicker, {
-                      uri: asset.uri,
-                      type:asset.type,
-                      name:asset.fileName
-                  }])
-    
-                });
-          
-    
-              
-    
-    
-            }
-        });
-    
-    }
-           
-        }
+                  });
+                
+  
+  
+              }
+          });
+  
+  
+      } else {
+          console.log("Camera permission denied");
+      }
+  
+  }
+  
+  else{
+      let options = {
+  
+          quality: 1,
+          storageOptions: {
+              skipBackup: true,
+              path: 'images',
+          },
+      };
+      launchCamera(options, (response) => {
+  
+  
+          if (response.didCancel) {
+              console.log('User cancelled image picker');
+          } else if (response.error) {
+              console.log('ImagePicker Error: ', response.error);
+          } else if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+              alert(response.customButton);
+          } else {
+  
+              response.assets.map((asset) => {
+  
+                  console.log('uri -> ', asset.uri);
+                
+                  setImagePicker([...imagePicker, {
+                    uri: asset.uri,
+                    type:asset.type,
+                    name:asset.fileName
+                }])
+  
+              });
+        
+  
+            
+  
+  
+          }
+      });
+  
+  }
+         
+      }
+
+//  console.log(imagePicker, 'from Imagepicker')
+
+
+ const OpenCamera =()=>{
+  ImagePicker.openCamera({
+    width: 300,
+    height: 400,
+    cropping: false,
+  }).then(image => {
+    console.log(image);
+  }).catch((error)=>{
+    console.log(error)
+  });
+
+ }
   // console.log(respond)
 const id = route?.params?.id
 // console.log(id)

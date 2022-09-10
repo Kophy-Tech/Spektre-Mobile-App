@@ -162,7 +162,7 @@ console.log(data)
                 console.log("Camera & storage permission given");
         
                 let options = {
-        
+                    noData: true,
                     quality: 1,
                     storageOptions: {
                         skipBackup: true,
@@ -266,10 +266,35 @@ console.log(data)
                         type:asset.type,
                         name:asset.fileName
                     })
+                    const data = new FormData();
 
-                    if(imagePicker.uri){
-                        submitData()
-                    }
+                    data.append('attachment', {
+                        uri: asset.uri,
+                        type:asset.type,
+                        name:asset.fileName});
+                      data.append('ticket', id)
+                    
+                     responseTicket(data).unwrap().then((data)=>{
+console.log(data)
+                      }).catch((error)=>{
+                        if (!error?.status) {
+                            Alert.alert('No Server Response')
+                        }
+                        else if (error.status === 400) {
+                            Alert.alert(error.data.non_field_errors[0])
+            
+                        }
+                        else if (error.status === 405) {
+                            Alert.alert(error.data.detail)
+            
+            
+                        } else {
+                            Alert.alert('error')
+            
+            
+                        }
+
+                      })
         
                     });
               
@@ -288,11 +313,11 @@ console.log(data)
     const submitData = async () => {
      const data = new FormData();
 
-        data.append('attachment', {
-            uri:imagePicker.uri,
-            type:imagePicker.type,
-            name:imagePicker.name
-          });
+        // data.append('attachment', {
+        //     uri:imagePicker.uri,
+        //     type:imagePicker.type,
+        //     name:imagePicker.name
+        //   });
           data.append('ticket', id)
           data.append('text', '');
                try {
