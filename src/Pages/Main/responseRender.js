@@ -55,7 +55,7 @@ const ResponseRender = ({item}) => {
                         {
                     item?.attachment &&    <Stack width="100%" style={{height:100}} my="2">
                     <Image
-                    resizeMode="cover"
+                    resizeMode="contain"
                     source={{
 uri:item?.attachment
 }} alt="Alternate Text"  width="100%" height="100%"/>
@@ -106,7 +106,7 @@ uri:item?.attachment
                  {
                     item?.attachment &&    <Stack width="100%" style={{height:100}} my="2">
                     <Image
-                    resizeMode="cover"
+                    resizeMode="contain"
                     source={{
 uri:item?.attachment
 }} alt="Alternate Text"  width="100%" height="100%"/>

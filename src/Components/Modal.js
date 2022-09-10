@@ -7,7 +7,7 @@ import IconI from 'react-native-vector-icons/Ionicons';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import DocumentPicker from "react-native-document-picker";
 import { useResponseTicketMutation } from '../Redux/AuthApi';
-const ModalComponent = ({modalVisible, setModalVisible ,id}) => {
+const ModalComponent = ({modalVisible, setModalVisible ,id, setModalLoad}) => {
 
     const [responseTicket, { isLoading: responseLoading }] = useResponseTicketMutation()
 
@@ -100,10 +100,12 @@ const ModalComponent = ({modalVisible, setModalVisible ,id}) => {
                             type:asset.type,
                             name:asset.fileName});
                           data.append('ticket', id)
-                        
+                          setModalLoad(true)
                          responseTicket(data).unwrap().then((data)=>{
+                            setModalLoad(false)
 console.log(data)
                           }).catch((error)=>{
+                            setModalLoad(false)
                             if (!error?.status) {
                                 Alert.alert('No Server Response')
                             }
@@ -197,10 +199,12 @@ console.log(data)
                             type:asset.type,
                             name:asset.fileName});
                           data.append('ticket', id)
-                        
+                          setModalLoad(true)
                          responseTicket(data).unwrap().then((data)=>{
+                            setModalLoad(false)
 console.log(data)
                           }).catch((error)=>{
+                            setModalLoad(false)
                             if (!error?.status) {
                                 Alert.alert('No Server Response')
                             }
@@ -273,10 +277,12 @@ console.log(data)
                         type:asset.type,
                         name:asset.fileName});
                       data.append('ticket', id)
-                    
+                      setModalLoad(true)
                      responseTicket(data).unwrap().then((data)=>{
+                        setModalLoad(false)
 console.log(data)
                       }).catch((error)=>{
+                        setModalLoad(false)
                         if (!error?.status) {
                             Alert.alert('No Server Response')
                         }

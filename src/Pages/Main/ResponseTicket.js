@@ -14,12 +14,13 @@ const ResponseTicket = ({route}) => {
     const projectManG= route?.params?.project?.assignment?.project?.project_manager
 // console.log(projectManG ,' project manager')
     const { data:itemData, error, isLoading } = useGetTicketQuery({ id }, {
-        // pollingInterval: 1000,
+        pollingInterval: 1000,
     })
 //    console.log( itemData, 'from response to ticket')
  
     const [modalVisible, setModalVisible] = React.useState(false);
     const [modalFileVisible, setModalFileVisible] = React.useState(false);
+    const [modalLoad, setModalLoad] = React.useState(false)
 
     const [responseTicket, { isLoading: responseLoading }] = useResponseTicketMutation()
 
@@ -91,7 +92,7 @@ const ResponseTicket = ({route}) => {
   return (
  <>
       <Box flex="1" bg="#fff" >
-          <Box w="100%" flex="1" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
+          <Box w="100%" flex="1.5" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
               borderColor: "coolGray.600",
               backgroundColor: "gray.700"
           }} _web={{
@@ -223,17 +224,20 @@ const ResponseTicket = ({route}) => {
 
                     </TouchableWithoutFeedback>
                     <Stack  position="absolute" right="2" top="2">
-  <TouchableOpacity
- onPress={() => setModalVisible(!modalVisible)}
-  >
-  <Icon
-                name="arrow-collapse-up"
-                size={35}
-                color='#4dd3ff'
+{
 
-               
-            />
-  </TouchableOpacity>
+modalLoad ?  <Spinner accessibilityLabel="Loading posts" color="blue" /> :   <TouchableOpacity
+    onPress={() => setModalVisible(!modalVisible)}
+     >
+     <Icon
+                   name="arrow-collapse-up"
+                   size={35}
+                   color='#4dd3ff'
+   
+                  
+               />
+     </TouchableOpacity>
+}
 
 </Stack>
                   </FormControl>
@@ -255,11 +259,11 @@ const ResponseTicket = ({route}) => {
                       </Button>
               }
 
-                  {responseLoading &&               <Spinner accessibilityLabel="Loading posts" color="blue" />     }
+                  {responseLoading &&               <Spinner pt="2" accessibilityLabel="Loading posts" color="#4dd3ff" />     }
               </HStack> 
    </Box>
 <Stack >
-<ModalComponent modalVisible={modalVisible}  setModalVisible={setModalVisible} id={id}/>
+<ModalComponent modalVisible={modalVisible}  setModalVisible={setModalVisible} id={id} setModalLoad={setModalLoad}/>
 </Stack>
 <Stack>
     <FileModal Attachments={itemData?.attachments} modalFileVisible={modalFileVisible}  setModalFileVisible={setModalFileVisible}/>

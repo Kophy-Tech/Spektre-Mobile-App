@@ -1,7 +1,7 @@
 
 
 
-import { StyleSheet, Linking, Alert, Platform } from 'react-native'
+import { StyleSheet, Linking, Alert, Platform , TouchableOpacity} from 'react-native'
 import React from 'react'
 import { Box, AspectRatio, Image, Center, Text, Button, HStack, } from "native-base";
 import RNFS from "react-native-fs";
@@ -54,7 +54,14 @@ const CardFile = ({ item }) => {
     }
     return (
         <Center>
-            <Box w="95%" rounded="lg" my="1" mb="3" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
+            <TouchableOpacity 
+                        onPress={() => OpenUrl(item.file)}
+            
+                        style={{
+                            width:'95%'
+                        }}
+            >
+   <Box w="100%" rounded="lg" my="1" mb="3" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
                 borderColor: "coolGray.600",
                 backgroundColor: "gray.700"
             }} _web={{
@@ -112,6 +119,8 @@ const CardFile = ({ item }) => {
                     </Button> */}
                 </HStack>
             </Box>
+            </TouchableOpacity>
+         
         </Center>
     )
 }
