@@ -14,9 +14,9 @@ const ResponseTicket = ({route}) => {
     const projectManG= route?.params?.project?.assignment?.project?.project_manager
 // console.log(projectManG ,' project manager')
     const { data:itemData, error, isLoading } = useGetTicketQuery({ id }, {
-        pollingInterval: 1000,
+        // pollingInterval: 1000,
     })
-//    console.log( itemData, 'from response to ticket')
+ console.log(itemData, 'attachments')
  
     const [modalVisible, setModalVisible] = React.useState(false);
     const [modalFileVisible, setModalFileVisible] = React.useState(false);

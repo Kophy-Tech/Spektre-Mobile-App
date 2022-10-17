@@ -7,7 +7,7 @@ import moment from "moment";
 
 export default function Card({item, navigation}) {
 
-
+console.log(item)
   
    
     return (
@@ -31,7 +31,7 @@ export default function Card({item, navigation}) {
                                     {item?.name}
                                 </Heading>
                                 <Text fontWeight="400" pt="1" color="blue">
-                                    {item?.description.slice(0, 30)}
+                                    {item?.description}
                                 </Text>
 
                             </Stack>
@@ -46,23 +46,10 @@ export default function Card({item, navigation}) {
                                 _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                    {item.project?.project_manager.company.name}
+                                    {item?.company?.name}
                                 </Text>
                             </HStack>
-                            <HStack alignItems="center" justifyContent="space-between">
-                                <Text color="coolGray.800" _dark={{
-                                    color: "warmGray.200"
-                                }} fontWeight="400">
-                                    Project Manager:
-                                </Text>
-                                <Text color="coolGray.800"
-                                fontSize="xs"
-                                _dark={{
-                                    color: "warmGray.200"
-                                }} fontWeight="400">
-                                    {item.project?.project_manager.first_name}   {item.project?.project_manager.last_name}
-                                </Text>
-                            </HStack>
+   
                             <HStack alignItems="center" justifyContent="space-between">
                                 <Text color="coolGray.800" _dark={{
                                     color: "warmGray.200"
@@ -92,7 +79,34 @@ export default function Card({item, navigation}) {
                                     </Stack>
                                 }
                             </HStack>
-
+                            <HStack alignItems="center" justifyContent="space-between">
+                                <Text color="coolGray.800" _dark={{
+                                    color: "warmGray.200"
+                                }} fontWeight="400">
+                                   Working Hour:
+                                </Text>
+                                <Text color="coolGray.800"
+                                fontSize="xs"
+                                _dark={{
+                                    color: "warmGray.200"
+                                }} fontWeight="400">
+                                 {item?.work_hours}
+                                </Text>
+                            </HStack>
+                            <HStack alignItems="center" justifyContent="space-between">
+                                <Text color="coolGray.800" _dark={{
+                                    color: "warmGray.200"
+                                }} fontWeight="400">
+                                   Working Scope:
+                                </Text>
+                                <Text color="coolGray.800"
+                                fontSize="xs"
+                                _dark={{
+                                    color: "warmGray.200"
+                                }} fontWeight="400">
+                                 {item?.working_scope}
+                                </Text>
+                            </HStack>
                             <HStack alignItems="center" justifyContent="space-between">
                                 <Text fontSize="xs" color="coolGray.600" _dark={{
                                     color: "warmGray.200"

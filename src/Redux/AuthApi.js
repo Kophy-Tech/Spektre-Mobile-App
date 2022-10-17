@@ -37,7 +37,7 @@ export const api = createApi({
       geAllAsign: builder.query({
         query() {
           return {
-            url: '/projects/assignments/',
+            url: '/assignments/',
             method: "GET",
       
 
@@ -50,7 +50,7 @@ export const api = createApi({
       getPendingAsign: builder.query({
         query() {
           return {
-            url: '/projects/assignments/?status=PENDING',
+            url: '/assignments/?status=PENDING',
             method: "GET",
          
 
@@ -64,7 +64,7 @@ export const api = createApi({
       getActiveAsign: builder.query({
         query() {
           return {
-            url: '/projects/assignments/?status=ACTIVE',
+            url: '/assignments/?status=ACTIVE',
             method: "GET",
            
 
@@ -78,7 +78,7 @@ export const api = createApi({
     getCompletedAsign: builder.query({
         query() {
           return {
-            url: '/projects/assignments/?status=COMPLETED',
+            url: '/assignments/?status=COMPLETED',
             method: "GET",
            
 
@@ -105,7 +105,7 @@ export const api = createApi({
       getAsign: builder.query({
         query({ id}) {
           return {
-            url: `/projects/assignments/${id}/`,
+            url: `/assignments/${id}/`,
             method: "GET",
           
 
@@ -120,7 +120,7 @@ export const api = createApi({
         query({  id , updateData}) {
          
           return {
-            url: `/projects/assignments/${id}/`,
+            url: `/assignments/${id}/`,
             method: "PATCH",
               body:updateData
 
@@ -134,7 +134,7 @@ export const api = createApi({
         query(respondId) {
 
           return {
-            url: `/projects/tickets/`,
+            url: `/tickets/`,
             method: "POST",
             body: respondId,
             headers: {
@@ -148,7 +148,7 @@ export const api = createApi({
       getTicket: builder.query({
         query({ id }) {
           return {
-            url: `/projects/tickets/${id}/`,
+            url: `/tickets/${id}/`,
             method: "GET",
 
 
@@ -163,7 +163,7 @@ export const api = createApi({
         query( updateData ) {
 
           return {
-            url: `/projects/responses/`,
+            url: `/responses/`,
             method: "POST",
             body: updateData,
             headers: {
@@ -179,7 +179,7 @@ export const api = createApi({
         query({ updateData, id }) {
 
           return {
-            url: `/projects/tickets/${id}/`,
+            url: `/tickets/${id}/`,
             method: "PATCH",
             body: updateData
 
@@ -191,7 +191,7 @@ export const api = createApi({
       getAllTicket: builder.query({
         query() {
           return {
-            url: '/projects/assignments/',
+            url: '/assignments/',
             method: "GET",
 
 
