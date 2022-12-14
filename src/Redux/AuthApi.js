@@ -10,6 +10,7 @@ export const api = createApi({
     credentials: 'include',
     prepareHeaders: async(headers, { getState }) => {
       const token = await AsyncStorage.getItem('token')
+      // console.log(token)
       if (token) {
       // console.log(token, 'valid token')
 
@@ -261,7 +262,22 @@ export const api = createApi({
         },
       
       }),
- 
+      uploadDocument: builder.mutation({
+
+        query({id, ...res}) {
+
+          return {
+            url: `/assignments/${id}/add-document/`,
+            method: "POST",
+            body: res,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          };
+
+        },
+        invalidatesTags: ['Assignment']
+      })
   }),
 })
 
@@ -282,7 +298,8 @@ export const {
   useGetNotificationsQuery,
   useGetNotificationQuery,
   useReadNofiticationMutation,
-  useChangePasswordMutation
+  useChangePasswordMutation,
+  useUploadDocumentMutation
 
 
   

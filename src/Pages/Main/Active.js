@@ -12,7 +12,7 @@ export default function Active({navigation}) {
 
 
   const { data, error, isLoading } =  useGetActiveAsignQuery()
-
+// console.log(data[0])
   if (isLoading) {
     return <LoadingCard />
   }
@@ -21,6 +21,10 @@ export default function Active({navigation}) {
 
       return <ErrorCard errormsg='No Server Response' />
     }
+    else if (error.status ==="FETCH_ERROR") {
+      return <ErrorCard errormsg="Network request failed, refresh your network and try again!." />
+
+  }
     else if (error.status === 400) {
       return <ErrorCard errormsg={error?.data?.detail} />
 
@@ -28,11 +32,8 @@ export default function Active({navigation}) {
     else if (error.status === 401) {
       return <ErrorCard errormsg='Unauthorized' />
 
-
-
-
     } else {
-      return <ErrorCard errormsg='Error' />
+      return <ErrorCard errormsg='Unknow error occur!,Kindly refresh your application' />
 
 
 

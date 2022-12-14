@@ -11,12 +11,12 @@ import ResponseRender from './responseRender';
 import FileModal from './FileModal';
 const ResponseTicket = ({route}) => {
     const id = route?.params?.id
-    const projectManG= route?.params?.project?.assignment?.project?.project_manager
+    const projectManG= route?.params?.project?.assignment?.project_manager
 // console.log(projectManG ,' project manager')
-    const { data:itemData, error, isLoading } = useGetTicketQuery({ id }, {
+    const { data:itemData, error, isLoading, isSuccess, isError } = useGetTicketQuery({ id }, {
         // pollingInterval: 1000,
     })
- console.log(itemData, 'attachments')
+ console.log(itemData?.status, 'attachments')
  
     const [modalVisible, setModalVisible] = React.useState(false);
     const [modalFileVisible, setModalFileVisible] = React.useState(false);
@@ -65,10 +65,14 @@ const ResponseTicket = ({route}) => {
     if (isLoading) {
         return <LoadingCard />
     }
-    if (error) {
+    if (isError) {
         if (!error?.status) {
          
             return <ErrorCard errormsg='No Server Response' />
+        }
+        else if (error.status ==="FETCH_ERROR") {
+            return <ErrorCard errormsg="Network request failed, refresh your network and try again!." />
+
         }
         else if (error.status === 400) {
             return <ErrorCard errormsg={error?.data?.detail} />
@@ -92,7 +96,7 @@ const ResponseTicket = ({route}) => {
   return (
  <>
       <Box flex="1" bg="#fff" >
-          <Box w="100%" flex="1.5" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
+          <Box w="100%" flex="1" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
               borderColor: "coolGray.600",
               backgroundColor: "gray.700"
           }} _web={{
@@ -129,7 +133,7 @@ const ResponseTicket = ({route}) => {
                           _dark={{
                               color: "warmGray.200"
                           }} fontWeight="400">
-                          {itemData?.opener?.company?.name}
+                          {projectManG?.company?.name}
                       </Text>
                   </HStack>
                   <HStack alignItems="center" justifyContent="space-between">
@@ -153,7 +157,7 @@ const ResponseTicket = ({route}) => {
                           Status:
                       </Text>
                       {
-                          itemData?.status === 'OPEN' && <Stack w="20" bg="white" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
+                          itemData?.status === 'OPEN' && <Stack w="20" bg="white" alignItems="center" justifyContent="center"  >
                               <Text fontWeight="400" color="black">
                                   {itemData?.status}
                               </Text>
@@ -162,7 +166,7 @@ const ResponseTicket = ({route}) => {
                     
 
                       {
-                          itemData?.status === 'CLOSE' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="red.600">
+                          itemData?.status === 'CLOSED' && <Stack w="20" bg="green.600" alignItems="center" justifyContent="center"  >
                               <Text fontWeight="400" color="white" style={{
                                   fontSize: 12
                               }}>
@@ -177,7 +181,7 @@ const ResponseTicket = ({route}) => {
                           color: "warmGray.200"
                       }} fontWeight="400">
 
-                          Date Created:{
+                          Date Created:  {
                               moment(itemData?.date_created).format('MMMM Do YYYY, h:mm:ss a')
 
                           }

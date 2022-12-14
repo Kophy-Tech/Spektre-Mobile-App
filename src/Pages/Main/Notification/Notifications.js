@@ -30,10 +30,10 @@ const EmptyCard =()=>{
     )
 }
 const Notifications = ({navigation}) => {
-    const { data, error, isLoading } = useGetNotificationsQuery({
+    const { data, error, isLoading, isError } = useGetNotificationsQuery({
         pollingInterval: 1000,
     })
-
+// console.log(data)
   
  const renderItem =({item})=>{
      return (
@@ -86,13 +86,17 @@ const Notifications = ({navigation}) => {
         return <LoadingCard />
     }
 
-    if (error) {
+    if (isError) {
         if (!error?.status) {
 
             return <ErrorCard errormsg='No Server Response' />
         }
         else if (error.status === 400) {
             return <ErrorCard errormsg={error?.data?.detail} />
+
+        }
+        else if (error.status ==="FETCH_ERROR") {
+            return <ErrorCard errormsg="Network request failed, refresh your network and try again!." />
 
         }
         else if (error.status === 401) {

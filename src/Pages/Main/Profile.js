@@ -16,7 +16,8 @@ export default function Profile() {
 
   
 
-  const { data, error, isLoading } = useGetUserQuery()
+  const { data, error, isLoading , isError} = useGetUserQuery()
+  console.log(data)
   const LogOut = () =>{
     Alert.alert(
       "Are you sure you want to logout?",
@@ -40,7 +41,7 @@ navigation.navigate('Auth')
   if (isLoading) {
     return <LoadingCard />
   }
-  if (error) {
+  if (isError) {
     if (!error?.status) {
 
       return <ErrorCard errormsg='No Server Response' />
@@ -56,7 +57,7 @@ navigation.navigate('Auth')
 
 
     } else {
-      return <ErrorCard errormsg='Error' />
+      return <ErrorCard errormsg='Unknow error occur!,Kindly refresh your application' />
 
 
 

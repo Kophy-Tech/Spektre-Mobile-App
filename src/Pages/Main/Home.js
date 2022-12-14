@@ -22,15 +22,16 @@ if(isLoading){
 
       return <ErrorCard errormsg='No Server Response' />
     }
+    else if (error.status ==="FETCH_ERROR") {
+      return <ErrorCard errormsg="Network request failed, refresh your network and try again!." />
+
+  }
     else if (error.status === 400) {
       return <ErrorCard errormsg={error?.data?.detail} />
 
     }
     else if (error.status === 401) {
       return <ErrorCard errormsg='Unauthorized' />
-
-
-
 
     } else {
       return <ErrorCard errormsg='Error' />

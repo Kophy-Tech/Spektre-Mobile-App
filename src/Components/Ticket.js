@@ -13,7 +13,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="400">
-                { item?.attachments?.length > 0 ? item?.attachments?.length :'Nil'}
+                { item?.attachments?.length > 0 ? item?.attachments?.length :0}
 
             </Text>
 

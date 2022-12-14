@@ -4,7 +4,10 @@ import ErrorCard from '../../Components/ErrorCard';
 import { useRoute } from '@react-navigation/native';
 import { Box, Heading, Text, Center, HStack, Stack, Button, Input, FormControl , Avatar} from "native-base";
 import LoadingCard from '../../Components/Loading';
-import { useChangeAsignStatusMutation, useGetAsignQuery, useOpenTicketMutation, useCloseTicketMutation } from '../../Redux/AuthApi';
+import { useChangeAsignStatusMutation, useGetAsignQuery, useOpenTicketMutation, useCloseTicketMutation, 
+  useUploadDocumentMutation
+
+} from '../../Redux/AuthApi';
 import CardFile from '../../Components/CardFile';
 import EmptyCardFile from '../../Components/EmptyCardFile';
 import SpinnerLoad from '../../Components/Spinner';
@@ -19,8 +22,9 @@ import IconI from 'react-native-vector-icons/Ionicons';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from 'react-native-image-crop-picker';
-
-
+import RenderHtml from 'react-native-render-html';
+import { useWindowDimensions } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown'
 
 
 export default function SingleAssignment({navigation}) {
@@ -29,20 +33,28 @@ export default function SingleAssignment({navigation}) {
   const [changeAsignStatus, { isLoading:Loadingstatus }] =useChangeAsignStatusMutation()
   const [OpenTicket, { isLoading: LoadingOpenTicket }] = useOpenTicketMutation()
   const [CloseTicket, { isLoading: LoadingCloseTicket }] = useCloseTicketMutation()
+const [uploadDocument, {isLoading:UploadLoading}]=  useUploadDocumentMutation()
+
  const [IdLoaing, setIdLoaing] = React.useState(null);
 
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [respond, setRespond] = React.useState('');
-  const [respondError, setRespondError] = React.useState('');
-  const [imagePicker, setImagePicker] = React.useState([]);
+  const [modalVisible2, setModalVisible2] = React.useState(false);
 
+  const [respond, setRespond] = React.useState('');
+
+
+  const [imagePicker, setImagePicker] = React.useState([]);
+  const [document, setDocument] = React.useState([]);
+
+  const { width } = useWindowDimensions();
+ 
 
   const documentPicker = async () => {
     // Opening Document Picker to select one file
     try {
       const res = await DocumentPicker.pick({
         // Provide which type of file you want user to pick
-        type: [DocumentPicker.types.allFiles],
+        type: [DocumentPicker.types.pdf],
         // There can me more options as well
         // DocumentPicker.types.allFiles
         // DocumentPicker.types.images
@@ -52,6 +64,19 @@ export default function SingleAssignment({navigation}) {
       });
       // Printing the log realted to the file
       console.log('res : ' + JSON.stringify(res));
+  res.map((asset) => {
+  
+        
+    
+        setDocument([...document, {
+          uri: asset.uri,
+          type:asset.type,
+          name:asset.fileName
+      }])
+       
+   
+
+    });
       // Setting the state to show single file attributes
       // setSingleFile(res);
     } catch (err) {
@@ -125,7 +150,64 @@ export default function SingleAssignment({navigation}) {
         }
     });
 }
+const selectImage2=()=> {
+  let options = {
+      title: 'Select Image',
+      customButtons: [
+          { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+      ],
+   
+      quality:1,
+      storageOptions: {
+          skipBackup: true,
+          path: 'images'
+      }
+  };
 
+  launchImageLibrary(options, (response) => {
+     
+
+      if (response.didCancel) {
+          console.log('User cancelled image picker');
+      } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+          alert(response.customButton);
+      } else {
+        
+
+        
+
+         
+
+          // You can also display the image using data:
+      
+          // alert(JSON.stringify(response));s
+          // const data = {
+          //     fileName: sourcefilename,
+          //     uri: sourceUri
+          // }
+          response.assets.map((asset) => {
+
+              // console.log('uri -> ', asset.uri);
+
+             setDocument([...document, {
+                uri: asset.uri,
+                type:asset.type,
+                name:asset.fileName
+            }])
+       
+       
+          });
+  
+         
+          
+     
+         
+      }
+  });
+}
  
 const CameraImage =async()=> {
         
@@ -243,7 +325,122 @@ const CameraImage =async()=> {
   }
          
       }
-
+      const CameraImage2 =async()=> {
+        
+        if(Platform.OS ==='android'){
+            const grantedcamera = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                {
+                    title: "App Camera Permission",
+                    message: "App needs access to your camera ",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                }
+            );
+            const grantedstorage = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                {
+                    title: "App Camera Permission",
+                    message: "App needs access to your camera ",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                }
+            );
+            if (grantedcamera === PermissionsAndroid.RESULTS.GRANTED && grantedstorage === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("Camera & storage permission given");
+        
+                let options = {
+                    noData: true,
+                    quality: 1,
+                    storageOptions: {
+                        skipBackup: true,
+                        path: 'images',
+                        // includeBase64: true
+                    },
+                };
+                launchCamera(options, (response) => {
+        
+        
+                    if (response.didCancel) {
+                        console.log('User cancelled image picker');
+                    } else if (response.error) {
+                        console.log('ImagePicker Error: ', response.error);
+                    } else if (response.customButton) {
+                        console.log('User tapped custom button: ', response.customButton);
+                        alert(response.customButton);
+                    } else {
+        
+                        response.assets.map((asset) => {
+        
+                            console.log('uri -> ', asset.uri);
+                        
+                            setDocument([...document, {
+                              uri: asset.uri,
+                              type:asset.type,
+                              name:asset.fileName
+                          }])
+                           
+                       
+          
+                        });
+                      
+        
+        
+                    }
+                });
+        
+        
+            } else {
+                console.log("Camera permission denied");
+            }
+        
+        }
+        
+        else{
+            let options = {
+        
+                quality: 1,
+                storageOptions: {
+                    skipBackup: true,
+                    path: 'images',
+                },
+            };
+            launchCamera(options, (response) => {
+        
+        
+                if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                } else if (response.error) {
+                    console.log('ImagePicker Error: ', response.error);
+                } else if (response.customButton) {
+                    console.log('User tapped custom button: ', response.customButton);
+                    alert(response.customButton);
+                } else {
+        
+                    response.assets.map((asset) => {
+        
+                        console.log('uri -> ', asset.uri);
+                      
+                        setImagePicker([...imagePicker, {
+                          uri: asset.uri,
+                          type:asset.type,
+                          name:asset.fileName
+                      }])
+        
+                    });
+              
+        
+                  
+        
+        
+                }
+            });
+        
+        }
+               
+            }
 //  console.log(imagePicker, 'from Imagepicker')
 
 
@@ -261,10 +458,21 @@ const CameraImage =async()=> {
  }
   // console.log(respond)
 const id = route?.params?.id
-// console.log(id)
+console.log(id)
 
-    const { data:itemData, error, isLoading } = useGetAsignQuery({id})
-
+    const { data:itemData, error, isLoading, isSuccess } = useGetAsignQuery({id})
+const [assign, setAssign] = React.useState([])
+const [responsiblePerson, setResponsiblePerson] = React.useState("")
+console.log(itemData?.documents, 'itemdata')
+React.useLayoutEffect(() => {
+if(isSuccess){
+  const assignee = itemData?.assignees?.map((d)=> d?.username)
+  setAssign([...assignee])
+}
+}, [itemData, isSuccess ])
+    const source = {
+      html: itemData?.description
+    };
  const updateStatus = (data)=>{
    Alert.alert(
      "Are you sure you want to update the status?",
@@ -376,32 +584,56 @@ const id = route?.params?.id
       ]
     );
   }
-  const validateResponse = () => {
-    if (respond === '') {
-      setRespondError('Ticket is required');
+  const SendDocument = async()=>{
 
-      return false;
-    }
-    if (respond.length >0) {
-      setRespondError('');
-
-      return true;
-    }
-
-  
-
-// return true
-
-  
-  };
- const SendOpenTicket = async()=>{
-   if (!validateResponse()) {
-     console.log('error')
+ 
+       const data = new FormData();
+       document.forEach((item, i)=>{
+        data.append('files', {
+          uri:item.uri,
+          type:item.type,
+          name:item.name
+        });
+       })
+   const d ={
+    id:id,
+    data:data
    }
- else{
+   
+    //  console.log(data, 'data ')
     
-     const data = new FormData();
+       try {
+         const user = await uploadDocument(d).unwrap()
+         console.log(user, 'upload datat');
+         setModalVisible2(false)
+       
+         setDocument([])
+  
+       } catch (error) {
+         console.log(error)
+         if (!error?.status) {
+           Alert.alert('No Server Response')
+         }
+         else if (error.status === 400) {
+           Alert.alert(error.data.non_field_errors[0])
+  
+         }
+         else if (error.status === 401) {
+           Alert.alert('Unauthorized')
+  
+  
+         } else {
+           Alert.alert('Error')
+  
+  
+         }
+       }
+   }
+ const SendOpenTicket = async()=>{
 
+  const d = itemData?.assignees.filter((fm)=> fm.username ===responsiblePerson)
+
+     const data = new FormData();
      imagePicker.forEach((item, i)=>{
       data.append('attachments', {
         uri:item.uri,
@@ -411,6 +643,7 @@ const id = route?.params?.id
      })
      data.append('assignment', id)
      data.append('issue', respond);
+     data.append('responsible_person',d[0]?.id )
   //  console.log(data, 'data ')
   
      try {
@@ -440,7 +673,8 @@ const id = route?.params?.id
        }
      }
  }
- }
+ 
+
  const renderItem =({item })=> <CardFile item={item}/>
   const renderItemTickets = ({ item }) => <Ticket item={item} closeTicketSend={closeTicketSend} LoadingCloseTicket={LoadingCloseTicket} IdLoaing={IdLoaing} navigation={navigation} />
    
@@ -456,6 +690,10 @@ const id = route?.params?.id
       return <ErrorCard errormsg={error?.data?.detail} />
 
     }
+    else if (error.status ==="FETCH_ERROR") {
+      return <ErrorCard errormsg="Network request failed, refresh your network and try again!." />
+
+  }
     else if (error.status === 401) {
       return <ErrorCard errormsg='Unauthorized' />
 
@@ -463,7 +701,7 @@ const id = route?.params?.id
 
 
     } else {
-      return <ErrorCard errormsg='Error' />
+      return <ErrorCard errormsg='Unknow error occur!,Kindly refresh your application' />
 
 
 
@@ -491,9 +729,10 @@ const id = route?.params?.id
               <Heading size="md" >
                 {itemData?.name}
               </Heading>
-              <Text fontWeight="400" pt="1" color="blue">
-                {itemData?.description}
-              </Text>
+              <RenderHtml
+      contentWidth={width}
+      source={source}
+    />
 
             </Stack>
             <HStack alignItems="center" justifyContent="space-between">
@@ -507,7 +746,7 @@ const id = route?.params?.id
                 _dark={{
                   color: "warmGray.200"
                 }} fontWeight="400">
-                {itemData.project?.project_manager.company.name}
+                {itemData.project_manager.company.name}
               </Text>
             </HStack>
             <HStack alignItems="center" justifyContent="space-between">
@@ -521,7 +760,35 @@ const id = route?.params?.id
                 _dark={{
                   color: "warmGray.200"
                 }} fontWeight="400">
-                {itemData.project?.project_manager.first_name}   {itemData.project?.project_manager.last_name}
+                {itemData?.project_manager.first_name}   {itemData?.project_manager.last_name}
+              </Text>
+            </HStack>
+            <HStack alignItems="center" justifyContent="space-between">
+              <Text color="coolGray.800" _dark={{
+                color: "warmGray.200"
+              }} fontWeight="400">
+              Construction Manager:
+              </Text>
+              <Text color="coolGray.800"
+                fontSize="xs"
+                _dark={{
+                  color: "warmGray.200"
+                }} fontWeight="400">
+                {itemData?.construction_manager_name}   
+              </Text>
+            </HStack>
+            <HStack alignItems="center" justifyContent="space-between">
+              <Text color="coolGray.800" _dark={{
+                color: "warmGray.200"
+              }} fontWeight="400">
+              Construction Manager Phone No.:
+              </Text>
+              <Text color="coolGray.800"
+                fontSize="xs"
+                _dark={{
+                  color: "warmGray.200"
+                }} fontWeight="400">
+                {itemData?.construction_manager_phone}   
               </Text>
             </HStack>
             <HStack alignItems="center" justifyContent="space-between">
@@ -623,6 +890,26 @@ const id = route?.params?.id
 
       
    </Center>
+   <HStack my="2" mx="2" justifyContent="space-between">
+        <Text color="coolGray.900"
+          fontSize='lg'
+          _dark={{
+            color: "warmGray.200"
+          }} fontWeight="700">
+      Documents
+        </Text>
+
+          <Button style={{ backgroundColor: "#fff", borderColor:"#4dd3ff", borderWidth:1 }}
+          onPress={() => setModalVisible2(true)}
+        >
+          <Text
+            color="#4dd3ff"
+            fontSize='xs'
+            fontWeight="800"
+          >Add Document</Text>
+
+        </Button>
+   </HStack>
       <HStack my="2" mx="2" justifyContent="space-between">
         <Text color="coolGray.900"
           fontSize='lg'
@@ -696,15 +983,33 @@ const id = route?.params?.id
                 fontSize="md"
 
               />
-              {
-                respondError && <FormControl.HelperText _text={{
-                  fontSize: 'xs',
-                  color: 'red.500'
-                }}>
-                  {respondError}
-                </FormControl.HelperText>
-              }
+            
             </FormControl>
+
+            <Stack my="5">
+<SelectDropdown
+buttonStyle={{
+  backgroundColor:'#fff',
+  borderWidth:1,
+  borderColor:'#4dd3ff'
+}}
+	data={assign}
+	onSelect={(selectedItem, index) => {
+		setResponsiblePerson(selectedItem)
+	}}
+	buttonTextAfterSelection={(selectedItem, index) => {
+		// text represented after item is selected
+		// if data array is an array of objects then return selectedItem.property to render after item is selected
+		return selectedItem
+	}}
+	rowTextForSelection={(item, index) => {
+		// text represented for each item in dropdown
+		// if data array is an array of objects then return item.property to represent item in dropdown
+		return item
+	}}
+/>
+
+</Stack>
           <HStack alignItems="center" justifyContent="flex-end">
 {/* <Stack mr="5">
 <TouchableOpacity
@@ -767,12 +1072,125 @@ onPress={selectImage}
           </HStack>
             <Box mt="8">
               <Button
-                style={{ backgroundColor: "#4dd3ff" , borderRadius:10}}
+                style={{ backgroundColor: respond ==='' ? 'grey': responsiblePerson===''?'grey' :"#4dd3ff" , borderRadius:10}}
                 onPress={SendOpenTicket}
-                disabled={LoadingOpenTicket}
+                disabled={LoadingOpenTicket || respond==='' || responsiblePerson===''}
               >
                 {
                   LoadingOpenTicket ? <SpinnerLoad /> : <Text
+                    color="#fff"
+                    fontSize='sm'
+                  >Send</Text>
+                }
+              
+
+              </Button>
+            </Box>
+          </View>
+        </View>
+      
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible2}
+        onRequestClose={() => {
+
+          setModalVisible2(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+         
+          <View style={styles.modalView}>
+            <HStack justifyContent='space-between'
+            alignItems="flex-end"
+            my="4"
+            >
+              <Text fontSize="md" color="black" fontWeight="700">Upload Document</Text>
+              <Icon
+                name="close"
+                size={35}
+                color='#4dd3ff'
+   onPress={() => setModalVisible2(false)}
+
+              />
+            </HStack>
+       
+
+
+          <HStack alignItems="center" justifyContent="center">
+<Stack mr="5">
+<TouchableOpacity
+onPress={documentPicker}
+>
+<Icon
+                name="file-upload"
+                size={35}
+                color='#4dd3ff'
+
+               
+            />
+</TouchableOpacity>
+</Stack>
+<Stack mx="5">
+<TouchableOpacity
+onPress={selectImage2}
+>
+<Icon
+                name="image"
+                size={35}
+                color='#4dd3ff'
+
+               
+            />
+</TouchableOpacity>
+</Stack>
+<Stack mx="5">
+  <TouchableOpacity
+  onPress={CameraImage2}
+  >
+  <IconI
+                name="camera"
+                size={35}
+                color='#4dd3ff'
+
+               
+            />
+  </TouchableOpacity>
+
+</Stack>
+          </HStack>
+
+          <HStack alignItems="center" my="3" flexWrap='wrap'>
+
+            {document.length > 0 &&  document.map( (data, i)=>{
+              // console.log(data)
+              return(
+               <Stack  key={i}>
+                  {
+                  data?.type.includes('jpeg') ||  data?.type.includes('png') ?<Avatar bg="#4dd3ff" 
+                  mx="1"
+                 
+                  alignSelf="center" size="md" source={{
+                    uri: data?.uri
+                  }}>
+                    
+                    </Avatar>:<Text fontSize="sm" fontWeight="400" colo="black" >file</Text>
+                }
+               </Stack>
+              )
+            })   }
+        
+          </HStack>
+            <Box mt="8">
+              <Button
+                style={{ backgroundColor: document.length===0?'grey' :"#4dd3ff" , borderRadius:10}}
+                onPress={SendDocument}
+                disabled={UploadLoading}
+              >
+                {
+                  UploadLoading? <SpinnerLoad /> : <Text
                     color="#fff"
                     fontSize='sm'
                   >Send</Text>

@@ -1,5 +1,6 @@
 import React from 'react';
-
+import RenderHtml from 'react-native-render-html';
+import { useWindowDimensions } from 'react-native';
 
 import { Box, Heading , Text, Center, HStack, Stack } from "native-base";
 import { TouchableOpacity } from 'react-native';
@@ -8,7 +9,10 @@ import moment from "moment";
 export default function Card({item, navigation}) {
 
 console.log(item)
-  
+const { width } = useWindowDimensions();
+const source = {
+    html: item?.description
+  };
    
     return (
 
@@ -30,9 +34,10 @@ console.log(item)
                                 <Heading size="md" >
                                     {item?.name}
                                 </Heading>
-                                <Text fontWeight="400" pt="1" color="blue">
-                                    {item?.description}
-                                </Text>
+                                <RenderHtml
+      contentWidth={width}
+      source={source}
+    />
 
                             </Stack>
                             <HStack alignItems="center" justifyContent="space-between">

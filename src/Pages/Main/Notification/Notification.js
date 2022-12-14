@@ -41,10 +41,12 @@ const Notification = ({route}) => {
             }
         }
     }
-    useEffect(() => {
+    React.useLayoutEffect(() => {
 ReadDoc()
-    }, []);
- console.log(item)
+     
+    }, [])
+
+ console.log(item, 'item')
     if (readLoading) {
         return <LoadingCard />
     }
@@ -65,7 +67,7 @@ ReadDoc()
 
 
         } else {
-            return <ErrorCard errormsg='Error' />
+            return <ErrorCard errormsg='Unknow error occur!,Kindly refresh your application' />
 
 
 
@@ -88,7 +90,10 @@ ReadDoc()
                     }} _light={{
                         backgroundColor: "gray.50"
                     }}>
-                    <Heading size="md" py="1">
+                           <Heading textAlign="center" size="md" py="1">
+                        {item?.notification_type}
+                    </Heading>
+                    <Heading size="sm" py="1">
                         {item?.title}
                     </Heading>
                     <Text color="coolGray.800"

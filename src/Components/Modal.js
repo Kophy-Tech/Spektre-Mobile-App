@@ -100,11 +100,13 @@ const ModalComponent = ({modalVisible, setModalVisible ,id, setModalLoad}) => {
                             type:asset.type,
                             name:asset.fileName});
                           data.append('ticket', id)
+                          data.append('text', '')
                           setModalLoad(true)
                          responseTicket(data).unwrap().then((data)=>{
                             setModalLoad(false)
 console.log(data)
                           }).catch((error)=>{
+                            console.log(error)
                             setModalLoad(false)
                             if (!error?.status) {
                                 Alert.alert('No Server Response')
@@ -199,6 +201,7 @@ console.log(data)
                             type:asset.type,
                             name:asset.fileName});
                           data.append('ticket', id)
+                          data.append('text', '')
                           setModalLoad(true)
                          responseTicket(data).unwrap().then((data)=>{
                             setModalLoad(false)
