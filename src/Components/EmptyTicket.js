@@ -13,7 +13,7 @@ export default function EmptyTicket() {
               _dark={{
                   color: "warmGray.200"
               }} fontWeight="400"
-    > Ticket is Empty</Text>
+    > Keine Tickets</Text>
   </Box>
   );
 }

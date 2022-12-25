@@ -71,7 +71,7 @@ const [uploadDocument, {isLoading:UploadLoading}]=  useUploadDocumentMutation()
         setDocument([...document, {
           uri: asset.uri,
           type:asset.type,
-          name:asset.fileName
+          name:asset.name
       }])
        
    
@@ -458,12 +458,12 @@ const CameraImage =async()=> {
  }
   // console.log(respond)
 const id = route?.params?.id
-console.log(id)
+// console.log(id)
 
     const { data:itemData, error, isLoading, isSuccess } = useGetAsignQuery({id})
 const [assign, setAssign] = React.useState([])
 const [responsiblePerson, setResponsiblePerson] = React.useState("")
-console.log(itemData?.documents, 'itemdata')
+// console.log(itemData?.documents, 'itemdata')
 React.useLayoutEffect(() => {
 if(isSuccess){
   const assignee = itemData?.assignees?.map((d)=> d?.username)
@@ -588,6 +588,10 @@ if(isSuccess){
 
  
        const data = new FormData();
+       const d= {
+        id,
+        data
+       }
        document.forEach((item, i)=>{
         data.append('files', {
           uri:item.uri,
@@ -595,16 +599,13 @@ if(isSuccess){
           name:item.name
         });
        })
-   const d ={
-    id:id,
-    data:data
-   }
+  
    
     //  console.log(data, 'data ')
     
        try {
          const user = await uploadDocument(d).unwrap()
-         console.log(user, 'upload datat');
+         console.log(user?.documents?.length, 'upload datat');
          setModalVisible2(false)
        
          setDocument([])
@@ -739,7 +740,7 @@ if(isSuccess){
               <Text color="coolGray.800" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Company Name:
+              Firmenname:
               </Text>
               <Text color="coolGray.800"
                 fontSize="xs"
@@ -753,7 +754,7 @@ if(isSuccess){
               <Text color="coolGray.800" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Project Manager:
+               Projektleiter:
               </Text>
               <Text color="coolGray.800"
                 fontSize="xs"
@@ -767,7 +768,7 @@ if(isSuccess){
               <Text color="coolGray.800" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-              Construction Manager:
+               Bauleiter:
               </Text>
               <Text color="coolGray.800"
                 fontSize="xs"
@@ -781,7 +782,7 @@ if(isSuccess){
               <Text color="coolGray.800" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-              Construction Manager Phone No.:
+             Bauleiter Telefon Nr.:
               </Text>
               <Text color="coolGray.800"
                 fontSize="xs"
@@ -807,7 +808,7 @@ if(isSuccess){
               {
                 itemData?.status === 'ACTIVE' && <Stack w="30%" bg="yellow.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="yellow.600">
                   <Text fontWeight="400" color="white">
-                    {itemData?.status}
+                  Aktiv
                   </Text>
                 </Stack>
               }
@@ -815,7 +816,7 @@ if(isSuccess){
               {
                 itemData?.status === 'COMPLETED' && <Stack w="30%" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
                   <Text fontWeight="400" color="white"  fontSize="sm">
-                    {itemData?.status}
+                  Abgeschlossen
                   </Text>
                 </Stack>
               }
@@ -825,7 +826,7 @@ if(isSuccess){
               <Text color="coolGray.600" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Start Time: {moment(itemData?.start_date).format('MMMM Do YYYY')}
+                Start Time: {moment(itemData?.start_date).format('Do.MM.YYYY')}
               </Text>
              
             </Stack>
@@ -834,7 +835,7 @@ if(isSuccess){
               <Text color="coolGray.600" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Deadline: {moment(itemData?.deadline).format('MMMM Do YYYY')}
+                Deadline: {moment(itemData?.deadline).format('Do.MM.YYYY')}
               </Text>
             </Stack>
             {
@@ -844,7 +845,7 @@ if(isSuccess){
                   _dark={{
                     color: "warmGray.200"
                   }} fontWeight="700">
-                  Activate Status
+                 Aktiver Status
                 </Text>
                 <Button style={{backgroundColor:"#4dd3ff"}}
                   onPress={() => updateStatus('ACTIVE')}
@@ -853,7 +854,7 @@ if(isSuccess){
   Loadingstatus ? <SpinnerLoad /> :  <Text
                     color="#fff"
                     fontSize='sm'
-                  >Update Status</Text>
+                  >Status Aktualisieren</Text>
 }
                  
                 </Button>
@@ -868,7 +869,7 @@ if(isSuccess){
                   _dark={{
                     color: "warmGray.200"
                   }} fontWeight="700">
-                  Activate Status
+                 Aktiver Status
                 </Text>
                 <Button bg="#4dd3ff"
                   onPress={() => updateStatus('COMPLETED')}
@@ -878,7 +879,7 @@ if(isSuccess){
                     Loadingstatus ? <SpinnerLoad /> : <Text
                       color="#fff"
                       fontSize='sm'
-                    >Update Status</Text>
+                    >Status Aktualisieren</Text>
                   }
 
                 </Button>
@@ -896,7 +897,7 @@ if(isSuccess){
           _dark={{
             color: "warmGray.200"
           }} fontWeight="700">
-      Documents
+      Dokument
         </Text>
 
           <Button style={{ backgroundColor: "#fff", borderColor:"#4dd3ff", borderWidth:1 }}
@@ -906,7 +907,8 @@ if(isSuccess){
             color="#4dd3ff"
             fontSize='xs'
             fontWeight="800"
-          >Add Document</Text>
+          >Dokument hinzufügen
+          </Text>
 
         </Button>
    </HStack>
@@ -925,7 +927,7 @@ if(isSuccess){
           <Text
             color="#fff"
             fontSize='sm'
-          >Open Ticket</Text>
+          >Ticket öffnen</Text>
 
         </Button>
    </HStack>
@@ -988,6 +990,7 @@ if(isSuccess){
 
             <Stack my="5">
 <SelectDropdown
+defaultButtonText='Option wählen'
 buttonStyle={{
   backgroundColor:'#fff',
   borderWidth:1,
@@ -1080,7 +1083,7 @@ onPress={selectImage}
                   LoadingOpenTicket ? <SpinnerLoad /> : <Text
                     color="#fff"
                     fontSize='sm'
-                  >Send</Text>
+                  >Senden</Text>
                 }
               
 
@@ -1107,12 +1110,14 @@ onPress={selectImage}
             alignItems="flex-end"
             my="4"
             >
-              <Text fontSize="md" color="black" fontWeight="700">Upload Document</Text>
+              <Text fontSize="md" color="black" fontWeight="700">Dokument hochladen</Text>
               <Icon
                 name="close"
                 size={35}
                 color='#4dd3ff'
-   onPress={() => setModalVisible2(false)}
+   onPress={() =>{ 
+    setDocument([])
+    setModalVisible2(false)}}
 
               />
             </HStack>
@@ -1176,7 +1181,7 @@ onPress={selectImage2}
                     uri: data?.uri
                   }}>
                     
-                    </Avatar>:<Text fontSize="sm" fontWeight="400" colo="black" >file</Text>
+                    </Avatar>:<Text fontSize="sm" mx="1" fontWeight="400" colo="black" >file</Text>
                 }
                </Stack>
               )
@@ -1193,7 +1198,7 @@ onPress={selectImage2}
                   UploadLoading? <SpinnerLoad /> : <Text
                     color="#fff"
                     fontSize='sm'
-                  >Send</Text>
+                  >Senden</Text>
                 }
               
 

@@ -11,7 +11,7 @@ export default function DocumentHeader() {
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="700"
-            >Documents Section</Text>
+            >Dokumente</Text>
         </Box>
     )
 }

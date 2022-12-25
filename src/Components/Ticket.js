@@ -47,7 +47,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                     _dark={{
                         color: "warmGray.200"
                     }} fontWeight="400">
-                    {item?.status}
+                   Aktiv
                 </Text>
             }
             {
@@ -61,7 +61,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                     _dark={{
                         color: "warmGray.200"
                     }} fontWeight="400">
-                    {item?.status}
+                   Abgeschlossen
                 </Text>
             }
             <Stack
@@ -81,7 +81,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
 
                 }}
                 onPress={()=>{
-                    navigation.navigate('responseTicket', { id: item.id, project: item })
+                    navigation.navigate('responseTicket', { id: item.id })
                 }}
                 >
                     <Text color="#fff"
@@ -90,7 +90,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                         _dark={{
                             color: "warmGray.200"
                         }} fontWeight="400">
-                        respond
+                        antworten
                     </Text>
                 </TouchableOpacity>
                 {/* <TouchableOpacity

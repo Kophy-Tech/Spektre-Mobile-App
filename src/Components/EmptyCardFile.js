@@ -25,7 +25,7 @@ const EmptyCardFile = () => {
                             _dark={{
                                 color: "warmGray.200"
                             }} fontWeight="400"
-                        > Empty File</Text>
+                        > Leere Datei</Text>
                 </Box>
 
 

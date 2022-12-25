@@ -21,7 +21,7 @@ const source = {
                 <Box alignItems="center" w="100%">
                     <Box w="100%" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
                         borderColor: "coolGray.600",
-                        backgroundColor: "gray.700"
+                        backgroundColor: "gray.300"
                     }} _web={{
                         shadow: 2,
                         borderWidth: 0
@@ -44,7 +44,7 @@ const source = {
                                 <Text color="coolGray.800" _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                    Company Name:
+                                    Firmenname:
                                 </Text>
                                 <Text color="coolGray.800"
                                     fontSize="xs"
@@ -71,7 +71,7 @@ const source = {
                                 {
                                     item?.status === 'ACTIVE' && <Stack w="30%" bg="yellow.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="yellow.600">
                                         <Text fontWeight="400" color="white" fontSize="sm">
-                                            {item?.status}
+                                        Aktiv
                                         </Text>
                                     </Stack>
                                 }
@@ -79,7 +79,7 @@ const source = {
                                 {
                                     item?.status === 'COMPLETED' && <Stack w="30%" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
                                         <Text fontWeight="400" color="white" fontSize="sm">
-                                            {item?.status}
+                                        Abgeschlossen
                                         </Text>
                                     </Stack>
                                 }
@@ -88,7 +88,7 @@ const source = {
                                 <Text color="coolGray.800" _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                   Working Hour:
+                                   Geplanten Stunden:
                                 </Text>
                                 <Text color="coolGray.800"
                                 fontSize="xs"
@@ -102,7 +102,7 @@ const source = {
                                 <Text color="coolGray.800" _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                   Working Scope:
+                                  Montageumfang:
                                 </Text>
                                 <Text color="coolGray.800"
                                 fontSize="xs"
@@ -116,12 +116,12 @@ const source = {
                                 <Text fontSize="xs" color="coolGray.600" _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                    Start Time: {moment(item?.start_date).format('MMMM Do YYYY')}
+                                    Start : {moment(item?.start_date).format('Do.MM.YYYY')}
                                 </Text>
                                 <Text fontSize='xs' color="coolGray.600" _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                    Deadline: {moment(item?.deadline).format('MMMM Do YYYY')}
+                                    Enddatum: {moment(item?.deadline).format('Do.MM.YYYY')}
                                 </Text>
                             </HStack>
                         </Stack>

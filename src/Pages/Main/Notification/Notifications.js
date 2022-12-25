@@ -18,12 +18,12 @@ const EmptyCard =()=>{
             }} _light={{
                 backgroundColor: "gray.50"
             }}>
-                <Text color="coolGray.800"
-                    fontSize="xs"
+                <Text p="5" textAlign="center" color="coolGray.800"
+                    fontSize="md"
                     _dark={{
                         color: "warmGray.200"
                     }} fontWeight="400">
-                 Empty Nofications
+               Leere Benachrichtigungen
                 </Text>
             </Box>
         </Box>

@@ -5,12 +5,12 @@ import { Box, Heading, Text, Center, HStack, Stack, Button } from "native-base";
 import { useReadNofiticationMutation } from '../../../Redux/AuthApi'
 import ErrorCard from '../../../Components/ErrorCard';
 import LoadingCard from '../../../Components/Loading';
-const Notification = ({route}) => {
+const Notification = ({route, navigation}) => {
     const id = route?.params?.id
  const [item, setItem] = React.useState(null);
     const [readNofitication, { isLoading: readLoading, error, isSuccess }] = useReadNofiticationMutation()
 
-  
+  console.log(item)
 
     const ReadDoc = async () => {
       
@@ -104,7 +104,19 @@ ReadDoc()
                         }} fontWeight="400">
                         {item?.text}
                     </Text>
-
+                 {
+                    item?.notification_type ==="TICKET" &&    <Button style={{ backgroundColor: "#4dd3ff" }}
+                    onPress={()=>{
+                     navigation.navigate('responseTicket', { id: item.type_id })
+                 }}
+                 >
+                   <Text
+                     color="#fff"
+                     fontSize='sm'
+                   >Details prüfen</Text>
+         
+                 </Button>
+                 }
                 </Box>
             </Box>
         )

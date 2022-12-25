@@ -13,29 +13,29 @@ export default function TicketHeader() {
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="700">
-             No. of File
+            Nein. Anzahl der Dateien
             </Text>
             <Text color="#fff"
-                fontSize='md'
+                fontSize='sm'
                 flex="1"
                textAlign="left"
 
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="700">
-                Issue
+                Ausstellen
             </Text>
             <Text color="#fff"
-                fontSize='md'
+                fontSize='sm'
                 flex="1"
                 textAlign="left"
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="700">
-                Opener
+             Öffner
             </Text>
             <Text color="#fff"
-                fontSize='md'
+                fontSize='sm'
                 flex="1"
 textAlign="left"
                 _dark={{
@@ -44,14 +44,14 @@ textAlign="left"
                 Status
             </Text>
             <Text color="#fff"
-                fontSize='md'
+                fontSize='sm'
                 flex="1"
                 textAlign="center"
 
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="700">
-                Actions
+              Aktion
             </Text>
 
         </HStack>

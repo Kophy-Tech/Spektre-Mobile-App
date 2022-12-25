@@ -21,9 +21,9 @@ function TopStack() {
             }}
         >
             {/* <Tab.Screen name="pending" component={Pending} /> */}
-            <Tab.Screen name="active" component={Active} />
-            <Tab.Screen name="completed" component={Completed} />
-            <Tab.Screen name="all" component={Home} />
+            <Tab.Screen name="Aktive" component={Active} />
+            <Tab.Screen name="Abgeschlossen" component={Completed} />
+            <Tab.Screen name="alle" component={Home} />
 
           
         </Tab.Navigator>

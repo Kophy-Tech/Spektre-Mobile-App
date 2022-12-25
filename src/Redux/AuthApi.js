@@ -6,7 +6,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
     reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://spektre-prj.herokuapp.com/api',
+    baseUrl: 'https://montage.a-z-m.ch/api',
     credentials: 'include',
     prepareHeaders: async(headers, { getState }) => {
       const token = await AsyncStorage.getItem('token')
@@ -113,7 +113,7 @@ export const api = createApi({
           };
 
         },
-        providesTags: ['Assignments', 'Assignment'],
+        providesTags: ['Assignment'],
         keepUnusedDataFor: 5,
       }),
       changeAsignStatus: builder.mutation({
@@ -264,12 +264,12 @@ export const api = createApi({
       }),
       uploadDocument: builder.mutation({
 
-        query({id, ...res}) {
-
+        query({id, data}) {
+console.log(data, 'uplaod')
           return {
             url: `/assignments/${id}/add-document/`,
             method: "POST",
-            body: res,
+            body: data,
             headers: {
               'Content-Type': 'multipart/form-data',
             },

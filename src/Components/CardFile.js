@@ -1,12 +1,15 @@
 
 
 
-import { StyleSheet, Linking, Alert, Platform , TouchableOpacity} from 'react-native'
+import { StyleSheet, Linking, Alert, Platform , TouchableOpacity,  Modal,View  } from 'react-native'
 import React from 'react'
 import { Box, AspectRatio, Image, Center, Text, Button, HStack, } from "native-base";
 import RNFS from "react-native-fs";
 import FileViewer from "react-native-file-viewer";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const CardFile = ({ item }) => {
+    // console.log(item)
     const OpenUrl = React.useCallback(
         async (url) => {
             const supported = await Linking.canOpenURL(url);
@@ -21,7 +24,8 @@ const CardFile = ({ item }) => {
         },
         [],
     )
-
+    const [modalVisible, setModalVisible] = React.useState(false);
+const [showFile, setshowFile] = React.useState('')
     const Downloadfile = async (file) => {
         const url = file
         // "https://github.com/vinzscam/react-native-file-viewer/raw/master/docs/react-native-file-viewer-certificate.pdf";
@@ -53,9 +57,10 @@ const CardFile = ({ item }) => {
             });
     }
     return (
+      <>
         <Center>
             <TouchableOpacity 
-                        onPress={() => OpenUrl(item.file)}
+                     
             
                         style={{
                             width:'95%'
@@ -75,7 +80,11 @@ const CardFile = ({ item }) => {
 
                 <Box w="100%" h="20" >
                     <Box w="100%" alignItems="center" justifyContent="center">
-                        <Image source={require('../images/file.jpg')} alt="image" h="100" w="100" />
+                       {
+                        item?.file.endsWith('jpg') || item?.file.endsWith('png') ? <Image source={{
+                            uri:item?.file
+                        }} alt="image" h="100" w="100" />: <Image source={require('../images/file.jpg')} alt="image" h="100" w="100" />
+                       }
 
                     </Box>
 
@@ -87,25 +96,41 @@ const CardFile = ({ item }) => {
                             _dark={{
                                 color: "warmGray.200"
                             }} fontWeight="400"
-                        > Document </Text>
+                        > Dokument </Text>
                     </Center>
                 </Box>
                 <HStack
                     justifyContent="space-between"
 
                 >
+{
+     item?.file.endsWith('jpg') || item?.file.endsWith('png') ? <Button bg="#fff"
+     borderWidth='1'
+     style={{ borderColor: "#4dd3ff", borderRadius:15 }}
+     onPress={() => {
+setModalVisible(true)
+setshowFile(item?.file)
+     }}
+ >
+     <Text
+         style={{ color: "#4dd3ff" }}
+         fontSize='sm'
+     >Offenes Modal</Text>
 
-                    <Button bg="#fff"
-                        borderWidth='1'
-                        style={{ borderColor: "#4dd3ff", borderRadius:15 }}
-                        onPress={() => OpenUrl(item.file)}
-                    >
-                        <Text
-                            style={{ color: "#4dd3ff" }}
-                            fontSize='sm'
-                        >Open On Web</Text>
+ </Button>:
+  <Button bg="#fff"
+  borderWidth='1'
+  style={{ borderColor: "#4dd3ff", borderRadius:15 }}
+  onPress={() => OpenUrl(item.file)}
+>
+  <Text
+      style={{ color: "#4dd3ff" }}
+      fontSize='sm'
+  >Imweb Öffnen </Text>
 
-                    </Button>
+</Button>
+}
+                   
                     {/* <Button bg="#fff"
                         borderWidth='1'
                         style={{ borderColor: "#4dd3ff", borderRadius: 15 }}
@@ -122,9 +147,70 @@ const CardFile = ({ item }) => {
             </TouchableOpacity>
          
         </Center>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+         
+          <View style={styles.modalView}>
+          <Box justifyContent='flex-end'
+            alignItems="flex-end"
+            my="1"
+            >
+              <Icon
+                name="close"
+                size={35}
+                color='#4dd3ff'
+   onPress={() => setModalVisible(false)}
+
+              />
+            </Box>
+         {
+            showFile && <Image source={{
+                uri:showFile
+            }} alt="image" flex="1" resizeMode='contain' />
+         }
+          </View>
+        </View>
+      
+      </Modal>
+      </>
     )
 }
 
 export default CardFile
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 2,
+        backgroundColor: 'rgba(0,0,0,0.7)',
+        
+      },
+      modalView: {
+        height:'90%',
+        width:'100%',
+        margin: 10,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 10,
+        // alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        elevation: 5,
+        width:'90%'
+      },
+})

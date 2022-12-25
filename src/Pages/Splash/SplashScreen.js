@@ -21,7 +21,7 @@ const SplashScreen = ({navigation}) => {
 Login()
   return (
     <View style={{flex:1, backgroundColor:'#fff', justifyContent:'center', alignItems:'center'}}>
-    <Image source={require('../../images/logoA.png')} alt="image" h="100" w="100" />
+    <Image source={require('../../images/logo-sm.png')} alt="image" h="100" w="100" />
 
   </View>
   )

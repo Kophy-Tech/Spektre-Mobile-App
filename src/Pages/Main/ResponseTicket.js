@@ -11,12 +11,12 @@ import ResponseRender from './responseRender';
 import FileModal from './FileModal';
 const ResponseTicket = ({route}) => {
     const id = route?.params?.id
-    const projectManG= route?.params?.project?.assignment?.project_manager
+   
 // console.log(projectManG ,' project manager')
     const { data:itemData, error, isLoading, isSuccess, isError } = useGetTicketQuery({ id }, {
         // pollingInterval: 1000,
     })
- console.log(itemData?.status, 'attachments')
+ console.log(itemData?.assignment?.project_manager?.profile_picture, 'attachments')
  
     const [modalVisible, setModalVisible] = React.useState(false);
     const [modalFileVisible, setModalFileVisible] = React.useState(false);
@@ -96,7 +96,7 @@ const ResponseTicket = ({route}) => {
   return (
  <>
       <Box flex="1" bg="#fff" >
-          <Box w="100%" flex="1" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
+          <Box w="100%" flex="1.5" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
               borderColor: "coolGray.600",
               backgroundColor: "gray.700"
           }} _web={{
@@ -107,11 +107,11 @@ const ResponseTicket = ({route}) => {
           }}>
 <Stack alignItems="center" mt="5">
 <Avatar bg="#4dd3ff" source={{
-                                uri:projectManG?.profile_picture
+                                uri:itemData?.assignment?.project_manager?.profile_picture
                         }}>
                          WK
                         </Avatar>
-                        <Text color="#4dd3ff">Project Manager</Text>
+                        <Text color="#4dd3ff">Projektleiter</Text>
 </Stack>
               <Stack p="3" space={3}>
                   <Stack>
@@ -126,28 +126,29 @@ const ResponseTicket = ({route}) => {
                       <Text color="coolGray.800" _dark={{
                           color: "warmGray.200"
                       }} fontWeight="400">
-                         Company Name:
+                         Firmenname:
                       </Text>
                       <Text color="coolGray.800"
                           fontSize="xs"
                           _dark={{
                               color: "warmGray.200"
                           }} fontWeight="400">
-                          {projectManG?.company?.name}
+                   
+                        {itemData?.assignment?.project_manager?.company?.name}
                       </Text>
                   </HStack>
                   <HStack alignItems="center" justifyContent="space-between">
               <Text color="coolGray.800" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Project Manager:
+                Projektleiter:
               </Text>
               <Text color="coolGray.800"
                 fontSize="xs"
                 _dark={{
                   color: "warmGray.200"
                 }} fontWeight="400">
-                {projectManG?.first_name}   {projectManG?.last_name}
+           {itemData?.assignment?.project_manager?.first_name} {itemData?.assignment?.project_manager?.last_name}
               </Text>
             </HStack>
                   <HStack alignItems="center" justifyContent="space-between">
@@ -159,7 +160,7 @@ const ResponseTicket = ({route}) => {
                       {
                           itemData?.status === 'OPEN' && <Stack w="20" bg="white" alignItems="center" justifyContent="center"  >
                               <Text fontWeight="400" color="black">
-                                  {itemData?.status}
+                              Offen
                               </Text>
                           </Stack>
                       }
@@ -170,7 +171,7 @@ const ResponseTicket = ({route}) => {
                               <Text fontWeight="400" color="white" style={{
                                   fontSize: 12
                               }}>
-                                  {itemData?.status}
+                           Geschlossen
                               </Text>
                           </Stack>
                       }
@@ -181,8 +182,8 @@ const ResponseTicket = ({route}) => {
                           color: "warmGray.200"
                       }} fontWeight="400">
 
-                          Date Created:  {
-                              moment(itemData?.date_created).format('MMMM Do YYYY, h:mm:ss a')
+Erstellungsdatum:  {
+                              moment(itemData?.date_created).format('Do.MM.YYYY, h:mm:ss a')
 
                           }
                       </Text>
@@ -192,7 +193,7 @@ const ResponseTicket = ({route}) => {
                  {
                     itemData?.attachments.length > 0 &&  <Stack my="2">
                     <Button  style={{backgroundColor:'#4dd3ff'}} onPress={()=> setModalFileVisible(true)} >
-    <Text color="#fff" fontSize="md" fontWeight="500">Open File</Text>
+    <Text color="#fff" fontSize="md" fontWeight="500">Offene Linie</Text>
   </Button>
                     </Stack>
                  }

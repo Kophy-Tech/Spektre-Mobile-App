@@ -11,8 +11,8 @@ const Login = () => {
   const navigation = useNavigation()
   const [login, { isLoading }] = useLoginMutation()
   const [data, setData] = React.useState({
-    username:'testmobileuser',
-    password:'s587H7RGtYbh6UY'
+    username:'worker2',
+    password:'SqA7q9XgnMKpfRS'
   });
 
 
@@ -112,7 +112,14 @@ Alert.alert('No Server Response')
           Alert.alert(error.data.detail)
 
         
-        } else {
+        } 
+        else if (error.status === "FETCH_ERROR") {
+          Alert.alert(" Network request failed")
+
+        
+        } 
+        
+        else {
           Alert.alert('Login Failed')
 
          

@@ -117,7 +117,7 @@ function BottomStack() {
             />
             <Stack.Screen name="SingleAssignment" component={SingleAssignment} 
                 options={{
-                    title: 'Asignment Details',
+                    title: 'Auftragsdetails',
                     // headerTitleAlign:'center'
                     headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
                     headerLeft: () => <BackIcon />,
@@ -127,7 +127,7 @@ function BottomStack() {
             />
             <Stack.Screen name="responseTicket" component={ResponseTicket}
                 options={{
-                    title: 'Chat',
+                    title: 'Plaudern',
                     // headerTitleAlign:'center'
                     headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
                     headerLeft: () => <BackIcon />,
@@ -137,7 +137,7 @@ function BottomStack() {
             />
             <Stack.Screen name="notify" component={Notifications}
                 options={{
-                    title: 'Notifications',
+                    title: 'Benachrichtigungen',
                     // headerTitleAlign:'center'
                     headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
                     headerLeft: () => <BackIcon />,

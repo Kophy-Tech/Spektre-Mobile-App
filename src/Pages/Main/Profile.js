@@ -72,7 +72,7 @@ navigation.navigate('Auth')
         <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
         }} fontWeight="400">
-          First Name:
+          Vorname:
         </Text>
         <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
@@ -85,7 +85,7 @@ navigation.navigate('Auth')
         <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
         }} fontWeight="400">
-          Last Name:
+          Nachname:
         </Text> 
          <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
@@ -99,7 +99,7 @@ navigation.navigate('Auth')
         <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
         }} fontWeight="400">
-          Email:
+          E-mail:
         </Text>
         <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
@@ -112,7 +112,7 @@ navigation.navigate('Auth')
         <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
         }} fontWeight="400">
-          Position:
+          Funktion:
         </Text>
         <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
@@ -125,7 +125,7 @@ navigation.navigate('Auth')
         <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
         }} fontWeight="400">
-          Company Name:
+          Firmenname:
         </Text>
         <Text color="coolGray.800" _dark={{
           color: "warmGray.200"
@@ -140,7 +140,7 @@ navigation.navigate('Auth')
   onPress={() => navigation.navigate('change')}
 >
 <Text  fontWeight="800" fontSize="md" color="#4dd3ff">
-         change Password
+Passwort ändern
         </Text> 
 </TouchableOpacity>
       </Stack>
@@ -150,7 +150,7 @@ navigation.navigate('Auth')
           bg="#4dd3ff"
           onPress={LogOut}
         >
-          Log Out
+        Auslogen
         </Button>
       </Stack>
      </Box>
