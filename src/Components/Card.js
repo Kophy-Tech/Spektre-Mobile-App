@@ -71,7 +71,7 @@ const source = {
                                 {
                                     item?.status === 'ACTIVE' && <Stack w="30%" bg="yellow.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="yellow.600">
                                         <Text fontWeight="400" color="white" fontSize="sm">
-                                        Aktiv
+                                      {item.status_display}
                                         </Text>
                                     </Stack>
                                 }
@@ -79,7 +79,7 @@ const source = {
                                 {
                                     item?.status === 'COMPLETED' && <Stack w="30%" bg="green.600" alignItems="center" justifyContent="center" borderWidth="0.5" borderRadius="2" borderColor="green.600">
                                         <Text fontWeight="400" color="white" fontSize="sm">
-                                        Abgeschlossen
+                                        {item.status_display}
                                         </Text>
                                     </Stack>
                                 }

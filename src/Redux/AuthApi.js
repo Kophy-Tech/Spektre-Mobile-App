@@ -3,22 +3,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // Define a service using a base URL and expected endpoints
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://montage.a-z-m.ch/api',
+  credentials: 'include',
+  prepareHeaders: async(headers, { getState }) => {
+    const token = await AsyncStorage.getItem('token')
+    // console.log(token)
+    if (token) {
+    // console.log(token, 'valid token')
+
+      headers.set("authorization", `Token ${token}`)
+    }
+    return headers
+  }
+})
+
+const baseQueryWithReauth = async (args, api, extraOptions) => {
+  let result = await baseQuery(args, api, extraOptions)
+
+  if (result?.error?.originalStatus === 401 || result?.error?.originalStatus===403) {
+      console.log('sending refresh token')
+      // send refresh token to get new access token 
+    await  AsyncStorage.removeItem('token')
+     
+  }
+
+  return result
+}
 export const api = createApi({
     reducerPath: 'api',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://montage.a-z-m.ch/api',
-    credentials: 'include',
-    prepareHeaders: async(headers, { getState }) => {
-      const token = await AsyncStorage.getItem('token')
-      // console.log(token)
-      if (token) {
-      // console.log(token, 'valid token')
-
-        headers.set("authorization", `Token ${token}`)
-      }
-      return headers
-    }
-  }),
+  baseQuery: baseQueryWithReauth,
   refetchOnFocus: true,
   refetchOnReconnect: true,
   tagTypes: ['Assignments', 'Assignment', 'notify'],

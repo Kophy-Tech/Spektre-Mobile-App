@@ -7,6 +7,8 @@ import ErrorCard from '../../../Components/ErrorCard';
 import LoadingCard from '../../../Components/Loading';
 const Notification = ({route, navigation}) => {
     const id = route?.params?.id
+    console.log(id)
+    const [Id, setId] = React.useState(id)
  const [item, setItem] = React.useState(null);
     const [readNofitication, { isLoading: readLoading, error, isSuccess }] = useReadNofiticationMutation()
 
@@ -16,7 +18,7 @@ const Notification = ({route, navigation}) => {
       
         try {
 
-            const user = await readNofitication(id).unwrap()
+            const user = await readNofitication(Id).unwrap()
             console.log(user, 'from read');
             setItem(user)
         
@@ -107,13 +109,24 @@ ReadDoc()
                  {
                     item?.notification_type ==="TICKET" &&    <Button style={{ backgroundColor: "#4dd3ff" }}
                     onPress={()=>{
-                     navigation.navigate('responseTicket', { id: item.type_id })
+                     navigation.replace('responseTicket', { id: item.type_id })
                  }}
                  >
                    <Text
                      color="#fff"
                      fontSize='sm'
-                   >Details prüfen</Text>
+                   >Zuordnungsdetails prüfen</Text>
+         
+                 </Button>
+                 }
+                   {
+                    item?.notification_type ==="ASSIGNMENT" &&    <Button style={{ backgroundColor: "#4dd3ff" }}
+                    onPress={() => navigation.replace('SingleAssignment', {id: item.type_id})}
+                 >
+                   <Text
+                     color="#fff"
+                     fontSize='sm'
+                   >Zuordnungsdetails prüfen</Text>
          
                  </Button>
                  }

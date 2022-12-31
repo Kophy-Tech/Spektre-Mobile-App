@@ -147,7 +147,7 @@ function BottomStack() {
             />
             <Stack.Screen name="notification" component={Notification}
                 options={{
-                    title: 'Notification',
+                    title: 'Benachrichtigung',
                     // headerTitleAlign:'center'
                     headerTitleStyle: { color: '#4dd3ff', fontSize: 15 },
                     headerLeft: () => <BackIcon />,
