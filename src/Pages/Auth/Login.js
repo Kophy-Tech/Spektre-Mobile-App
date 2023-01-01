@@ -6,6 +6,9 @@ import SpinnerLoad from "../../Components/Spinner";
 import { useLoginMutation } from "../../Redux/AuthApi";
 import { StyleSheet, Linking, Alert, Platform } from 'react-native'
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { tokenSet } from "../../Redux/AuthSlice";
+
 const Login = () => {
   const [passwordType, setPasswordType] = React.useState("password");
   const navigation = useNavigation()
@@ -34,6 +37,7 @@ const Login = () => {
 
   const [errorUsername, setErrorUsername] = React.useState('');
   const [errorPassword, setErrorPassword] = React.useState('');
+  const dispatch= useDispatch()
   const togglePassword = () => {
     if (passwordType === "password") {
       setPasswordType("text");
@@ -96,8 +100,9 @@ const Login = () => {
         // console.log(user);
 if(user){
   AsyncStorage.setItem('token' ,  user?.token)
+  dispatch(tokenSet(user?.token))
 }
-        navigation.replace("Bottom")
+        // navigation.replace("Bottom")
         
       } catch (error) {
         console.log(error)

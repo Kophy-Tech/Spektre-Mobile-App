@@ -34,10 +34,10 @@ const source = {
                                 <Heading size="md" >
                                     {item?.name}
                                 </Heading>
-                                <RenderHtml
+                                {/* <RenderHtml
       contentWidth={width}
       source={source}
-    />
+    /> */}
 
                             </Stack>
                             <HStack alignItems="center" justifyContent="space-between">

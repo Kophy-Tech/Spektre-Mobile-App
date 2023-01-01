@@ -10,7 +10,9 @@ import {
     TouchableOpacity,
     Dimensions,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import StatusBarContainer from '../../Components/StatusBar';
+import { getOnboard } from '../../Redux/AuthSlice';
 const { width, height } = Dimensions.get('window');
 
 const COLORS = { primary: '#282534', white: '#fff', black:'#4dd3ff' };
@@ -59,6 +61,7 @@ const OnboardingScreen = ({ navigation }) => {
         const currentIndex = Math.round(contentOffsetX / width);
         setCurrentSlideIndex(currentIndex);
     };
+    const dispatch= useDispatch()
 
     const goToNextSlide = () => {
         const nextSlideIndex = currentSlideIndex + 1;
@@ -112,7 +115,9 @@ const OnboardingScreen = ({ navigation }) => {
                         <View style={{ height: 50 }}>
                             <TouchableOpacity
                                 style={styles.btn}
-                                onPress={() => navigation.replace('Auth')}>
+                                onPress={() => {
+dispatch(getOnboard(false))
+                                }}>
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, color:'#fff' }}>
                                     GET STARTED
                                 </Text>

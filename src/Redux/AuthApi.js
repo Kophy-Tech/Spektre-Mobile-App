@@ -1,10 +1,11 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { tokenSet } from './AuthSlice';
 
 // Define a service using a base URL and expected endpoints
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://montage.a-z-m.ch/api',
+  baseUrl: 'https://montage.a-z-m.ch/de/api',
   credentials: 'include',
   prepareHeaders: async(headers, { getState }) => {
     const token = await AsyncStorage.getItem('token')
@@ -20,11 +21,14 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions)
+// console.log(result?.meta?.response?.status, 'resultsproductResult')
 
-  if (result?.error?.originalStatus === 401 || result?.error?.originalStatus===403) {
+
+  if (result?.meta?.response?.status === 401 || result?.meta?.response?.status === 403) {
       console.log('sending refresh token')
       // send refresh token to get new access token 
-    await  AsyncStorage.removeItem('token')
+      AsyncStorage.removeItem('token')
+      api.dispatch(tokenSet(null))
      
   }
 

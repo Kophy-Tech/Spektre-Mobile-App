@@ -14,7 +14,7 @@ const ResponseTicket = ({route}) => {
    
 // console.log(projectManG ,' project manager')
     const { data:itemData, error, isLoading, isSuccess, isError } = useGetTicketQuery({ id }, {
-        // pollingInterval: 1000,
+        pollingInterval: 1000,
     })
  console.log(itemData?.assignment?.project_manager?.profile_picture, 'attachments')
  

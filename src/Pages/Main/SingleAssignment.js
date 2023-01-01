@@ -713,7 +713,17 @@ if(isSuccess){
   return (
     <>
     <Box  bg="#fff" flex="1">
-   <Center>
+
+     
+      <FlatList
+        data={itemData?.tickets}
+        renderItem={renderItemTickets}
+        keyExtractor={item => item.id}
+          ListEmptyComponent={<EmptyTicket />}
+        ListHeaderComponent={()=>{
+          return(
+            <>
+               <Center>
 
         <Box w="95%" my="4" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
           borderColor: "coolGray.600",
@@ -931,14 +941,10 @@ if(isSuccess){
 
         </Button>
    </HStack>
-
-     
-      <FlatList
-        data={itemData?.tickets}
-        renderItem={renderItemTickets}
-        keyExtractor={item => item.id}
-          ListEmptyComponent={<EmptyTicket />}
-        ListHeaderComponent={<TicketHeader/>}
+<TicketHeader/>
+            </>
+          )
+        }}
         showsVerticalScrollIndicator={false}
      
         ListFooterComponent={<FlatList

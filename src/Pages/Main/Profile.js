@@ -10,10 +10,12 @@ import LoadingCard from '../../Components/Loading';
 import { useGetUserQuery } from '../../Redux/AuthApi';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { tokenSet } from '../../Redux/AuthSlice';
 
 export default function Profile() {
   const navigation = useNavigation()
-
+const dispatch = useDispatch()
   
 
   const { data, error, isLoading , isError} = useGetUserQuery()
@@ -31,7 +33,7 @@ export default function Profile() {
         },
         { text: "OK", onPress: () => {
           AsyncStorage.removeItem('token')
-navigation.navigate('Auth')
+dispatch(tokenSet(null))
         } }
       ]
     );
