@@ -70,5 +70,8 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+<string>Allow $(PRODUCT_NAME) to access your photos</string>
 </dict>
+
 </plist>
