@@ -1,4 +1,4 @@
-package com.devTemitope.spektretask.newarchitecture;
+package com.spektre.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.devTemitope.spektretask.BuildConfig;
-import com.devTemitope.spektretask.newarchitecture.components.MainComponentsRegistry;
-import com.devTemitope.spektretask.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.spektre.BuildConfig;
+import com.spektre.newarchitecture.components.MainComponentsRegistry;
+import com.spektre.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

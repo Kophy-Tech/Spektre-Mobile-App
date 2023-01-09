@@ -1,4 +1,4 @@
-package com.devTemitope.spektretask;
+package com.spektre;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
