@@ -1,4 +1,4 @@
-package com.devTemitope.spektretask.newarchitecture.components;
+package com.spektre.spektretask.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
