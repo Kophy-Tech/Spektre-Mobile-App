@@ -1,4 +1,4 @@
-package com.spektre.spektre;
+package com.spektre;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

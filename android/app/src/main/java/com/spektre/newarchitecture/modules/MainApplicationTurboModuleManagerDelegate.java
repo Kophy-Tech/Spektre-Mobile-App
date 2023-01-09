@@ -1,4 +1,4 @@
-package com.spektre.spektre.newarchitecture.modules;
+package com.spektre.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
