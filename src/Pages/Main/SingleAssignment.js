@@ -300,7 +300,7 @@ const CameraImage =async()=> {
               console.log('ImagePicker Error: ', response.error);
           } else if (response.customButton) {
               console.log('User tapped custom button: ', response.customButton);
-              alert(response.customButton);
+              console.log(response.customButton);
           } else {
   
               response.assets.map((asset) => {
