@@ -836,7 +836,7 @@ if(isSuccess){
               <Text color="coolGray.600" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Start Time: {moment(itemData?.start_date).format('Do.MM.YYYY')}
+                Start Time: {moment(itemData?.start_date).format('DD.MM.YYYY')}
               </Text>
              
             </Stack>
@@ -845,7 +845,7 @@ if(isSuccess){
               <Text color="coolGray.600" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Deadline: {moment(itemData?.deadline).format('Do.MM.YYYY')}
+                Deadline: {moment(itemData?.deadline).format('DD.MM.YYYY')}
               </Text>
             </Stack>
             {

@@ -183,7 +183,7 @@ const ResponseTicket = ({route}) => {
                       }} fontWeight="400">
 
 Erstellungsdatum:  {
-                              moment(itemData?.date_created).format('Do.MM.YYYY, h:mm:ss a')
+                              moment(itemData?.date_created).format('DD.MM.YYYY, h:mm:ss a')
 
                           }
                       </Text>

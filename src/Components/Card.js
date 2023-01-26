@@ -116,12 +116,12 @@ const source = {
                                 <Text fontSize="xs" color="coolGray.600" _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                    Start : {moment(item?.start_date).format('Do.MM.YYYY')}
+                                    Start : {moment(item?.start_date).format('DD.MM.YYYY')}
                                 </Text>
                                 <Text fontSize='xs' color="coolGray.600" _dark={{
                                     color: "warmGray.200"
                                 }} fontWeight="400">
-                                    Enddatum: {moment(item?.deadline).format('Do.MM.YYYY')}
+                                    Enddatum: {moment(item?.deadline).format('DD.MM.YYYY')}
                                 </Text>
                             </HStack>
                         </Stack>
