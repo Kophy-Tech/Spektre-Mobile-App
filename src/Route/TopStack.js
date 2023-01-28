@@ -23,7 +23,7 @@ function TopStack() {
             {/* <Tab.Screen name="pending" component={Pending} /> */}
             <Tab.Screen name="Aktive" component={Active} />
             <Tab.Screen name="Abgeschlossen" component={Completed} />
-            {/* <Tab.Screen name="alle" component={Home} /> */}
+            <Tab.Screen name="alle" component={Home} />
 
           
         </Tab.Navigator>
