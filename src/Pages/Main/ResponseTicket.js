@@ -193,7 +193,7 @@ Erstellungsdatum:  {
                  {
                     itemData?.attachments.length > 0 &&  <Stack my="2">
                     <Button  style={{backgroundColor:'#4dd3ff'}} onPress={()=> setModalFileVisible(true)} >
-    <Text color="#fff" fontSize="md" fontWeight="500">Offene Linie</Text>
+    <Text color="#fff" fontSize="md" fontWeight="500">Öffen File</Text>
   </Button>
                     </Stack>
                  }
