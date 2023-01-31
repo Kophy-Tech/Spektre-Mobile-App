@@ -23,12 +23,12 @@ const Login = () => {
  
   const OpenUrl = React.useCallback(
     async () => {
-      const supported = await Linking.canOpenURL('https://spektre-prj.herokuapp.com/account/password_reset/');
+      const supported = await Linking.canOpenURL('https://montage.a-z-m.ch/de/accounts/password_reset/');
       //  console.log(supported)
       if (supported) {
         // Opening the link with some app, if the URL scheme is "http" the web link should be opened
         // by some browser in the mobile
-        await Linking.openURL('https://spektre-prj.herokuapp.com/accounts/password_reset/');
+        await Linking.openURL('https://montage.a-z-m.ch/de/accounts/password_reset/');
       } else {
         Alert.alert(`Don't know how to open this URL`);
       }
