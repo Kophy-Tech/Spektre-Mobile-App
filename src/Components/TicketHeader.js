@@ -33,7 +33,7 @@ export default function TicketHeader() {
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="700">
-            Opener
+            Ersteller
             </Text>
           
             <Text color="#fff"
@@ -43,7 +43,7 @@ export default function TicketHeader() {
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="700">
-         Responsible Person
+       Verantwortliche
             </Text>
             <Text color="#fff"
                 fontSize='sm'

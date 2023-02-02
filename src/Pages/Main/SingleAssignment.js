@@ -879,7 +879,7 @@ if(isSuccess){
                   _dark={{
                     color: "warmGray.200"
                   }} fontWeight="700">
-                 Aktiver Status
+                Status
                 </Text>
                 <Button bg="#4dd3ff"
                   onPress={() => updateStatus('COMPLETED')}

@@ -126,7 +126,7 @@ setshowFile(item?.file)
   <Text
       style={{ color: "#4dd3ff" }}
       fontSize='sm'
-  >Imweb Öffnen </Text>
+  > Öffnen </Text>
 
 </Button>
 }

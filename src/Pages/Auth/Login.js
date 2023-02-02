@@ -18,8 +18,7 @@ const Login = () => {
     password:''
   });
 
-  // username:'Bledar',
-  // password:'smartboy3000'
+ 
  
   const OpenUrl = React.useCallback(
     async () => {
