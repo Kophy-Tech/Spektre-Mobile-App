@@ -71,7 +71,11 @@
 		<string>Zocial.ttf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-<string>Allow $(PRODUCT_NAME) to access your photos</string>
+<string>This app requires access to your photo library to upload project-related images.</string>
+<key>NSCameraUsageDescription</key>
+<string>This app requires access to your camera to take photos for project submissions</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Allow $(PRODUCT_NAME) to record audio</string>
 </dict>
 
 </plist>
