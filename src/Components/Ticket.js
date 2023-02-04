@@ -3,18 +3,20 @@ import { Text, HStack, Stack, Avatar, } from "native-base";
 import { TouchableOpacity } from 'react-native';
 
 export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLoaing, navigation }) {
-    // console.log(item?.attachments, 'from ticket')
+    // console.log(item?.responsible_person, 'from ticket')
+    // console.log(item?.opener, 'opener ticket')
+
     return (
         <HStack mt="0.5" mb="2" mx="2" p="0.5" justifyContent="space-between" alignItems='center'>
-  <Text color="coolGray.600"
+       <Text color="coolGray.600"
                 fontSize="xs"
                 flex="1"
-                textAlign="left"
+                justifyItems="flex-start"
+
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="400">
-                { item?.attachments?.length > 0 ? item?.attachments?.length :0}
-
+                {item?.id}
             </Text>
 
             <Text color="coolGray.600"
@@ -30,11 +32,22 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
             <Text color="coolGray.600"
                 fontSize="xs"
                 flex="1"
+             textAlign="center"
+
+                _dark={{
+                    color: "warmGray.200"
+                }} fontWeight="400">
+                            {item?.opener?.first_name}
+
+            </Text>
+            <Text color="coolGray.600"
+                fontSize="xs"
+                flex="1"
                 textAlign="left"
                 _dark={{
                     color: "warmGray.200"
                 }} fontWeight="400">
-                {item?.opener?.first_name}
+                {item?.responsible_person?.first_name}
 
             </Text>
             {
@@ -85,7 +98,7 @@ export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLo
                 }}
                 >
                     <Text color="#fff"
-                        fontSize="xs"
+                        fontSize={10}
 
                         _dark={{
                             color: "warmGray.200"

@@ -300,7 +300,7 @@ const CameraImage =async()=> {
               console.log('ImagePicker Error: ', response.error);
           } else if (response.customButton) {
               console.log('User tapped custom button: ', response.customButton);
-              alert(response.customButton);
+              console.log(response.customButton);
           } else {
   
               response.assets.map((asset) => {
@@ -836,7 +836,7 @@ if(isSuccess){
               <Text color="coolGray.600" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Start Time: {moment(itemData?.start_date).format('Do.MM.YYYY')}
+                Start Time: {moment(itemData?.start_date).format('DD.MM.YYYY')}
               </Text>
              
             </Stack>
@@ -845,7 +845,7 @@ if(isSuccess){
               <Text color="coolGray.600" _dark={{
                 color: "warmGray.200"
               }} fontWeight="400">
-                Deadline: {moment(itemData?.deadline).format('Do.MM.YYYY')}
+                Deadline: {moment(itemData?.deadline).format('DD.MM.YYYY')}
               </Text>
             </Stack>
             {
@@ -879,7 +879,7 @@ if(isSuccess){
                   _dark={{
                     color: "warmGray.200"
                   }} fontWeight="700">
-                 Aktiver Status
+                Status
                 </Text>
                 <Button bg="#4dd3ff"
                   onPress={() => updateStatus('COMPLETED')}
