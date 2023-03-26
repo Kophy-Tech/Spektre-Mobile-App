@@ -17,7 +17,7 @@ function MainStack({navigation}) {
     const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
     const token = useSelector((state)=> state.auth.token)
     const onBoard = useSelector((state)=> state.auth.onBoard)
-    console.log(onBoard, '')
+    // console.log(onBoard, '')
 const dispatch= useDispatch()
  const [showSplash, setshowSplash] = React.useState(true)
 

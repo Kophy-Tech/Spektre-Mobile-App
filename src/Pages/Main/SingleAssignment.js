@@ -463,13 +463,16 @@ const id = route?.params?.id
     const { data:itemData, error, isLoading, isSuccess } = useGetAsignQuery({id})
 const [assign, setAssign] = React.useState([])
 const [responsiblePerson, setResponsiblePerson] = React.useState("")
-// console.log(itemData?.documents, 'itemdata')
+const [fillError, setFillError] = React.useState("")
+// console.log(itemData?.concerned_user_options[0], 'itemdata')
 React.useLayoutEffect(() => {
 if(isSuccess){
-  const assignee = itemData?.assignees?.map((d)=> d?.username)
+  const assignee = itemData?.concerned_user_options?.map((d)=> d?.username)
   setAssign([...assignee])
 }
 }, [itemData, isSuccess ])
+
+
     const source = {
       html: itemData?.description
     };
@@ -493,14 +496,14 @@ if(isSuccess){
              id,
              updateData
            }
-           console.log(updateId)
+          //  console.log(updateId)
            try {
              const user = await changeAsignStatus(updateId).unwrap()
-             console.log(user?.status);
+            //  console.log(user?.status);
          
 
            } catch (error) {
-             console.log(error.data)
+            //  console.log(error.data)
              if (!error?.status) {
                Alert.alert('No Server Response')
              }
@@ -553,11 +556,11 @@ if(isSuccess){
               }
               try {
                 const user = await CloseTicket(updateId).unwrap()
-                console.log(user?.status);
+                // console.log(user?.status);
                 setIdLoaing(null)
 
               } catch (error) {
-                console.log(error.data)
+                // console.log(error.data)
                 if (!error?.status) {
                   Alert.alert('No Server Response')
                 }
@@ -605,13 +608,13 @@ if(isSuccess){
     
        try {
          const user = await uploadDocument(d).unwrap()
-         console.log(user?.documents?.length, 'upload datat');
+        //  console.log(user?.documents?.length, 'upload datat');
          setModalVisible2(false)
        
          setDocument([])
   
        } catch (error) {
-         console.log(error)
+        //  console.log(error)
          if (!error?.status) {
            Alert.alert('No Server Response')
          }
@@ -632,47 +635,52 @@ if(isSuccess){
    }
  const SendOpenTicket = async()=>{
 
-  const d = itemData?.assignees.filter((fm)=> fm.username ===responsiblePerson)
+ if(respond ==='' || responsiblePerson===''){
+  setFillError('Please select a responsible person and fill in the text input.')
+ }
+ else{
+  const d = itemData?.concerned_user_options.filter((fm)=> fm.username ===responsiblePerson)
 
-     const data = new FormData();
-     imagePicker.forEach((item, i)=>{
-      data.append('attachments', {
-        uri:item.uri,
-        type:item.type,
-        name:item.name
-      });
-     })
-     data.append('assignment', id)
-     data.append('issue', respond);
-     data.append('responsible_person',d[0]?.id )
-  //  console.log(data, 'data ')
-  
-     try {
-       const user = await OpenTicket(data).unwrap()
-       console.log(user);
-       setModalVisible(false)
-       setRespond('')
-       setImagePicker([])
+  const data = new FormData();
+  imagePicker.forEach((item, i)=>{
+   data.append('attachments', {
+     uri:item.uri,
+     type:item.type,
+     name:item.name
+   });
+  })
+  data.append('assignment', id)
+  data.append('issue', respond);
+  data.append('responsible_person',d[0]?.id )
+//  console.log(d[0]?.id, 'data ')
 
-     } catch (error) {
-       console.log(error)
-       if (!error?.status) {
-         Alert.alert('No Server Response')
-       }
-       else if (error.status === 400) {
-         Alert.alert(error.data.non_field_errors[0])
+  try {
+    const user = await OpenTicket(data).unwrap()
+   //  console.log(user);
+    setModalVisible(false)
+    setRespond('')
+    setImagePicker([])
 
-       }
-       else if (error.status === 401) {
-         Alert.alert('Unauthorized')
+  } catch (error) {
+   //  console.log(error)
+    if (!error?.status) {
+      Alert.alert('No Server Response')
+    }
+    else if (error.status === 400) {
+      Alert.alert(error.data.non_field_errors[0])
 
-
-       } else {
-         Alert.alert('Error')
+    }
+    else if (error.status === 401) {
+      Alert.alert('Unauthorized')
 
 
-       }
-     }
+    } else {
+      Alert.alert('Error')
+
+
+    }
+  }
+ }
  }
  
 
@@ -1065,7 +1073,7 @@ onPress={selectImage}
           <HStack alignItems="center" my="3" flexWrap='wrap'>
 
             {imagePicker.length > 0 &&  imagePicker.map( (data, i)=>{
-              console.log(data)
+              // console.log(data)
               return(
                 <Avatar bg="#4dd3ff" 
                 mx="1"
@@ -1080,10 +1088,16 @@ onPress={selectImage}
         
           </HStack>
             <Box mt="8">
+
+              {
+                fillError &&  <Text fontSize="xs" textAlign="center" color='red.900'>{fillError}</Text>
+              }
+
+
               <Button
-                style={{ backgroundColor: respond ==='' ? 'grey': responsiblePerson===''?'grey' :"#4dd3ff" , borderRadius:10}}
+                style={{ backgroundColor:"#4dd3ff" , borderRadius:10}}
                 onPress={SendOpenTicket}
-                disabled={LoadingOpenTicket || respond==='' || responsiblePerson===''}
+                
               >
                 {
                   LoadingOpenTicket ? <SpinnerLoad /> : <Text

@@ -5,7 +5,7 @@ import { tokenSet } from './AuthSlice';
 
 // Define a service using a base URL and expected endpoints
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://montage.a-z-m.ch/de/api',
+  baseUrl: 'http://64.226.94.149/en/api',
   credentials: 'include',
   prepareHeaders: async(headers, { getState }) => {
     const token = await AsyncStorage.getItem('token')
@@ -25,7 +25,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 
   if (result?.meta?.response?.status === 401 || result?.meta?.response?.status === 403) {
-      console.log('sending refresh token')
+      // console.log('sending refresh token')
       // send refresh token to get new access token 
       AsyncStorage.removeItem('token')
       api.dispatch(tokenSet(null))
@@ -283,7 +283,7 @@ export const api = createApi({
       uploadDocument: builder.mutation({
 
         query({id, data}) {
-console.log(data, 'uplaod')
+// console.log(data, 'uplaod')
           return {
             url: `/assignments/${id}/add-document/`,
             method: "POST",

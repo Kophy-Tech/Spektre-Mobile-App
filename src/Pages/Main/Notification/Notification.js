@@ -7,24 +7,24 @@ import ErrorCard from '../../../Components/ErrorCard';
 import LoadingCard from '../../../Components/Loading';
 const Notification = ({route, navigation}) => {
     const id = route?.params?.id
-    console.log(id)
+    // console.log(id)
     const [Id, setId] = React.useState(id)
  const [item, setItem] = React.useState(null);
     const [readNofitication, { isLoading: readLoading, error, isSuccess }] = useReadNofiticationMutation()
 
-  console.log(item)
+//   console.log(item)
 
     const ReadDoc = async () => {
       
         try {
 
             const user = await readNofitication(Id).unwrap()
-            console.log(user, 'from read');
+            // console.log(user, 'from read');
             setItem(user)
         
 
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             if (!error?.status) {
                 Alert.alert('No Server Response')
             }
@@ -48,7 +48,7 @@ ReadDoc()
      
     }, [])
 
- console.log(item, 'item')
+//  console.log(item, 'item')
     if (readLoading) {
         return <LoadingCard />
     }

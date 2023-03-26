@@ -40,7 +40,7 @@ const ResponseTicket = ({route}) => {
         
  setText('')
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             if (!error?.status) {
                 Alert.alert('No Server Response')
             }
@@ -60,7 +60,7 @@ const ResponseTicket = ({route}) => {
         }
 
     }
-    console.log(error)
+    // console.log(error)
 //  console.log(item)
     if (isLoading) {
         return <LoadingCard />
