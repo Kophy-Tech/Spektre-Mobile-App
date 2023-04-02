@@ -30,7 +30,7 @@ const ModalComponent = ({modalVisible, setModalVisible ,id, setModalLoad}) => {
             // DocumentPicker.types.pdf
           });
           // Printing the log realted to the file
-          console.log('res : ' + JSON.stringify(res));
+        //   console.log('res : ' + JSON.stringify(res));
           // Setting the state to show single file attributes
           // setSingleFile(res);
         } catch (err) {
@@ -64,11 +64,11 @@ const ModalComponent = ({modalVisible, setModalVisible ,id, setModalLoad}) => {
            
     
             if (response.didCancel) {
-                console.log('User cancelled image picker');
+                // console.log('User cancelled image picker');
             } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+                // console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+                // console.log('User tapped custom button: ', response.customButton);
                 alert(response.customButton);
             } else {
               
@@ -86,7 +86,7 @@ const ModalComponent = ({modalVisible, setModalVisible ,id, setModalLoad}) => {
                 // }
                 response.assets.map((asset) => {
     
-                    console.log('uri -> ', asset.uri);
+                    // console.log('uri -> ', asset.uri);
     
                   
                     setImagePicker({
@@ -104,7 +104,7 @@ const ModalComponent = ({modalVisible, setModalVisible ,id, setModalLoad}) => {
                           setModalLoad(true)
                          responseTicket(data).unwrap().then((data)=>{
                             setModalLoad(false)
-console.log(data)
+// console.log(data)
                           }).catch((error)=>{
                             console.log(error)
                             setModalLoad(false)
@@ -163,7 +163,7 @@ console.log(data)
                 }
             );
             if (grantedcamera === PermissionsAndroid.RESULTS.GRANTED && grantedstorage === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log("Camera & storage permission given");
+                // console.log("Camera & storage permission given");
         
                 let options = {
                     noData: true,

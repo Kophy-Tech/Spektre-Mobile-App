@@ -8,7 +8,7 @@ import moment from "moment";
 
 export default function Card({item, navigation}) {
 
-console.log(item)
+// console.log(item)
 const { width } = useWindowDimensions();
 const source = {
     html: item?.description

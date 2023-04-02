@@ -6,7 +6,7 @@ import EmptyCard from "./EmptyCard";
 const CustomFlatList = ({data, msg , navigation}) => {
     const renderItem = ({ item }) => <Card item={item} navigation={navigation} />
 
-    console.log(data[0])
+    // console.log(data[0])s
     const fakeData=[]
     return <FlatList
         data={data}
