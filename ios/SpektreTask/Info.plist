@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>2.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -71,11 +71,10 @@
 		<string>Zocial.ttf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-<string>This app requires access to your photo library to upload project-related images.</string>
-<key>NSCameraUsageDescription</key>
-<string>This app requires access to your camera to take photos for project submissions</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>Allow $(PRODUCT_NAME) to record audio</string>
+	<string>This app requires access to your photo library to upload project-related images.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to your camera to take photos for project submissions</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to record audio</string>
 </dict>
-
 </plist>
