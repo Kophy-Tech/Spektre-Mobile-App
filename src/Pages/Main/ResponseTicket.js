@@ -16,7 +16,7 @@ const ResponseTicket = ({route}) => {
     const { data:itemData, error, isLoading, isSuccess, isError } = useGetTicketQuery({ id }, {
         pollingInterval: 1000,
     })
- console.log(itemData?.assignment?.project_manager?.profile_picture, 'attachments')
+//  console.log(itemData?.assignment?.project_manager?.profile_picture, 'attachments')
  
     const [modalVisible, setModalVisible] = React.useState(false);
     const [modalFileVisible, setModalFileVisible] = React.useState(false);
@@ -41,22 +41,7 @@ const ResponseTicket = ({route}) => {
  setText('')
         } catch (error) {
             // console.log(error)
-            if (!error?.status) {
-                Alert.alert('No Server Response')
-            }
-            else if (error.status === 400) {
-                Alert.alert(error.data.non_field_errors[0])
-
-            }
-            else if (error.status === 405) {
-                Alert.alert(error.data.detail)
-
-
-            } else {
-                Alert.alert('error')
-
-
-            }
+            Alert.alert(error)
         }
 
     }

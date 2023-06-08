@@ -3,8 +3,7 @@ import { Text, HStack, Stack, Avatar, } from "native-base";
 import { TouchableOpacity } from 'react-native';
 
 export default function Ticket({ item, closeTicketSend, LoadingCloseTicket, IdLoaing, navigation }) {
-    // console.log(item?.responsible_person, 'from ticket')
-    // console.log(item?.opener, 'opener ticket')
+  
 
     return (
         <HStack mt="0.5" mb="2" mx="2" p="0.5" justifyContent="space-between" alignItems='center'>

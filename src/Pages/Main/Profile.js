@@ -44,29 +44,8 @@ dispatch(tokenSet(null))
     return <LoadingCard />
   }
   if (isError) {
-    if (!error?.status) {
-
-      return <ErrorCard errormsg='No Server Response' />
+    <ErrorCard errormsg={error} />
     }
-    else if (error.status === 400) {
-      return <ErrorCard errormsg={error?.data?.detail} />
-
-    }
-    else if (error.status === 401) {
-      return <ErrorCard errormsg='Unauthorized' />
-
-
-
-
-    } else {
-      return <ErrorCard errormsg='Unknow error occur!,Kindly refresh your application' />
-
-
-
-
-    }
-
-  }
   return (
     <Box py="4" px="4" bg="#fff" h="100%">
        

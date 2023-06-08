@@ -11,37 +11,16 @@ import { useGetPendingAsignQuery } from '../../Redux/AuthApi';
 export default function Pending({navigation}) {
 
 
-  const { data, error, isLoading } = useGetPendingAsignQuery()
+  const { data, error, isLoading, isError } = useGetPendingAsignQuery()
   // console.log(error, 'errror')
   // console.log(data)
  
   if (isLoading) {
     return <LoadingCard />
   }
-  if (error) {
-    if (!error?.status) {
-
-      return <ErrorCard errormsg='No Server Response' />
+  if (isError) {
+    <ErrorCard errormsg={error} />
     }
-    else if (error.status === 400) {
-      return <ErrorCard errormsg={error?.data?.detail} />
-
-    }
-    else if (error.status === 401) {
-      return <ErrorCard errormsg='Unauthorized' />
-
-
-
-
-    } else {
-      return <ErrorCard errormsg='Error' />
-
-
-
-
-    }
-
-  }
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
 

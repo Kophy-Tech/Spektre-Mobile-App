@@ -460,7 +460,7 @@ const CameraImage =async()=> {
 const id = route?.params?.id
 // console.log(id)
 
-    const { data:itemData, error, isLoading, isSuccess } = useGetAsignQuery({id})
+    const { data:itemData, error, isLoading, isSuccess, isError } = useGetAsignQuery({id})
 const [assign, setAssign] = React.useState([])
 const [responsiblePerson, setResponsiblePerson] = React.useState("")
 const [fillError, setFillError] = React.useState("")
@@ -504,22 +504,7 @@ if(isSuccess){
 
            } catch (error) {
             //  console.log(error.data)
-             if (!error?.status) {
-               Alert.alert('No Server Response')
-             }
-             else if (error.status === 400) {
-               Alert.alert(error.data.non_field_errors[0])
-
-             }
-             else if (error.status === 405) {
-               Alert.alert(error.data.detail)
-
-
-             } else {
-               Alert.alert('Login Failed')
-
-
-             }
+            Alert.alert(error)
            }
          }
        }
@@ -561,22 +546,7 @@ if(isSuccess){
 
               } catch (error) {
                 // console.log(error.data)
-                if (!error?.status) {
-                  Alert.alert('No Server Response')
-                }
-                else if (error.status === 400) {
-                  Alert.alert(error.data.non_field_errors[0])
-
-                }
-                else if (error.status === 401) {
-                  Alert.alert('Unauthorized')
-
-
-                } else {
-                  Alert.alert('Login Failed')
-
-
-                }
+                Alert.alert(error)
               }
             }
        
@@ -615,28 +585,13 @@ if(isSuccess){
   
        } catch (error) {
         //  console.log(error)
-         if (!error?.status) {
-           Alert.alert('No Server Response')
-         }
-         else if (error.status === 400) {
-           Alert.alert(error.data.non_field_errors[0])
-  
-         }
-         else if (error.status === 401) {
-           Alert.alert('Unauthorized')
-  
-  
-         } else {
-           Alert.alert('Error')
-  
-  
-         }
+        Alert.alert(error)
        }
    }
  const SendOpenTicket = async()=>{
 
- if(respond ==='' || responsiblePerson===''){
-  setFillError('Please select a responsible person and fill in the text input.')
+ if(responsiblePerson===''){
+  setFillError('Bitte wählen Sie eine verantwortliche Person aus')
  }
  else{
   const d = itemData?.concerned_user_options.filter((fm)=> fm.username ===responsiblePerson)
@@ -663,22 +618,7 @@ if(isSuccess){
 
   } catch (error) {
    //  console.log(error)
-    if (!error?.status) {
-      Alert.alert('No Server Response')
-    }
-    else if (error.status === 400) {
-      Alert.alert(error.data.non_field_errors[0])
-
-    }
-    else if (error.status === 401) {
-      Alert.alert('Unauthorized')
-
-
-    } else {
-      Alert.alert('Error')
-
-
-    }
+   Alert.alert(error)
   }
  }
  }
@@ -690,34 +630,9 @@ if(isSuccess){
   if (isLoading) {
         return <LoadingCard />
     }
-  if (error) {
-    if (!error?.status) {
-
-      return <ErrorCard errormsg='No Server Response' />
-    }
-    else if (error.status === 400) {
-      return <ErrorCard errormsg={error?.data?.detail} />
-
-    }
-    else if (error.status ==="FETCH_ERROR") {
-      return <ErrorCard errormsg="Network request failed, refresh your network and try again!." />
-
-  }
-    else if (error.status === 401) {
-      return <ErrorCard errormsg='Unauthorized' />
-
-
-
-
-    } else {
-      return <ErrorCard errormsg='Unknow error occur!,Kindly refresh your application' />
-
-
-
-
-    }
-
-  }
+    if (isError) {
+      <ErrorCard errormsg={error} />
+      }
   return (
     <>
     <Box  bg="#fff" flex="1">
@@ -1013,6 +928,7 @@ buttonStyle={{
 	data={assign}
 	onSelect={(selectedItem, index) => {
 		setResponsiblePerson(selectedItem)
+    setFillError('')
 	}}
 	buttonTextAfterSelection={(selectedItem, index) => {
 		// text represented after item is selected

@@ -2,10 +2,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { tokenSet } from './AuthSlice';
+import { formatError } from './helper';
 
 // Define a service using a base URL and expected endpoints
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://montage.a-z-m.ch/de/api',
+  baseUrl: 'http://64.226.94.149/en/api',
   credentials: 'include',
   prepareHeaders: async(headers, { getState }) => {
     const token = await AsyncStorage.getItem('token')
@@ -63,6 +64,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         providesTags: ['Assignments'],
         keepUnusedDataFor: 5,
       }),
@@ -76,6 +81,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         providesTags: ['Assignments'],
         keepUnusedDataFor: 5,
 
@@ -90,6 +99,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         providesTags: ['Assignments'],
           keepUnusedDataFor: 5,
  
@@ -104,6 +117,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
       providesTags:['Assignments'],
       keepUnusedDataFor: 5,
 
@@ -118,6 +135,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         keepUnusedDataFor: 5,
 
       }),
@@ -131,6 +152,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         providesTags: ['Assignment'],
         keepUnusedDataFor: 5,
       }),
@@ -146,6 +171,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         invalidatesTags:['Assignments']
       }),
       OpenTicket: builder.mutation({
@@ -162,6 +191,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         invalidatesTags: ['Assignment']
       }),
       getTicket: builder.query({
@@ -174,6 +207,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         providesTags: ['Assignment'],
         keepUnusedDataFor: 5,
       }),
@@ -191,6 +228,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         invalidatesTags: ['Assignment']
       }),
       CloseTicket: builder.mutation({
@@ -205,6 +246,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         invalidatesTags: ['Assignment']
       }),
       getAllTicket: builder.query({
@@ -217,6 +262,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         providesTags: ['Assignments'],
         keepUnusedDataFor: 5,
       }),
@@ -230,6 +279,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
   
         providesTags: ['notify'],
         keepUnusedDataFor: 5,
@@ -264,6 +317,10 @@ export const api = createApi({
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         invalidatesTags: ['notify']
       }),
       changePassword: builder.mutation({
@@ -278,7 +335,10 @@ export const api = createApi({
           };
 
         },
-      
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
       }),
       uploadDocument: builder.mutation({
 
@@ -294,6 +354,10 @@ console.log(data, 'uplaod')
           };
 
         },
+        transformErrorResponse: (response, meta, arg) => ({
+          message: formatError(response),
+          error: response.data,
+        }),
         invalidatesTags: ['Assignment']
       })
   }),

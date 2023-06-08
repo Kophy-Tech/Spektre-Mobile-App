@@ -10,7 +10,7 @@ const Notification = ({route, navigation}) => {
     // console.log(id)
     const [Id, setId] = React.useState(id)
  const [item, setItem] = React.useState(null);
-    const [readNofitication, { isLoading: readLoading, error, isSuccess }] = useReadNofiticationMutation()
+    const [readNofitication, { isLoading: readLoading, error, isSuccess , isError}] = useReadNofiticationMutation()
 
 //   console.log(item)
 
@@ -25,22 +25,7 @@ const Notification = ({route, navigation}) => {
 
         } catch (error) {
             // console.log(error)
-            if (!error?.status) {
-                Alert.alert('No Server Response')
-            }
-            else if (error.status === 400) {
-                Alert.alert(error.data.non_field_errors[0])
-
-            }
-            else if (error.status === 405) {
-                Alert.alert(error.data.detail)
-
-
-            } else {
-                Alert.alert('error')
-
-
-            }
+            Alert.alert(error)
         }
     }
     React.useLayoutEffect(() => {
@@ -53,30 +38,10 @@ ReadDoc()
         return <LoadingCard />
     }
 
-    if (error) {
-        if (!error?.status) {
-
-            return <ErrorCard errormsg='No Server Response' />
+  
+    if (isError) {
+        <ErrorCard errormsg={error} />
         }
-        else if (error.status === 400) {
-            return <ErrorCard errormsg={error?.data?.detail} />
-
-        }
-        else if (error.status === 401) {
-            return <ErrorCard errormsg='Unauthorized' />
-
-
-
-
-        } else {
-            return <ErrorCard errormsg='Unknow error occur!,Kindly refresh your application' />
-
-
-
-
-        }
-
-    }
 
     if (isSuccess){
         return (
