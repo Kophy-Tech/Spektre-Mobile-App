@@ -3,10 +3,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { tokenSet } from './AuthSlice';
 import { formatError } from './helper';
-
+// baseUrl: 'https://montage.a-z-m.ch/de/api',
+// baseUrl: 'http://64.226.94.149/en/api',
+// 
 // Define a service using a base URL and expected endpoints
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://64.226.94.149/en/api',
+  baseUrl: 'https://montage.a-z-m.ch/de/api',
   credentials: 'include',
   prepareHeaders: async(headers, { getState }) => {
     const token = await AsyncStorage.getItem('token')

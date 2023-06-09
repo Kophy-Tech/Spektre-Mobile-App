@@ -14,10 +14,11 @@ const Login = () => {
   const navigation = useNavigation()
   const [login, { isLoading }] = useLoginMutation()
   const [data, setData] = React.useState({
-    username:'worker2',
-    password:'SqA7q9XgnMKpfRS'
+    username:'',
+    password:''
   });
-
+  // worker2
+  // SqA7q9XgnMKpfRS
 
  
   const OpenUrl = React.useCallback(
